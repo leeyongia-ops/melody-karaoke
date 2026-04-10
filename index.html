@@ -575,16 +575,16 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
       <p>KARAOKE POS SYSTEM v2.0</p>
     </div>
     <div class="role-grid">
-      <div class="rtab on" onclick="setRole('owner',this)"><span class="ri">👑</span><div class="rl">เจ้าของ</div></div>
-      <div class="rtab"    onclick="setRole('staff',this)"><span class="ri">🧑‍💼</span><div class="rl">พนักงาน</div></div>
-      <div class="rtab"    onclick="setRole('customer',this)"><span class="ri">🎶</span><div class="rl">ลูกค้า QR</div></div>
+      <div class="rtab on" data-role="owner"><span class="ri">👑</span><div class="rl">เจ้าของ</div></div>
+      <div class="rtab"    data-role="staff"><span class="ri">🧑‍💼</span><div class="rl">พนักงาน</div></div>
+      <div class="rtab"    data-role="customer"><span class="ri">🎶</span><div class="rl">ลูกค้า QR</div></div>
     </div>
     <div class="pin-disp" id="pinDisp">•</div>
     <div class="pinpad" id="pinPad">
-      <button class="pb" onclick="pk('1')">1</button><button class="pb" onclick="pk('2')">2</button><button class="pb" onclick="pk('3')">3</button>
-      <button class="pb" onclick="pk('4')">4</button><button class="pb" onclick="pk('5')">5</button><button class="pb" onclick="pk('6')">6</button>
-      <button class="pb" onclick="pk('7')">7</button><button class="pb" onclick="pk('8')">8</button><button class="pb" onclick="pk('9')">9</button>
-      <button class="pb del" onclick="pd()">⌫</button><button class="pb" onclick="pk('0')">0</button><button class="pb go" onclick="pLogin()">เข้า</button>
+      <button class="pb" data-k="1">1</button><button class="pb" data-k="2">2</button><button class="pb" data-k="3">3</button>
+      <button class="pb" data-k="4">4</button><button class="pb" data-k="5">5</button><button class="pb" data-k="6">6</button>
+      <button class="pb" data-k="7">7</button><button class="pb" data-k="8">8</button><button class="pb" data-k="9">9</button>
+      <button class="pb del" id="pinDel">⌫</button><button class="pb" data-k="0">0</button><button class="pb go" id="pinGo">เข้า</button>
     </div>
     <div class="login-hint">👑 เจ้าของ: <b>1234</b> &nbsp;|&nbsp; 🧑‍💼 พนักงาน: <b>0000</b> &nbsp;|&nbsp; 🎶 ลูกค้า: ไม่ต้อง PIN</div>
     <div class="login-err" id="lErr"></div>
@@ -1541,8 +1541,30 @@ window.addEventListener('afterprint',()=>{document.querySelectorAll('.screen').f
 // ─── KEYBOARD PIN ───
 document.addEventListener('keydown',e=>{if(document.getElementById('scrLogin').classList.contains('show')&&loginRole!=='customer'){if(e.key>='0'&&e.key<='9')pk(e.key);else if(e.key==='Backspace')pd();else if(e.key==='Enter')pLogin();}if((e.ctrlKey||e.metaKey)&&e.key==='p'&&curPage()==='billing'){e.preventDefault();printBill();}});
 
-// ─── INIT ───
-renderBItems();
+// ─── INIT — รอ DOM โหลดเสร็จก่อน ───
+function _init(){
+  // Pinpad
+  document.querySelectorAll('.pb[data-k]').forEach(function(btn){
+    btn.addEventListener('click', function(){ pk(btn.dataset.k); });
+  });
+  var delBtn = document.getElementById('pinDel');
+  var goBtn  = document.getElementById('pinGo');
+  if(delBtn) delBtn.addEventListener('click', pd);
+  if(goBtn)  goBtn.addEventListener('click', pLogin);
+  // Role tabs
+  document.querySelectorAll('.rtab[data-role]').forEach(function(btn){
+    btn.addEventListener('click', function(){ setRole(btn.dataset.role, btn); });
+  });
+  // Bill items
+  renderBItems();
+  console.log('✅ Init complete — pinpad ready');
+}
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', _init);
+} else {
+  _init();
+}
 </script>
 </body>
 </html>
