@@ -1226,13 +1226,13 @@ function openCO(id){
   openM('mCheckout');
 }
 function buildCOBill(r,s,rc,ft,grand,mins,hrs,ro){
-  const now=new Date();let rows='';ro.forEach(o=>o.items.forEach(i=>{rows+=`<div style="display:flex;justify-content:space-between;padding:2px 0;font-size:11px;"><span>${i.emoji} ${i.name} ×${i.qty}</span><span>฿${(i.price*i.qty).toLocaleString()}</span></div>``;}));
-  return`<div style="text-align:center;border-bottom:1px dashed #ccc;padding-bottom:10px;margin-bottom:10px;"><div style="font-size:26px;">🎤</div><div style="font-size:14px;font-weight:800;">Melody Karaoke</div><div style="font-size:10px;color:#777;">${now.toLocaleString('th-TH')}</div></div>
-  <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><b>${r.name}</b><span>👥 ${s.pax}คน</span></div>
-  <div style="font-size:10px;color:#666;margin-bottom:7px;">${hrs}ชม. (${mins}น.) · ค่าห้อง ฿${rc.toLocaleString()}</div>
-  <hr style="border:none;border-top:1px dashed #ddd;margin:7px 0;">${rows}
-  <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;"><b>ค่าอาหาร/เครื่องดื่ม</b><b>฿${ft.toLocaleString()}</b></div>
-  <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:800;border-top:2px solid #111;margin-top:8px;padding-top:7px;"><span>💰 รวมทั้งสิ้น</span><span>฿${grand.toLocaleString()}</span></div>`;
+  const now=new Date();let rows='';ro.forEach(o=>o.items.forEach(i=>{rows+='<div style="display:flex;justify-content:space-between;padding:2px 0;font-size:11px;"><span>'+i.emoji+' '+i.name+' \xd7'+i.qty+'</span><span>\u0e3f'+(i.price*i.qty).toLocaleString()+'</span></div>';}));
+  return '<div style="text-align:center;border-bottom:1px dashed #ccc;padding-bottom:10px;margin-bottom:10px;"><div style="font-size:26px;">\ud83c\udf64</div><div style="font-size:14px;font-weight:800;">Melody Karaoke</div><div style="font-size:10px;color:#777;">'+now.toLocaleString('th-TH')+'</div></div>'
+  +'<div style="display:flex;justify-content:space-between;margin-bottom:4px;"><b>'+r.name+'</b><span>\ud83d\udc65 '+s.pax+'\u0e04\u0e19</span></div>'
+  +'<div style="font-size:10px;color:#666;margin-bottom:7px;">'+hrs+'\u0e0a\u0e21. ('+mins+'\u0e19.) \u00b7 \u0e04\u0e48\u0e32\u0e2b\u0e49\u0e2d\u0e07 \u0e3f'+rc.toLocaleString()+'</div>'
+  +'<hr style="border:none;border-top:1px dashed #ddd;margin:7px 0;">'+rows
+  +'<div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;"><b>\u0e04\u0e48\u0e32\u0e2d\u0e32\u0e2b\u0e32\u0e23/\u0e40\u0e04\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e14\u0e37\u0e48\u0e21</b><b>\u0e3f'+ft.toLocaleString()+'</b></div>'
+  +'<div style="display:flex;justify-content:space-between;font-size:15px;font-weight:800;border-top:2px solid #111;margin-top:8px;padding-top:7px;"><span>\ud83d\udcb0 \u0e23\u0e27\u0e21\u0e17\u0e31\u0e49\u0e07\u0e2a\u0e34\u0e49\u0e19</span><span>\u0e3f'+grand.toLocaleString()+'</span></div>';
 }
 function selP(el,m){document.querySelectorAll('.popt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');payMethod=m;document.getElementById('cashWrap').style.display=m==='cash'?'block':'none';document.getElementById('coBtn').disabled=m==='cash';if(m!=='cash')document.getElementById('coBtn').disabled=false;}
 function calcChg(){const g=coData?.grand||0,c=+document.getElementById('cashIn').value||0;document.getElementById('chgAmt').textContent='฿'+Math.max(0,c-g).toLocaleString();document.getElementById('coBtn').disabled=c<g;}
