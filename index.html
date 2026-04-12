@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -22,44 +21,44 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 .scr.show{display:flex;}
 
 /* LOGIN */
-#sLogin{align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,.07),transparent 60%),var(–bg);}
+#sLogin{align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,.07),transparent 60%),var(--bg);}
 .lbox{width:90%;max-width:360px;}
 .ltop{text-align:center;margin-bottom:24px;}
 .ltop .icon{font-size:46px;display:block;margin-bottom:7px;}
-.ltop h1{font-family:‘Playfair Display’,serif;font-size:28px;color:var(–gold);letter-spacing:2px;}
-.ltop p{font-size:10px;color:var(–text2);letter-spacing:1px;margin-top:3px;}
+.ltop h1{font-family:'Playfair Display',serif;font-size:28px;color:var(--gold);letter-spacing:2px;}
+.ltop p{font-size:10px;color:var(--text2);letter-spacing:1px;margin-top:3px;}
 .rtabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
-.rtab{background:var(–card);border:2px solid var(–border2);border-radius:10px;padding:12px 8px;cursor:pointer;text-align:center;transition:all .2s;}
-.rtab:hover{border-color:var(–border);}
-.rtab.on{border-color:var(–gold);background:rgba(212,175,55,.08);}
+.rtab{background:var(--card);border:2px solid var(--border2);border-radius:10px;padding:12px 8px;cursor:pointer;text-align:center;transition:all .2s;}
+.rtab:hover{border-color:var(--border);}
+.rtab.on{border-color:var(--gold);background:rgba(212,175,55,.08);}
 .rtab span{font-size:22px;display:block;margin-bottom:4px;}
-.rtab b{font-size:11px;font-weight:700;color:var(–text2);}
-.rtab.on b{color:var(–gold);}
-.pdisp{background:var(–card);border:1px solid var(–border2);border-radius:9px;padding:13px;text-align:center;font-size:26px;letter-spacing:12px;color:var(–gold);min-height:54px;display:flex;align-items:center;justify-content:center;margin-bottom:11px;}
+.rtab b{font-size:11px;font-weight:700;color:var(--text2);}
+.rtab.on b{color:var(--gold);}
+.pdisp{background:var(--card);border:1px solid var(--border2);border-radius:9px;padding:13px;text-align:center;font-size:26px;letter-spacing:12px;color:var(--gold);min-height:54px;display:flex;align-items:center;justify-content:center;margin-bottom:11px;}
 .ppad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
-.pb{background:var(–card2);border:1px solid var(–border2);color:var(–text);border-radius:9px;padding:13px;font-family:‘Kanit’;font-size:18px;font-weight:600;cursor:pointer;transition:all .15s;width:100%;}
-.pb:hover{background:var(–card3);}
+.pb{background:var(--card2);border:1px solid var(--border2);color:var(--text);border-radius:9px;padding:13px;font-family:'Kanit';font-size:18px;font-weight:600;cursor:pointer;transition:all .15s;width:100%;}
+.pb:hover{background:var(--card3);}
 .pb:active{transform:scale(.95);}
-.pb.del{color:var(–red);font-size:13px;}
-.pb.go{background:linear-gradient(135deg,var(–gold),var(–gold2));color:#080e1c;border:none;font-size:13px;}
-.lhint{font-size:10px;color:var(–text3);text-align:center;margin-top:9px;line-height:1.8;}
-.lerr{color:var(–red);font-size:11px;text-align:center;margin-top:4px;min-height:15px;}
+.pb.del{color:var(--red);font-size:13px;}
+.pb.go{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#080e1c;border:none;font-size:13px;}
+.lhint{font-size:10px;color:var(--text3);text-align:center;margin-top:9px;line-height:1.8;}
+.lerr{color:var(--red);font-size:11px;text-align:center;margin-top:4px;min-height:15px;}
 
 /* TOPBAR */
-.topbar{height:50px;flex-shrink:0;background:var(–card);border-bottom:1px solid var(–border2);display:flex;align-items:center;padding:0 13px;}
-.tlogo{font-family:‘Playfair Display’,serif;color:var(–gold);font-size:15px;letter-spacing:2px;padding-right:12px;border-right:1px solid var(–border2);margin-right:2px;flex-shrink:0;}
+.topbar{height:50px;flex-shrink:0;background:var(--card);border-bottom:1px solid var(--border2);display:flex;align-items:center;padding:0 13px;}
+.tlogo{font-family:'Playfair Display',serif;color:var(--gold);font-size:15px;letter-spacing:2px;padding-right:12px;border-right:1px solid var(--border2);margin-right:2px;flex-shrink:0;}
 .tnav-wrap{display:flex;overflow-x:auto;scrollbar-width:none;flex:1;}
 .tnav-wrap::-webkit-scrollbar{display:none;}
-.tnav{background:transparent;border:none;color:var(–text2);padding:0 12px;height:50px;cursor:pointer;font-family:‘Kanit’;font-size:12px;font-weight:500;white-space:nowrap;display:flex;align-items:center;border-bottom:3px solid transparent;transition:all .2s;}
-.tnav:hover{color:var(–text);}
-.tnav.on{color:var(–gold);border-bottom-color:var(–gold);}
+.tnav{background:transparent;border:none;color:var(--text2);padding:0 12px;height:50px;cursor:pointer;font-family:'Kanit';font-size:12px;font-weight:500;white-space:nowrap;display:flex;align-items:center;border-bottom:3px solid transparent;transition:all .2s;}
+.tnav:hover{color:var(--text);}
+.tnav.on{color:var(--gold);border-bottom-color:var(--gold);}
 .tright{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.ttime{font-size:11px;color:var(–text2);}
+.ttime{font-size:11px;color:var(--text2);}
 .rchip{font-size:10px;font-weight:700;padding:4px 9px;border-radius:13px;border:1px solid;}
-.rco{background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.3);color:var(–gold);}
-.rcs{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.3);color:var(–blue);}
-.tbtn{background:transparent;border:1px solid var(–border2);color:var(–text2);padding:4px 9px;border-radius:7px;cursor:pointer;font-family:‘Kanit’;font-size:10px;}
-.tbtn:hover{border-color:var(–red);color:var(–red);}
+.rco{background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.3);color:var(--gold);}
+.rcs{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.3);color:var(--blue);}
+.tbtn{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:4px 9px;border-radius:7px;cursor:pointer;font-family:'Kanit';font-size:10px;}
+.tbtn:hover{border-color:var(--red);color:var(--red);}
 
 /* CONTENT */
 .content{flex:1;overflow:hidden;}
@@ -67,101 +66,101 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 .page.on{display:flex;}
 
 /* COMMON */
-.btn{padding:8px 13px;border-radius:8px;border:none;cursor:pointer;font-family:‘Kanit’;font-size:12px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;}
+.btn{padding:8px 13px;border-radius:8px;border:none;cursor:pointer;font-family:'Kanit';font-size:12px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;}
 .btn:hover{transform:translateY(-1px);}
 .btn:active{transform:none;opacity:.8;}
 .btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important;}
-.bg2{background:linear-gradient(135deg,var(–gold),var(–gold2));color:#080e1c;}
-.bo{background:transparent;border:1px solid var(–border2);color:var(–text2);}
-.bo:hover{border-color:var(–gold);color:var(–text);}
-.br2{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:var(–red);}
+.bg2{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#080e1c;}
+.bo{background:transparent;border:1px solid var(--border2);color:var(--text2);}
+.bo:hover{border-color:var(--gold);color:var(--text);}
+.br2{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:var(--red);}
 .sm{padding:6px 10px;font-size:11px;border-radius:7px;}
 .wf{width:100%;}
-.inp{background:var(–card2);border:1px solid var(–border2);color:var(–text);padding:7px 10px;border-radius:8px;font-family:‘Kanit’;font-size:12px;width:100%;outline:none;}
-.inp:focus{border-color:var(–gold);}
-.inp::placeholder{color:var(–text3);}
-.fl{font-size:10px;color:var(–text2);margin-bottom:2px;}
+.inp{background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:7px 10px;border-radius:8px;font-family:'Kanit';font-size:12px;width:100%;outline:none;}
+.inp:focus{border-color:var(--gold);}
+.inp::placeholder{color:var(--text3);}
+.fl{font-size:10px;color:var(--text2);margin-bottom:2px;}
 .fr2{display:flex;flex-direction:column;gap:2px;margin-bottom:9px;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
 .shd{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;flex-shrink:0;}
 .stitle{font-size:15px;font-weight:700;}
 .pad{padding:17px;}
-.cb{background:var(–card);border:1px solid var(–border2);border-radius:12px;margin-bottom:12px;}
-.chd{padding:10px 13px;border-bottom:1px solid var(–border2);display:flex;align-items:center;justify-content:space-between;}
+.cb{background:var(--card);border:1px solid var(--border2);border-radius:12px;margin-bottom:12px;}
+.chd{padding:10px 13px;border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;}
 .chtl{font-size:12px;font-weight:700;}
 .cbd{padding:13px;}
 .badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;}
-.bgg{background:rgba(34,211,160,.12);color:var(–green);}
-.bgo{background:rgba(212,175,55,.12);color:var(–gold);}
-.bgr{background:rgba(248,113,113,.12);color:var(–red);}
-.bgb{background:rgba(96,165,250,.12);color:var(–blue);}
+.bgg{background:rgba(34,211,160,.12);color:var(--green);}
+.bgo{background:rgba(212,175,55,.12);color:var(--gold);}
+.bgr{background:rgba(248,113,113,.12);color:var(--red);}
+.bgb{background:rgba(96,165,250,.12);color:var(--blue);}
 
 /* ROOMS */
 .rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;padding:0 17px 17px;}
-.rcard{background:var(–card);border:2px solid var(–border2);border-radius:13px;padding:14px;cursor:pointer;transition:all .22s;position:relative;}
+.rcard{background:var(--card);border:2px solid var(--border2);border-radius:13px;padding:14px;cursor:pointer;transition:all .22s;position:relative;}
 .rcard:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.5);}
 .rcard.busy{border-color:rgba(212,175,55,.5);}
-.rnum{font-family:‘Playfair Display’,serif;font-size:21px;color:var(–gold);}
-.rcap{font-size:10px;color:var(–text2);margin-bottom:7px;}
-.rtimer{font-size:17px;font-weight:700;color:var(–gold2);}
-.rbill{font-size:10px;color:var(–text2);margin:2px 0 7px;}
-.rqr{position:absolute;top:9px;right:9px;width:25px;height:25px;background:var(–card2);border:1px solid var(–border);color:var(–text2);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;}
-.rqr:hover{background:var(–gold);color:#080e1c;}
+.rnum{font-family:'Playfair Display',serif;font-size:21px;color:var(--gold);}
+.rcap{font-size:10px;color:var(--text2);margin-bottom:7px;}
+.rtimer{font-size:17px;font-weight:700;color:var(--gold2);}
+.rbill{font-size:10px;color:var(--text2);margin:2px 0 7px;}
+.rqr{position:absolute;top:9px;right:9px;width:25px;height:25px;background:var(--card2);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;}
+.rqr:hover{background:var(--gold);color:#080e1c;}
 
 /* POS */
 .playout{display:grid;grid-template-columns:1fr 310px;height:100%;overflow:hidden;}
-.pl{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(–border2);}
-.ptb{padding:8px 11px;display:flex;gap:7px;align-items:center;border-bottom:1px solid var(–border2);}
-.psrch{background:var(–card2);border:1px solid var(–border2);color:var(–text);padding:7px 10px;border-radius:8px;font-family:‘Kanit’;font-size:11px;flex:1;outline:none;}
-.psrch:focus{border-color:var(–gold);}
-.pcats{display:flex;gap:5px;padding:7px 11px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(–border2);flex-shrink:0;}
+.pl{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border2);}
+.ptb{padding:8px 11px;display:flex;gap:7px;align-items:center;border-bottom:1px solid var(--border2);}
+.psrch{background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:7px 10px;border-radius:8px;font-family:'Kanit';font-size:11px;flex:1;outline:none;}
+.psrch:focus{border-color:var(--gold);}
+.pcats{display:flex;gap:5px;padding:7px 11px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border2);flex-shrink:0;}
 .pcats::-webkit-scrollbar{display:none;}
-.cpill{background:var(–card2);border:1px solid var(–border2);color:var(–text2);padding:4px 12px;border-radius:15px;cursor:pointer;font-family:‘Kanit’;font-size:11px;white-space:nowrap;}
-.cpill.on{background:rgba(212,175,55,.12);border-color:var(–gold);color:var(–gold);font-weight:600;}
+.cpill{background:var(--card2);border:1px solid var(--border2);color:var(--text2);padding:4px 12px;border-radius:15px;cursor:pointer;font-family:'Kanit';font-size:11px;white-space:nowrap;}
+.cpill.on{background:rgba(212,175,55,.12);border-color:var(--gold);color:var(--gold);font-weight:600;}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:8px;padding:9px 11px;overflow-y:auto;}
-.mcard{background:var(–card);border:1px solid var(–border2);border-radius:9px;overflow:hidden;cursor:pointer;transition:all .2s;}
+.mcard{background:var(--card);border:1px solid var(--border2);border-radius:9px;overflow:hidden;cursor:pointer;transition:all .2s;}
 .mcard:hover{border-color:rgba(212,175,55,.4);transform:translateY(-2px);}
 .mcard.na{opacity:.45;cursor:not-allowed;}
-.mem{height:68px;display:flex;align-items:center;justify-content:center;font-size:28px;background:var(–card2);}
+.mem{height:68px;display:flex;align-items:center;justify-content:center;font-size:28px;background:var(--card2);}
 .mbd{padding:7px 8px;}
 .mnm{font-size:11px;font-weight:600;margin-bottom:2px;}
-.mpr{font-size:12px;font-weight:700;color:var(–gold);}
-.opanel{display:flex;flex-direction:column;overflow:hidden;background:var(–card);}
-.ohd{padding:9px 12px;border-bottom:1px solid var(–border2);display:flex;align-items:center;justify-content:space-between;gap:7px;}
-.rsel{background:var(–card2);border:1px solid var(–border2);color:var(–text);padding:5px 8px;border-radius:7px;font-family:‘Kanit’;font-size:11px;cursor:pointer;outline:none;flex:1;}
+.mpr{font-size:12px;font-weight:700;color:var(--gold);}
+.opanel{display:flex;flex-direction:column;overflow:hidden;background:var(--card);}
+.ohd{padding:9px 12px;border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;gap:7px;}
+.rsel{background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:5px 8px;border-radius:7px;font-family:'Kanit';font-size:11px;cursor:pointer;outline:none;flex:1;}
 .olist{flex:1;overflow-y:auto;padding:7px;}
-.oempty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:5px;color:var(–text2);font-size:12px;}
-.oitem{display:flex;align-items:center;gap:6px;background:var(–card2);border-radius:8px;padding:7px 8px;margin-bottom:5px;}
+.oempty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:5px;color:var(--text2);font-size:12px;}
+.oitem{display:flex;align-items:center;gap:6px;background:var(--card2);border-radius:8px;padding:7px 8px;margin-bottom:5px;}
 .oiem{font-size:16px;flex-shrink:0;}
 .oinf{flex:1;}
 .onm{font-size:11px;font-weight:600;}
-.opr{font-size:10px;color:var(–text2);}
+.opr{font-size:10px;color:var(--text2);}
 .qc{display:flex;align-items:center;gap:3px;}
-.qb{width:20px;height:20px;border-radius:5px;border:1px solid var(–border2);background:var(–card);color:var(–text);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;}
-.qb:hover{background:var(–gold);border-color:var(–gold);color:#080e1c;}
+.qb{width:20px;height:20px;border-radius:5px;border:1px solid var(--border2);background:var(--card);color:var(--text);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.qb:hover{background:var(--gold);border-color:var(--gold);color:#080e1c;}
 .qn{font-size:11px;font-weight:700;min-width:14px;text-align:center;}
-.ofoot{padding:9px 12px;border-top:1px solid var(–border2);}
-.trow{display:flex;justify-content:space-between;font-size:11px;color:var(–text2);padding:2px 0;}
-.trow.grand{font-size:15px;font-weight:700;color:var(–text);border-top:1px solid var(–border2);margin-top:5px;padding-top:6px;}
+.ofoot{padding:9px 12px;border-top:1px solid var(--border2);}
+.trow{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);padding:2px 0;}
+.trow.grand{font-size:15px;font-weight:700;color:var(--text);border-top:1px solid var(--border2);margin-top:5px;padding-top:6px;}
 
 /* ORDERS */
 .orows{display:flex;flex-direction:column;gap:7px;padding:0 17px 17px;}
-.orow{background:var(–card);border:1px solid var(–border2);border-radius:10px;padding:11px 13px;display:flex;align-items:flex-start;gap:9px;}
-.ortag{background:linear-gradient(135deg,var(–gold),var(–gold2));color:#080e1c;font-size:12px;font-weight:800;width:36px;height:36px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.orow{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:11px 13px;display:flex;align-items:flex-start;gap:9px;}
+.ortag{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#080e1c;font-size:12px;font-weight:800;width:36px;height:36px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .orinf{flex:1;}
 .ortitle{font-size:12px;font-weight:600;margin-bottom:2px;}
-.orits{font-size:10px;color:var(–text2);margin-bottom:3px;}
+.orits{font-size:10px;color:var(--text2);margin-bottom:3px;}
 .orrt{text-align:right;flex-shrink:0;}
-.ortot{font-size:13px;font-weight:700;color:var(–gold2);}
-.ortm{font-size:9px;color:var(–text2);}
+.ortot{font-size:13px;font-weight:700;color:var(--gold2);}
+.ortm{font-size:9px;color:var(--text2);}
 
 /* BILL */
 .blayout{display:grid;grid-template-columns:270px 1fr;height:100%;overflow:hidden;}
-.bctrl{overflow-y:auto;padding:13px;border-right:1px solid var(–border2);background:var(–card);}
+.bctrl{overflow-y:auto;padding:13px;border-right:1px solid var(--border2);background:var(--card);}
 .bprev{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;align-items:center;gap:11px;}
-.receipt{background:#fff;color:#111;width:330px;border-radius:11px;font-family:‘Sarabun’,sans-serif;font-size:12px;box-shadow:0 4px 18px rgba(0,0,0,.5);}
-.receipt::before,.receipt::after{content:’’;display:block;height:9px;background:repeating-radial-gradient(circle at 8px,transparent 0,transparent 5px,#fff 5px,#fff 9px);background-size:15px 9px;background-color:#111;}
+.receipt{background:#fff;color:#111;width:330px;border-radius:11px;font-family:'Sarabun',sans-serif;font-size:12px;box-shadow:0 4px 18px rgba(0,0,0,.5);}
+.receipt::before,.receipt::after{content:'';display:block;height:9px;background:repeating-radial-gradient(circle at 8px,transparent 0,transparent 5px,#fff 5px,#fff 9px);background-size:15px 9px;background-color:#111;}
 .receipt::after{transform:rotate(180deg);}
 .ri{padding:15px 17px;}
 .rhd{text-align:center;border-bottom:1px dashed #ddd;padding-bottom:9px;margin-bottom:9px;}
@@ -182,42 +181,40 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 
 /* CUSTOMER */
 #sCust{overflow-y:auto;height:100vh;background:linear-gradient(160deg,#0a1628,#060c18);}
-.ctop{background:rgba(212,175,55,.04);border-bottom:1px solid var(–border);padding:13px;text-align:center;}
-.ctag{display:inline-flex;align-items:center;gap:5px;background:rgba(212,175,55,.08);border:1px solid var(–border);color:var(–gold2);padding:3px 11px;border-radius:11px;font-size:11px;font-weight:600;margin-top:4px;}
+.ctop{background:rgba(212,175,55,.04);border-bottom:1px solid var(--border);padding:13px;text-align:center;}
+.ctag{display:inline-flex;align-items:center;gap:5px;background:rgba(212,175,55,.08);border:1px solid var(--border);color:var(--gold2);padding:3px 11px;border-radius:11px;font-size:11px;font-weight:600;margin-top:4px;}
 .clayout{display:grid;grid-template-columns:1fr 255px;min-height:calc(100vh - 95px);}
 .cma{padding:11px;overflow-y:auto;}
-.ccat{font-size:12px;font-weight:700;color:var(–gold);padding-bottom:5px;border-bottom:1px solid var(–border);margin-bottom:6px;}
+.ccat{font-size:12px;font-weight:700;color:var(--gold);padding-bottom:5px;border-bottom:1px solid var(--border);margin-bottom:6px;}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px;margin-bottom:11px;}
-.ccart{background:rgba(255,255,255,.02);border-left:1px solid var(–border);display:flex;flex-direction:column;}
-.ccarthd{padding:10px 12px;border-bottom:1px solid var(–border);font-size:12px;font-weight:600;}
+.ccart{background:rgba(255,255,255,.02);border-left:1px solid var(--border);display:flex;flex-direction:column;}
+.ccarthd{padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;}
 .ccartitems{flex:1;overflow-y:auto;padding:7px;display:flex;flex-direction:column;gap:4px;}
-.ccartfoot{padding:10px 12px;border-top:1px solid var(–border);}
-@media(max-width:600px){.clayout{grid-template-columns:1fr;}.ccart{position:sticky;bottom:0;max-height:40vh;}.playout{grid-template-columns:1fr;}.opanel{display:none;}.blayout{grid-template-columns:1fr;}.bctrl{border-right:none;border-bottom:1px solid var(–border2);max-height:45vh;}}
+.ccartfoot{padding:10px 12px;border-top:1px solid var(--border);}
+@media(max-width:600px){.clayout{grid-template-columns:1fr;}.ccart{position:sticky;bottom:0;max-height:40vh;}.playout{grid-template-columns:1fr;}.opanel{display:none;}.blayout{grid-template-columns:1fr;}.bctrl{border-right:none;border-bottom:1px solid var(--border2);max-height:45vh;}}
 
 /* MODALS */
 .mbg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px);}
 .mbg.open{display:flex;}
-.mbox{background:var(–card);border:1px solid var(–border);border-radius:14px;padding:19px;width:90%;max-width:400px;max-height:86vh;overflow-y:auto;}
+.mbox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:19px;width:90%;max-width:400px;max-height:86vh;overflow-y:auto;}
 .mbox.wide{max-width:470px;}
-.mtitle{font-size:14px;font-weight:700;color:var(–gold);margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(–border2);display:flex;align-items:center;justify-content:space-between;}
-.mx{background:var(–card2);border:none;color:var(–text2);width:23px;height:23px;border-radius:6px;cursor:pointer;font-size:12px;}
-.popt{background:var(–card2);border:2px solid var(–border2);border-radius:9px;padding:10px;cursor:pointer;text-align:center;transition:all .2s;}
-.popt:hover,.popt.on{border-color:var(–gold);background:rgba(212,175,55,.06);}
+.mtitle{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;}
+.mx{background:var(--card2);border:none;color:var(--text2);width:23px;height:23px;border-radius:6px;cursor:pointer;font-size:12px;}
+.popt{background:var(--card2);border:2px solid var(--border2);border-radius:9px;padding:10px;cursor:pointer;text-align:center;transition:all .2s;}
+.popt:hover,.popt.on{border-color:var(--gold);background:rgba(212,175,55,.06);}
 .qrbox{background:#fff;border-radius:9px;padding:13px;display:flex;align-items:center;justify-content:center;margin-bottom:9px;}
-.qrtxt{background:var(–card2);border-radius:7px;padding:6px 9px;font-size:9px;color:var(–text2);word-break:break-all;font-family:monospace;margin-bottom:9px;}
+.qrtxt{background:var(--card2);border-radius:7px;padding:6px 9px;font-size:9px;color:var(--text2);word-break:break-all;font-family:monospace;margin-bottom:9px;}
 
 /* TOAST */
-.toast{position:fixed;bottom:17px;left:50%;transform:translateX(-50%) translateY(60px);background:var(–card2);border:1px solid var(–border);color:var(–text);padding:8px 17px;border-radius:9px;font-size:12px;z-index:9999;transition:transform .3s;white-space:nowrap;pointer-events:none;}
+.toast{position:fixed;bottom:17px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--card2);border:1px solid var(--border);color:var(--text);padding:8px 17px;border-radius:9px;font-size:12px;z-index:9999;transition:transform .3s;white-space:nowrap;pointer-events:none;}
 .toast.show{transform:translateX(-50%) translateY(0);}
-.toast.ok{border-color:var(–green);color:var(–green);}
-.toast.err{border-color:var(–red);color:var(–red);}
+.toast.ok{border-color:var(--green);color:var(--green);}
+.toast.err{border-color:var(--red);color:var(--red);}
 </style>
-
 </head>
 <body>
 
 <!-- LOGIN -->
-
 <div class="scr show" id="sLogin">
   <div class="lbox">
     <div class="ltop">
@@ -242,7 +239,6 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 </div>
 
 <!-- APP -->
-
 <div class="scr" id="sApp">
   <div class="topbar">
     <div class="tlogo">🎤 MELODY</div>
@@ -255,155 +251,152 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
   </div>
   <div class="content">
 
-```
-<!-- ROOMS -->
-<div class="page" id="p-rooms">
-  <div class="shd">
-    <div class="stitle">🏠 ห้อง / โต๊ะ</div>
-    <div style="display:flex;gap:6px;" id="roomTopBtns">
-      <button class="btn bo sm" id="btnManageRooms" style="display:none">⚙️ จัดการห้อง</button>
-      <button class="btn bg2 sm" id="btnAddRoom" style="display:none">+ เพิ่มห้อง</button>
-    </div>
-  </div>
-  <div style="display:flex;gap:8px;padding:0 17px 11px;flex-wrap:wrap;" id="rStats"></div>
-
-  <!-- MANAGE MODE banner (owner only) -->
-  <div id="manageBanner" style="display:none;background:rgba(212,175,55,.08);border:1px solid var(--border);border-radius:10px;margin:0 17px 12px;padding:10px 14px;display:none;align-items:center;gap:10px;">
-    <span style="font-size:14px;">✏️</span>
-    <span style="font-size:12px;color:var(--gold);font-weight:600;">โหมดจัดการห้อง — กดการ์ดห้องเพื่อแก้ไข</span>
-    <button class="btn bo sm" id="doneManageBtn" style="margin-left:auto;font-size:11px;">เสร็จ</button>
-  </div>
-
-  <div class="rg" id="rGrid"></div>
-</div>
-
-<!-- POS -->
-<div class="page" id="p-pos">
-  <div class="playout">
-    <div class="pl">
-      <div class="ptb">
-        <input class="psrch" id="pSrch" placeholder="🔍 ค้นหาเมนู...">
-        <select class="inp rsel" id="pRS" style="flex:1;padding:6px 8px;font-size:11px;"></select>
-      </div>
-      <div class="pcats" id="pCats"></div>
-      <div class="mgrid" id="pGrid"></div>
-    </div>
-    <div class="opanel">
-      <div class="ohd">
-        <div style="font-size:12px;font-weight:700;flex-shrink:0;">🛒 รายการ</div>
-        <button class="btn bo sm" id="clearBtn">ล้าง</button>
-      </div>
-      <div class="olist" id="oList"><div class="oempty"><span style="font-size:30px;">🍺</span>ยังไม่มีรายการ</div></div>
-      <div class="ofoot">
-        <div class="trow"><span>ยอดรวม</span><span id="cTot">฿0</span></div>
-        <div class="trow grand"><span>รวม</span><span id="cGrand" style="color:var(--gold2);">฿0</span></div>
-        <button class="btn bg2 wf" style="margin-top:8px;" id="sendBtn" disabled>📤 ส่งออเดอร์</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ORDERS -->
-<div class="page" id="p-orders">
-  <div class="shd">
-    <div class="stitle">📋 ออเดอร์</div>
-    <div style="display:flex;gap:5px;" id="ofBtns">
-      <button class="btn bo sm of on" data-f="all">ทั้งหมด</button>
-      <button class="btn bo sm of" data-f="pending">⏳ รอ</button>
-      <button class="btn bo sm of" data-f="done">✅ เสร็จ</button>
-      <button class="btn bo sm of" data-f="paid">💳 จ่ายแล้ว</button>
-    </div>
-  </div>
-  <div class="orows" id="oRows"></div>
-</div>
-
-<!-- BILL (เจ้าของ + พนักงาน) -->
-<div class="page" id="p-bill">
-  <div class="blayout">
-    <div class="bctrl">
-      <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:9px;">🏪 ข้อมูลร้าน</div>
-      <div class="fr2"><label class="fl">ชื่อร้าน</label><input class="inp" id="bShop" value="Melody Karaoke"></div>
-      <div class="fr2"><label class="fl">ที่อยู่</label><input class="inp" id="bAddr" value="123 ถ.สุขุมวิท"></div>
-      <div class="g2">
-        <div class="fr2"><label class="fl">โทร</label><input class="inp" id="bTel" value="02-xxx-xxxx"></div>
-        <div class="fr2"><label class="fl">Line</label><input class="inp" id="bLine" value="@melody"></div>
-      </div>
-      <div style="font-size:11px;font-weight:700;color:var(--gold);margin:9px 0 7px;">🎤 ข้อมูลบิล</div>
-      <div class="g2">
-        <div class="fr2"><label class="fl">ห้อง</label><input class="inp" id="bRoom" value="ห้อง 1"></div>
-        <div class="fr2"><label class="fl">ลูกค้า</label><input class="inp" type="number" id="bPax" value="4"></div>
-      </div>
-      <div class="g2">
-        <div class="fr2"><label class="fl">เวลาเข้า</label><input class="inp" type="time" id="bIn"></div>
-        <div class="fr2"><label class="fl">เวลาออก</label><input class="inp" type="time" id="bOut"></div>
-      </div>
-      <div class="g2">
-        <div class="fr2"><label class="fl">฿/ชม.</label><input class="inp" type="number" id="bRate" value="400"></div>
-        <div class="fr2"><label class="fl">ค่าห้อง</label><input class="inp" type="number" id="bRoomAmt" value="800"></div>
-      </div>
-      <div class="fr2"><label class="fl">เลขที่บิล</label><input class="inp" id="bNo"></div>
-      <div style="font-size:11px;font-weight:700;color:var(--gold);margin:9px 0 6px;">🍺 รายการ</div>
-      <div id="bItemsEl"></div>
-      <button class="btn bo sm wf" id="addBItem" style="margin-bottom:8px;">+ เพิ่มรายการ</button>
-      <div class="g2">
-        <div class="fr2"><label class="fl">ส่วนลด (฿)</label><input class="inp" type="number" id="bDisc" value="0"></div>
-        <div class="fr2"><label class="fl">ภาษี (%)</label><input class="inp" type="number" id="bTax" value="0"></div>
-      </div>
-      <div class="g2">
-        <div class="fr2"><label class="fl">ชำระด้วย</label>
-          <select class="inp" id="bPay" style="padding:6px 7px;">
-            <option>เงินสด</option><option>พร้อมเพย์</option><option>บัตรเครดิต</option><option>โอนเงิน</option>
-          </select>
+    <!-- ROOMS -->
+    <div class="page" id="p-rooms">
+      <div class="shd">
+        <div class="stitle">🏠 ห้อง / โต๊ะ</div>
+        <div style="display:flex;gap:6px;" id="roomTopBtns">
+          <button class="btn bo sm" id="btnManageRooms" style="display:none">⚙️ จัดการห้อง</button>
+          <button class="btn bg2 sm" id="btnAddRoom" style="display:none">+ เพิ่มห้อง</button>
         </div>
-        <div class="fr2"><label class="fl">รับเงิน (฿)</label><input class="inp" type="number" id="bCash" value="0"></div>
       </div>
-    </div>
-    <div class="bprev">
-      <div style="font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;">ตัวอย่างบิล</div>
-      <div id="receiptEl"></div>
-      <div style="display:flex;gap:7px;width:330px;">
-        <button class="btn bg2" style="flex:1;" id="printBtn">🖨️ พิมพ์</button>
-        <button class="btn bo" style="flex:1;" id="newBillBtn">🔄 บิลใหม่</button>
-      </div>
-    </div>
-  </div>
-</div>
+      <div style="display:flex;gap:8px;padding:0 17px 11px;flex-wrap:wrap;" id="rStats"></div>
 
-<!-- SETTINGS (owner only) -->
-<div class="page pad" id="p-settings">
-  <div class="cb">
-    <div class="chd"><div class="chtl">🏪 ข้อมูลร้าน</div></div>
-    <div class="cbd">
-      <div class="g2">
-        <div class="fr2"><label class="fl">ชื่อร้าน</label><input class="inp" id="sShop" value="Melody Karaoke"></div>
-        <div class="fr2"><label class="fl">โทร</label><input class="inp" id="sTel" value="02-xxx-xxxx"></div>
+      <!-- MANAGE MODE banner (owner only) -->
+      <div id="manageBanner" style="display:none;background:rgba(212,175,55,.08);border:1px solid var(--border);border-radius:10px;margin:0 17px 12px;padding:10px 14px;display:none;align-items:center;gap:10px;">
+        <span style="font-size:14px;">✏️</span>
+        <span style="font-size:12px;color:var(--gold);font-weight:600;">โหมดจัดการห้อง — กดการ์ดห้องเพื่อแก้ไข</span>
+        <button class="btn bo sm" id="doneManageBtn" style="margin-left:auto;font-size:11px;">เสร็จ</button>
       </div>
-      <div class="fr2"><label class="fl">ที่อยู่</label><input class="inp" id="sAddr" value="123 ถ.สุขุมวิท กรุงเทพฯ"></div>
-      <button class="btn bg2 sm" id="saveSetBtn">💾 บันทึก</button>
+
+      <div class="rg" id="rGrid"></div>
     </div>
-  </div>
-  <div class="cb">
-    <div class="chd"><div class="chtl">🔐 PIN</div></div>
-    <div class="cbd">
-      <div class="g2">
-        <div class="fr2"><label class="fl">PIN เจ้าของ</label><input class="inp" type="password" id="sOPin" placeholder="****" value="1234"></div>
-        <div class="fr2"><label class="fl">PIN พนักงาน</label><input class="inp" type="password" id="sSPin" placeholder="****" value="0000"></div>
+
+    <!-- POS -->
+    <div class="page" id="p-pos">
+      <div class="playout">
+        <div class="pl">
+          <div class="ptb">
+            <input class="psrch" id="pSrch" placeholder="🔍 ค้นหาเมนู...">
+            <select class="inp rsel" id="pRS" style="flex:1;padding:6px 8px;font-size:11px;"></select>
+          </div>
+          <div class="pcats" id="pCats"></div>
+          <div class="mgrid" id="pGrid"></div>
+        </div>
+        <div class="opanel">
+          <div class="ohd">
+            <div style="font-size:12px;font-weight:700;flex-shrink:0;">🛒 รายการ</div>
+            <button class="btn bo sm" id="clearBtn">ล้าง</button>
+          </div>
+          <div class="olist" id="oList"><div class="oempty"><span style="font-size:30px;">🍺</span>ยังไม่มีรายการ</div></div>
+          <div class="ofoot">
+            <div class="trow"><span>ยอดรวม</span><span id="cTot">฿0</span></div>
+            <div class="trow grand"><span>รวม</span><span id="cGrand" style="color:var(--gold2);">฿0</span></div>
+            <button class="btn bg2 wf" style="margin-top:8px;" id="sendBtn" disabled>📤 ส่งออเดอร์</button>
+          </div>
+        </div>
       </div>
-      <button class="btn bg2 sm" id="savePinBtn">💾 บันทึก PIN</button>
     </div>
-  </div>
-  <div class="cb">
-    <div class="chd"><div class="chtl">🗂 จัดการเมนู</div><button class="btn bg2 sm" id="addMenuBtn">+ เพิ่ม</button></div>
-    <div style="padding:9px 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:7px;" id="mgrGrid"></div>
-  </div>
-</div>
-```
+
+    <!-- ORDERS -->
+    <div class="page" id="p-orders">
+      <div class="shd">
+        <div class="stitle">📋 ออเดอร์</div>
+        <div style="display:flex;gap:5px;" id="ofBtns">
+          <button class="btn bo sm of on" data-f="all">ทั้งหมด</button>
+          <button class="btn bo sm of" data-f="pending">⏳ รอ</button>
+          <button class="btn bo sm of" data-f="done">✅ เสร็จ</button>
+          <button class="btn bo sm of" data-f="paid">💳 จ่ายแล้ว</button>
+        </div>
+      </div>
+      <div class="orows" id="oRows"></div>
+    </div>
+
+    <!-- BILL (เจ้าของ + พนักงาน) -->
+    <div class="page" id="p-bill">
+      <div class="blayout">
+        <div class="bctrl">
+          <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:9px;">🏪 ข้อมูลร้าน</div>
+          <div class="fr2"><label class="fl">ชื่อร้าน</label><input class="inp" id="bShop" value="Melody Karaoke"></div>
+          <div class="fr2"><label class="fl">ที่อยู่</label><input class="inp" id="bAddr" value="123 ถ.สุขุมวิท"></div>
+          <div class="g2">
+            <div class="fr2"><label class="fl">โทร</label><input class="inp" id="bTel" value="02-xxx-xxxx"></div>
+            <div class="fr2"><label class="fl">Line</label><input class="inp" id="bLine" value="@melody"></div>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:var(--gold);margin:9px 0 7px;">🎤 ข้อมูลบิล</div>
+          <div class="g2">
+            <div class="fr2"><label class="fl">ห้อง</label><input class="inp" id="bRoom" value="ห้อง 1"></div>
+            <div class="fr2"><label class="fl">ลูกค้า</label><input class="inp" type="number" id="bPax" value="4"></div>
+          </div>
+          <div class="g2">
+            <div class="fr2"><label class="fl">เวลาเข้า</label><input class="inp" type="time" id="bIn"></div>
+            <div class="fr2"><label class="fl">เวลาออก</label><input class="inp" type="time" id="bOut"></div>
+          </div>
+          <div class="g2">
+            <div class="fr2"><label class="fl">฿/ชม.</label><input class="inp" type="number" id="bRate" value="400"></div>
+            <div class="fr2"><label class="fl">ค่าห้อง</label><input class="inp" type="number" id="bRoomAmt" value="800"></div>
+          </div>
+          <div class="fr2"><label class="fl">เลขที่บิล</label><input class="inp" id="bNo"></div>
+          <div style="font-size:11px;font-weight:700;color:var(--gold);margin:9px 0 6px;">🍺 รายการ</div>
+          <div id="bItemsEl"></div>
+          <button class="btn bo sm wf" id="addBItem" style="margin-bottom:8px;">+ เพิ่มรายการ</button>
+          <div class="g2">
+            <div class="fr2"><label class="fl">ส่วนลด (฿)</label><input class="inp" type="number" id="bDisc" value="0"></div>
+            <div class="fr2"><label class="fl">ภาษี (%)</label><input class="inp" type="number" id="bTax" value="0"></div>
+          </div>
+          <div class="g2">
+            <div class="fr2"><label class="fl">ชำระด้วย</label>
+              <select class="inp" id="bPay" style="padding:6px 7px;">
+                <option>เงินสด</option><option>พร้อมเพย์</option><option>บัตรเครดิต</option><option>โอนเงิน</option>
+              </select>
+            </div>
+            <div class="fr2"><label class="fl">รับเงิน (฿)</label><input class="inp" type="number" id="bCash" value="0"></div>
+          </div>
+        </div>
+        <div class="bprev">
+          <div style="font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;">ตัวอย่างบิล</div>
+          <div id="receiptEl"></div>
+          <div style="display:flex;gap:7px;width:330px;">
+            <button class="btn bg2" style="flex:1;" id="printBtn">🖨️ พิมพ์</button>
+            <button class="btn bo" style="flex:1;" id="newBillBtn">🔄 บิลใหม่</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS (owner only) -->
+    <div class="page pad" id="p-settings">
+      <div class="cb">
+        <div class="chd"><div class="chtl">🏪 ข้อมูลร้าน</div></div>
+        <div class="cbd">
+          <div class="g2">
+            <div class="fr2"><label class="fl">ชื่อร้าน</label><input class="inp" id="sShop" value="Melody Karaoke"></div>
+            <div class="fr2"><label class="fl">โทร</label><input class="inp" id="sTel" value="02-xxx-xxxx"></div>
+          </div>
+          <div class="fr2"><label class="fl">ที่อยู่</label><input class="inp" id="sAddr" value="123 ถ.สุขุมวิท กรุงเทพฯ"></div>
+          <button class="btn bg2 sm" id="saveSetBtn">💾 บันทึก</button>
+        </div>
+      </div>
+      <div class="cb">
+        <div class="chd"><div class="chtl">🔐 PIN</div></div>
+        <div class="cbd">
+          <div class="g2">
+            <div class="fr2"><label class="fl">PIN เจ้าของ</label><input class="inp" type="password" id="sOPin" placeholder="****" value="1234"></div>
+            <div class="fr2"><label class="fl">PIN พนักงาน</label><input class="inp" type="password" id="sSPin" placeholder="****" value="0000"></div>
+          </div>
+          <button class="btn bg2 sm" id="savePinBtn">💾 บันทึก PIN</button>
+        </div>
+      </div>
+      <div class="cb">
+        <div class="chd"><div class="chtl">🗂 จัดการเมนู</div><button class="btn bg2 sm" id="addMenuBtn">+ เพิ่ม</button></div>
+        <div style="padding:9px 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:7px;" id="mgrGrid"></div>
+      </div>
+    </div>
 
   </div>
 </div>
 
 <!-- CUSTOMER QR -->
-
 <div class="scr" id="sCust" style="overflow-y:auto;height:100vh;">
   <div class="ctop">
     <div style="font-size:26px;">🎤</div>
@@ -428,7 +421,6 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 </div>
 
 <!-- MODALS -->
-
 <div class="mbg" id="mRoom">
   <div class="mbox">
     <div class="mtitle">🎤 เปิดห้อง — <span id="mRLbl"></span><button class="mx" data-close="mRoom">✕</button></div>
@@ -440,7 +432,6 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 </div>
 
 <!-- Edit/Add Room Modal -->
-
 <div class="mbg" id="mEditRoom">
   <div class="mbox">
     <div class="mtitle">
@@ -915,113 +906,108 @@ $('mPrintQRBtn').addEventListener('click',function(){
   var qurl='https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl='+encodeURIComponent(url)+'&choe=UTF-8';
   var w=window.open('','_blank','width=400,height=520');
   w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>QR '+name+'</title><style>body{font-family:sans-serif;text-align:center;padding:28px;background:#fff;color:#111;}h2{margin-bottom:4px;}p{font-size:12px;color:#666;margin-bottom:18px;}img{border:1px solid #eee;border-radius:8px;padding:10px;}small{display:block;margin-top:10px;font-size:9px;color:#aaa;word-break:break-all;}@media print{.nobtn{display:none;}}</style></head>'+
-
-```
-'<body><h2>🎤 MELODY Karaoke</h2><p>'+name+' - สแกนเพื่อสั่งอาหาร/เครื่องดื่ม</p>'+
-'<img src="'+qurl+'" width="240" height="240"><small>'+url+'</small>'+
-'<br><br><button class="nobtn" onclick="window.print()" style="padding:10px 22px;background:#d4af37;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;">🖨️ พิมพ์</button></body></html>');
-```
-
-w.document.close();
+    '<body><h2>🎤 MELODY Karaoke</h2><p>'+name+' - สแกนเพื่อสั่งอาหาร/เครื่องดื่ม</p>'+
+    '<img src="'+qurl+'" width="240" height="240"><small>'+url+'</small>'+
+    '<br><br><button class="nobtn" onclick="window.print()" style="padding:10px 22px;background:#d4af37;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;">🖨️ พิมพ์</button></body></html>');
+  w.document.close();
 });
 
 // Checkout
-document.querySelectorAll(’.popt’).forEach(function(el){
-el.addEventListener(‘click’,function(){
-document.querySelectorAll(’.popt’).forEach(function(x){x.classList.remove(‘on’);});
-el.classList.add(‘on’);payMethod=el.dataset.m;
-$(‘cashWrap’).style.display=payMethod===‘cash’?‘block’:‘none’;
-$(‘coConfirm’).disabled=payMethod===‘cash’;
-if(payMethod!==‘cash’)$(‘coConfirm’).disabled=false;
+document.querySelectorAll('.popt').forEach(function(el){
+  el.addEventListener('click',function(){
+    document.querySelectorAll('.popt').forEach(function(x){x.classList.remove('on');});
+    el.classList.add('on');payMethod=el.dataset.m;
+    $('cashWrap').style.display=payMethod==='cash'?'block':'none';
+    $('coConfirm').disabled=payMethod==='cash';
+    if(payMethod!=='cash')$('coConfirm').disabled=false;
+  });
 });
+$('cashIn').addEventListener('input',function(){
+  var g=coData?coData.grand:0,c=+this.value||0;
+  $('chgAmt').textContent='฿'+Math.max(0,c-g).toLocaleString();
+  $('coConfirm').disabled=c<g;
 });
-$(‘cashIn’).addEventListener(‘input’,function(){
-var g=coData?coData.grand:0,c=+this.value||0;
-$(‘chgAmt’).textContent=‘฿’+Math.max(0,c-g).toLocaleString();
-$(‘coConfirm’).disabled=c<g;
-});
-$(‘coConfirm’).addEventListener(‘click’,function(){
-if(!coData)return;var r=coData.r,s=coData.s,grand=coData.grand,ro=coData.ro;
-ro.forEach(function(o){var x=DB.orders.find(function(d){return d.id===o.id;});if(x)x.status=‘paid’;});
-DB.sessions=DB.sessions.filter(function(x){return x.id!==s.id;});r.status=‘free’;r.sid=null;
-closeM(‘mCO’);toast(‘💳 ชำระ ฿’+grand.toLocaleString()+’ เรียบร้อย!’,‘ok’);
-renderRooms();renderOrders();buildRS();
+$('coConfirm').addEventListener('click',function(){
+  if(!coData)return;var r=coData.r,s=coData.s,grand=coData.grand,ro=coData.ro;
+  ro.forEach(function(o){var x=DB.orders.find(function(d){return d.id===o.id;});if(x)x.status='paid';});
+  DB.sessions=DB.sessions.filter(function(x){return x.id!==s.id;});r.status='free';r.sid=null;
+  closeM('mCO');toast('💳 ชำระ ฿'+grand.toLocaleString()+' เรียบร้อย!','ok');
+  renderRooms();renderOrders();buildRS();
 });
 
 // QR
-$(‘simCustBtn’).addEventListener(‘click’,function(){
-custRoom=qrRoomData;custCart=[];closeM(‘mQR’);
-$(‘cRoomName’).textContent=custRoom.name;
-renderCustMenu();
-$(‘sApp’).classList.remove(‘show’);$(‘sCust’).classList.add(‘show’);
-toast(‘📱 หน้าลูกค้า QR’);
+$('simCustBtn').addEventListener('click',function(){
+  custRoom=qrRoomData;custCart=[];closeM('mQR');
+  $('cRoomName').textContent=custRoom.name;
+  renderCustMenu();
+  $('sApp').classList.remove('show');$('sCust').classList.add('show');
+  toast('📱 หน้าลูกค้า QR');
 });
 
 // POS
-$(‘sendBtn’).addEventListener(‘click’,function(){
-if(!curRoom||!cart.length)return;
-var r=DB.rooms.find(function(x){return x.id===curRoom;});
-var s=DB.sessions.find(function(x){return x.rid===curRoom;});
-var total=cart.reduce(function(a,i){return a+i.price*i.qty;},0);
-DB.orders.push({id:‘o’+Date.now(),rid:curRoom,rname:r?r.name:’’,sid:s?s.id:null,items:cart.map(function(i){return Object.assign({},i);}),status:‘pending’,src:‘pos’,time:Date.now(),total:total,by:CU.name});
-cart=[];renderCart();toast(‘✅ ส่งออเดอร์แล้ว!’,‘ok’);
+$('sendBtn').addEventListener('click',function(){
+  if(!curRoom||!cart.length)return;
+  var r=DB.rooms.find(function(x){return x.id===curRoom;});
+  var s=DB.sessions.find(function(x){return x.rid===curRoom;});
+  var total=cart.reduce(function(a,i){return a+i.price*i.qty;},0);
+  DB.orders.push({id:'o'+Date.now(),rid:curRoom,rname:r?r.name:'',sid:s?s.id:null,items:cart.map(function(i){return Object.assign({},i);}),status:'pending',src:'pos',time:Date.now(),total:total,by:CU.name});
+  cart=[];renderCart();toast('✅ ส่งออเดอร์แล้ว!','ok');
 });
-$(‘pRS’).addEventListener(‘change’,function(){curRoom=this.value||null;renderCart();});
-$(‘pSrch’).addEventListener(‘input’,function(){posSrch=this.value;renderPOS();});
-$(‘clearBtn’).addEventListener(‘click’,function(){cart=[];renderCart();});
+$('pRS').addEventListener('change',function(){curRoom=this.value||null;renderCart();});
+$('pSrch').addEventListener('input',function(){posSrch=this.value;renderPOS();});
+$('clearBtn').addEventListener('click',function(){cart=[];renderCart();});
 
 // Order filter
-$(‘ofBtns’).addEventListener(‘click’,function(e){
-var btn=e.target.closest(’.of’);if(!btn)return;OF=btn.dataset.f;
-document.querySelectorAll(’.of’).forEach(function(b){b.classList.remove(‘on’);b.style.borderColor=’’;b.style.color=’’;});
-btn.classList.add(‘on’);btn.style.borderColor=‘var(–gold)’;btn.style.color=‘var(–gold)’;renderOrders();
+$('ofBtns').addEventListener('click',function(e){
+  var btn=e.target.closest('.of');if(!btn)return;OF=btn.dataset.f;
+  document.querySelectorAll('.of').forEach(function(b){b.classList.remove('on');b.style.borderColor='';b.style.color='';});
+  btn.classList.add('on');btn.style.borderColor='var(--gold)';btn.style.color='var(--gold)';renderOrders();
 });
 
 // Bill
-[‘bShop’,‘bAddr’,‘bTel’,‘bLine’,‘bRoom’,‘bPax’,‘bRoomAmt’,‘bNo’,‘bDisc’,‘bTax’,‘bPay’,‘bCash’].forEach(function(id){var el=$(id);if(el){el.addEventListener(‘input’,buildReceipt);el.addEventListener(‘change’,buildReceipt);}});
-[‘bIn’,‘bOut’,‘bRate’].forEach(function(id){var el=$(id);if(el){el.addEventListener(‘input’,calcRoom);}});
-$(‘addBItem’).addEventListener(‘click’,function(){bItems.push({name:’’,qty:1,price:0});renderBItems();});
-$(‘printBtn’).addEventListener(‘click’,function(){window.print();});
-$(‘newBillBtn’).addEventListener(‘click’,function(){if(!confirm(‘เปิดบิลใหม่?’))return;bItems=[{name:’’,qty:1,price:0}];renderBItems();initBill();});
+['bShop','bAddr','bTel','bLine','bRoom','bPax','bRoomAmt','bNo','bDisc','bTax','bPay','bCash'].forEach(function(id){var el=$(id);if(el){el.addEventListener('input',buildReceipt);el.addEventListener('change',buildReceipt);}});
+['bIn','bOut','bRate'].forEach(function(id){var el=$(id);if(el){el.addEventListener('input',calcRoom);}});
+$('addBItem').addEventListener('click',function(){bItems.push({name:'',qty:1,price:0});renderBItems();});
+$('printBtn').addEventListener('click',function(){window.print();});
+$('newBillBtn').addEventListener('click',function(){if(!confirm('เปิดบิลใหม่?'))return;bItems=[{name:'',qty:1,price:0}];renderBItems();initBill();});
 
 // Settings
-$(‘saveSetBtn’).addEventListener(‘click’,function(){toast(‘✅ บันทึกแล้ว’,‘ok’);});
-$(‘savePinBtn’).addEventListener(‘click’,function(){var op=$(‘sOPin’).value,sp=$(‘sSPin’).value;if(op.length>=4)CFG.ownerPin=op;if(sp.length>=4)CFG.staffPin=sp;toast(‘✅ บันทึก PIN แล้ว’,‘ok’);});
-$(‘addMenuBtn’).addEventListener(‘click’,function(){openM(‘mMenu’);});
-$(‘saveMenuBtn’).addEventListener(‘click’,function(){
-var n=$(‘mnNm’).value.trim(),pr=+$(‘mnPr’).value||0,cat=$(‘mnCat’).value,em=$(‘mnEm’).value||‘🍽️’;
-if(!n||!pr){toast(‘กรุณากรอกข้อมูลให้ครบ’,‘err’);return;}
-DB.menu.push({id:‘m’+Date.now(),name:n,cat:cat,price:pr,emoji:em,avail:true});
-closeM(‘mMenu’);renderPOS();renderMgr();toast(‘✅ เพิ่มเมนู ‘+n,‘ok’);
-$(‘mnNm’).value=’’;$(‘mnPr’).value=’’;$(‘mnEm’).value=’’;
+$('saveSetBtn').addEventListener('click',function(){toast('✅ บันทึกแล้ว','ok');});
+$('savePinBtn').addEventListener('click',function(){var op=$('sOPin').value,sp=$('sSPin').value;if(op.length>=4)CFG.ownerPin=op;if(sp.length>=4)CFG.staffPin=sp;toast('✅ บันทึก PIN แล้ว','ok');});
+$('addMenuBtn').addEventListener('click',function(){openM('mMenu');});
+$('saveMenuBtn').addEventListener('click',function(){
+  var n=$('mnNm').value.trim(),pr=+$('mnPr').value||0,cat=$('mnCat').value,em=$('mnEm').value||'🍽️';
+  if(!n||!pr){toast('กรุณากรอกข้อมูลให้ครบ','err');return;}
+  DB.menu.push({id:'m'+Date.now(),name:n,cat:cat,price:pr,emoji:em,avail:true});
+  closeM('mMenu');renderPOS();renderMgr();toast('✅ เพิ่มเมนู '+n,'ok');
+  $('mnNm').value='';$('mnPr').value='';$('mnEm').value='';
 });
 
 // Customer
-$(‘ccSend’).addEventListener(‘click’,function(){
-if(!custCart.length||!custRoom)return;
-var total=custCart.reduce(function(s,i){return s+i.price*i.qty;},0);
-var sess=DB.sessions.find(function(x){return x.rid===custRoom.id;});
-DB.orders.push({id:‘o’+Date.now(),rid:custRoom.id,rname:custRoom.name,sid:sess?sess.id:null,items:custCart.map(function(i){return Object.assign({},i);}),status:‘pending’,src:‘customer’,time:Date.now(),total:total,by:‘ลูกค้า QR’});
-custCart=[];
-$(‘cMenu’).innerHTML=’<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;gap:13px;text-align:center;padding:18px;"><div style="font-size:50px;">✅</div><div style="font-size:19px;font-weight:700;color:var(--gold);">ส่งออเดอร์แล้ว!</div><div style="font-size:12px;color:var(--text2);">พนักงานได้รับออเดอร์แล้ว 🎤</div><div style="background:var(--card2);border-radius:9px;padding:10px 18px;font-size:13px;">รวม <b style="color:var(--gold);">฿’+total.toLocaleString()+’</b></div><button class="btn bg2" id="rCust">+ สั่งเพิ่ม</button></div>’;
-renderCC();toast(‘📤 ส่งออเดอร์แล้ว!’,‘ok’);
-document.getElementById(‘rCust’).addEventListener(‘click’,renderCustMenu);
+$('ccSend').addEventListener('click',function(){
+  if(!custCart.length||!custRoom)return;
+  var total=custCart.reduce(function(s,i){return s+i.price*i.qty;},0);
+  var sess=DB.sessions.find(function(x){return x.rid===custRoom.id;});
+  DB.orders.push({id:'o'+Date.now(),rid:custRoom.id,rname:custRoom.name,sid:sess?sess.id:null,items:custCart.map(function(i){return Object.assign({},i);}),status:'pending',src:'customer',time:Date.now(),total:total,by:'ลูกค้า QR'});
+  custCart=[];
+  $('cMenu').innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;gap:13px;text-align:center;padding:18px;"><div style="font-size:50px;">✅</div><div style="font-size:19px;font-weight:700;color:var(--gold);">ส่งออเดอร์แล้ว!</div><div style="font-size:12px;color:var(--text2);">พนักงานได้รับออเดอร์แล้ว 🎤</div><div style="background:var(--card2);border-radius:9px;padding:10px 18px;font-size:13px;">รวม <b style="color:var(--gold);">฿'+total.toLocaleString()+'</b></div><button class="btn bg2" id="rCust">+ สั่งเพิ่ม</button></div>';
+  renderCC();toast('📤 ส่งออเดอร์แล้ว!','ok');
+  document.getElementById('rCust').addEventListener('click',renderCustMenu);
 });
-$(‘custBack’).addEventListener(‘click’,function(){$(‘sCust’).classList.remove(‘show’);$(‘sLogin’).classList.add(‘show’);});
+$('custBack').addEventListener('click',function(){$('sCust').classList.remove('show');$('sLogin').classList.add('show');});
 
 // Logout
-$(‘logoutBtn’).addEventListener(‘click’,function(){if(!confirm(‘ออกจากระบบ?’))return;CU=null;CR=null;cart=[];curRoom=null;pinVal=’’;updPin();$(‘sApp’).classList.remove(‘show’);$(‘sLogin’).classList.add(‘show’);$(‘lErr’).textContent=’’;});
+$('logoutBtn').addEventListener('click',function(){if(!confirm('ออกจากระบบ?'))return;CU=null;CR=null;cart=[];curRoom=null;pinVal='';updPin();$('sApp').classList.remove('show');$('sLogin').classList.add('show');$('lErr').textContent='';});
 
 // Modals
-document.querySelectorAll(’.mbg’).forEach(function(el){el.addEventListener(‘click’,function(e){if(e.target===el)el.classList.remove(‘open’);});});
-document.querySelectorAll(’[data-close]’).forEach(function(el){el.addEventListener(‘click’,function(){closeM(el.dataset.close);});});
+document.querySelectorAll('.mbg').forEach(function(el){el.addEventListener('click',function(e){if(e.target===el)el.classList.remove('open');});});
+document.querySelectorAll('[data-close]').forEach(function(el){el.addEventListener('click',function(){closeM(el.dataset.close);});});
 
 // URL params
 (function(){
-var p=new URLSearchParams(location.search),r=p.get(‘room’),rn=p.get(‘rn’);
-if(r){custRoom={id:r,name:rn?decodeURIComponent(rn):‘ห้อง’};$(‘cRoomName’).textContent=custRoom.name;$(‘sLogin’).classList.remove(‘show’);$(‘sCust’).classList.add(‘show’);renderCustMenu();}
+  var p=new URLSearchParams(location.search),r=p.get('room'),rn=p.get('rn');
+  if(r){custRoom={id:r,name:rn?decodeURIComponent(rn):'ห้อง'};$('cRoomName').textContent=custRoom.name;$('sLogin').classList.remove('show');$('sCust').classList.add('show');renderCustMenu();}
 })();
 </script>
-
 </body>
 </html>
