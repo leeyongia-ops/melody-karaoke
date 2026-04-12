@@ -433,7 +433,21 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
   </div>
 </div>
 
-<!-- Edit/Add Room Modal -->
+<!-- Modal ย้ายห้อง -->
+<div class="mbg" id="mMoveRoom">
+  <div class="mbox">
+    <div class="mtitle">🔄 ย้ายห้อง — <span id="mMoveLbl"></span><button class="mx" data-close="mMoveRoom">✕</button></div>
+    <input type="hidden" id="mMoveFromId">
+    <div class="fr2">
+      <label class="fl">ย้ายไปห้อง/โต๊ะ</label>
+      <select class="inp" id="mMoveToSel" style="padding:8px 10px;"></select>
+    </div>
+    <div style="background:var(--card2);border-radius:8px;padding:10px;margin-bottom:12px;font-size:11px;color:var(--text2);">
+      ออเดอร์และ session ทั้งหมดจะถูกย้ายไปห้องใหม่ทันที ห้องเดิมจะกลับเป็นว่าง
+    </div>
+    <button class="btn bg2 wf" id="mMoveConfirm">✅ ยืนยันย้ายห้อง</button>
+  </div>
+</div>
 <div class="mbg" id="mEditRoom">
   <div class="mbox">
     <div class="mtitle">
@@ -533,14 +547,21 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 
     <div class="fr2"><label class="fl">ชื่อเมนู</label><input class="inp" id="mnNm" placeholder="เช่น เบียร์ช้าง"></div>
     <div class="g2">
-      <div class="fr2"><label class="fl">หมวด</label>
-        <select class="inp" id="mnCat">
-          <option>เบียร์</option><option>ไวน์</option><option>สุรา</option><option>น้ำดื่ม</option><option>อาหาร</option><option>ของว่าง</option>
-        </select>
+      <div class="fr2">
+        <label class="fl">หมวดหมู่</label>
+        <div style="display:flex;gap:5px;">
+          <select class="inp" id="mnCat" style="flex:1;padding:7px 8px;">
+            <option>เบียร์</option><option>ไวน์</option><option>สุรา</option><option>น้ำดื่ม</option><option>อาหาร</option><option>ของว่าง</option>
+          </select>
+          <button class="btn bo sm" id="mnAddCatBtn" title="เพิ่มหมวดใหม่" style="flex-shrink:0;">+</button>
+        </div>
       </div>
       <div class="fr2"><label class="fl">ราคา (฿)</label><input class="inp" type="number" id="mnPr" placeholder="0"></div>
     </div>
-    <div class="fr2"><label class="fl">Emoji (ถ้าไม่มีรูป)</label><input class="inp" id="mnEm" placeholder="🍺" maxlength="2"></div>
+    <div class="g2">
+      <div class="fr2"><label class="fl">รหัส SKU</label><input class="inp" id="mnSku" placeholder="เช่น BEER-001" style="font-family:monospace;font-size:11px;"></div>
+      <div class="fr2"><label class="fl">Emoji (ถ้าไม่มีรูป)</label><input class="inp" id="mnEm" placeholder="🍺" maxlength="2"></div>
+    </div>
     <div style="display:flex;gap:7px;">
       <button class="btn bg2 wf" id="saveMenuBtn">💾 บันทึก</button>
       <button class="btn br2" id="delMenuBtn" style="display:none;">🗑 ลบ</button>
@@ -886,6 +907,7 @@ function renderRooms(){
         '<div class="rbill">ค่าห้อง ฿'+rc.toLocaleString()+' + อาหาร ฿'+ft.toLocaleString()+'</div>'+
         '<div style="display:flex;gap:5px;margin-top:7px;">'+
           '<button class="btn bo sm" style="flex:1;font-size:10px;" data-pos="'+r.id+'">🍺 สั่ง</button>'+
+          '<button class="btn bo sm" style="font-size:10px;" data-move="'+r.id+'" title="ย้ายห้อง">🔄</button>'+
           '<button class="btn bg2 sm" style="flex:1;font-size:10px;" data-co="'+r.id+'">💳 เก็บเงิน</button>'+
         '</div>':
         '<button class="btn bg2 wf" style="margin-top:7px;font-size:11px;" data-open="'+r.id+'">🎤 เปิดห้อง</button>'
@@ -894,11 +916,45 @@ function renderRooms(){
   document.querySelectorAll('[data-open]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openRoom(el.dataset.open);});});
   document.querySelectorAll('[data-co]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openCO(el.dataset.co);});});
   document.querySelectorAll('[data-pos]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();goPos(el.dataset.pos);});});
+  document.querySelectorAll('[data-move]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openMoveRoom(el.dataset.move);});});
   document.querySelectorAll('[data-qr]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();showQR(el.dataset.qr,el.dataset.qrn);});});
   document.querySelectorAll('[data-qrm]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();showQR(el.dataset.qrm,el.dataset.qrn);});});
   document.querySelectorAll('[data-edit]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openEditRoom(el.dataset.edit);});});
 }
 function openRoom(id){var r=DB.rooms.find(function(x){return x.id===id;});$('mRLbl').textContent=r.name;$('mRid').value=id;$('mNote').value='';$('mPax').value=2;openM('mRoom');}
+
+/* ── ย้ายห้อง ── */
+function openMoveRoom(fromId){
+  var r=DB.rooms.find(function(x){return x.id===fromId;});
+  if(!r||r.status!=='busy'){toast('ห้องนี้ยังไม่เปิด','err');return;}
+  $('mMoveLbl').textContent=r.name;
+  $('mMoveFromId').value=fromId;
+  // แสดงเฉพาะห้องว่าง
+  var freeRooms=DB.rooms.filter(function(x){return x.id!==fromId&&x.status==='free';});
+  if(!freeRooms.length){toast('ไม่มีห้องว่างให้ย้าย','err');return;}
+  $('mMoveToSel').innerHTML=freeRooms.map(function(x){return'<option value="'+x.id+'">'+x.name+' ('+x.cap+' คน · ฿'+x.rate+'/ชม.)</option>';}).join('');
+  openM('mMoveRoom');
+}
+
+document.getElementById('mMoveConfirm').addEventListener('click',function(){
+  var fromId=$('mMoveFromId').value;
+  var toId=$('mMoveToSel').value;
+  if(!fromId||!toId)return;
+  var fromRoom=DB.rooms.find(function(x){return x.id===fromId;});
+  var toRoom=DB.rooms.find(function(x){return x.id===toId;});
+  var sess=DB.sessions.find(function(x){return x.id===fromRoom.sid;});
+  if(!fromRoom||!toRoom||!sess){toast('ข้อมูลไม่ถูกต้อง','err');return;}
+  // ย้าย session
+  sess.rid=toId; sess.rname=toRoom.name;
+  // ย้ายออเดอร์ทั้งหมดในห้องนี้
+  DB.orders.forEach(function(o){if(o.sid===sess.id){o.rid=toId;o.rname=toRoom.name;}});
+  // อัปเดตสถานะห้อง
+  toRoom.status='busy'; toRoom.sid=sess.id;
+  fromRoom.status='free'; fromRoom.sid=null;
+  closeM('mMoveRoom');
+  saveData(); renderRooms(); buildRS();
+  toast('✅ ย้ายจาก '+fromRoom.name+' ไป '+toRoom.name+' แล้ว','ok');
+});
 function openEditRoom(id){
   var isNew=!id;
   var r=isNew?{id:'',name:'',cap:6,rate:300,type:'karaoke',note:''}:DB.rooms.find(function(x){return x.id===id;});
@@ -1060,6 +1116,7 @@ function renderMgr(){
       '<div style="padding:7px 8px;">'+
         '<div style="font-size:11px;font-weight:600;margin-bottom:1px;">'+m.name+'</div>'+
         '<div style="font-size:10px;color:var(--text2);">'+m.cat+' · ฿'+m.price+'</div>'+
+        (m.sku?'<div style="font-size:9px;color:var(--text3);font-family:monospace;margin-top:1px;">SKU: '+m.sku+'</div>':'')+
       '</div>'+
       '<div style="padding:5px 8px 8px;display:flex;align-items:center;justify-content:space-between;">'+
         '<button class="btn bo sm" style="font-size:10px;padding:4px 8px;" data-medit="'+m.id+'">✏️ แก้ไข</button>'+
@@ -1226,25 +1283,45 @@ $('newBillBtn').addEventListener('click',function(){if(!confirm('เปิดบ
 // Settings
 $('saveSetBtn').addEventListener('click',function(){toast('✅ บันทึกแล้ว','ok');});
 $('savePinBtn').addEventListener('click',function(){var op=$('sOPin').value,sp=$('sSPin').value;if(op.length>=4)CFG.ownerPin=op;if(sp.length>=4)CFG.staffPin=sp;saveData();toast('✅ บันทึก PIN แล้ว','ok');});
-var mnImgData = null; // Base64 รูปภาพปัจจุบัน
+var mnImgData = null;
+
+function getAllCats(){
+  var defaults=['เบียร์','ไวน์','สุรา','น้ำดื่ม','อาหาร','ของว่าง'];
+  var fromMenu=DB.menu.map(function(m){return m.cat;});
+  var all=defaults.concat(fromMenu.filter(function(c){return defaults.indexOf(c)<0;}));
+  return all.filter(function(c,i,a){return a.indexOf(c)===i;});
+}
+
+function rebuildCatSelect(selectedCat){
+  $('mnCat').innerHTML=getAllCats().map(function(c){
+    return'<option value="'+c+'"'+(c===selectedCat?' selected':'')+'>'+c+'</option>';
+  }).join('');
+}
 
 function openEditMenu(id){
   var isNew=!id;
-  var m=isNew?{id:'',name:'',cat:'เบียร์',price:0,emoji:'🍽️',img:'',avail:true}:DB.menu.find(function(x){return x.id===id;});
-  $('mMenuTitle').textContent=isNew?'🍽️ เพิ่มเมนู':'✏️ แก้ไข — '+m.name;
+  var m=isNew?{id:'',name:'',cat:'เบียร์',price:0,emoji:'🍽️',sku:'',img:'',avail:true}:DB.menu.find(function(x){return x.id===id;});
+  $('mMenuTitle').textContent=isNew?'🍽️ เพิ่มเมนู':'✏️ แก้ไข: '+m.name;
   $('mnId').value=m.id||'';
   $('mnNm').value=m.name||'';
-  $('mnCat').value=m.cat||'เบียร์';
   $('mnPr').value=m.price||'';
   $('mnEm').value=m.emoji||'🍽️';
+  $('mnSku').value=m.sku||'';
+  rebuildCatSelect(m.cat||'เบียร์');
   mnImgData=m.img||null;
   $('delMenuBtn').style.display=isNew?'none':'inline-flex';
-  // แสดง preview
   var prev=$('mnImgPreview');
   if(mnImgData) prev.innerHTML='<img src="'+mnImgData+'" style="width:72px;height:72px;object-fit:cover;border-radius:9px;">';
   else prev.innerHTML=m.emoji||'🍽️';
   openM('mMenu');
 }
+
+document.getElementById('mnAddCatBtn').addEventListener('click',function(){
+  var newCat=prompt('ชื่อหมวดหมู่ใหม่:','');
+  if(!newCat||!newCat.trim())return;
+  rebuildCatSelect(newCat.trim());
+  toast('✅ เพิ่มหมวด "'+newCat.trim()+'"');
+});
 
 // Image file input
 $('mnImgFile').addEventListener('change',function(){
@@ -1276,18 +1353,20 @@ $('addMenuBtn').addEventListener('click',function(){openEditMenu(null);});
 
 $('saveMenuBtn').addEventListener('click',function(){
   var id=$('mnId').value;
-  var n=$('mnNm').value.trim(),pr=+$('mnPr').value||0,cat=$('mnCat').value,em=$('mnEm').value||'🍽️';
+  var n=$('mnNm').value.trim(),pr=+$('mnPr').value||0;
+  var cat=$('mnCat').value,em=$('mnEm').value||'🍽️';
+  var sku=$('mnSku').value.trim();
   if(!n||!pr){toast('กรุณากรอกชื่อและราคา','err');return;}
   if(id){
     var m=DB.menu.find(function(x){return x.id===id;});
-    if(m){m.name=n;m.price=pr;m.cat=cat;m.emoji=em;m.img=mnImgData||'';}
+    if(m){m.name=n;m.price=pr;m.cat=cat;m.emoji=em;m.sku=sku;m.img=mnImgData||'';}
     toast('✅ แก้ไข "'+n+'" แล้ว','ok');
   } else {
-    DB.menu.push({id:'m'+Date.now(),name:n,cat:cat,price:pr,emoji:em,img:mnImgData||'',avail:true});
+    DB.menu.push({id:'m'+Date.now(),name:n,cat:cat,price:pr,emoji:em,sku:sku,img:mnImgData||'',avail:true});
     toast('✅ เพิ่มเมนู "'+n+'" แล้ว','ok');
   }
   closeM('mMenu');saveData();renderPOS();renderMgr();
-  $('mnNm').value='';$('mnPr').value='';$('mnEm').value='';mnImgData=null;
+  $('mnNm').value='';$('mnPr').value='';$('mnEm').value='';$('mnSku').value='';mnImgData=null;
 });
 
 $('delMenuBtn').addEventListener('click',function(){
