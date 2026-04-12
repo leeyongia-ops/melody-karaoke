@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🎤 Melody Karaoke POS</title>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
+<!-- QR Code pure JS — ไม่ต้องพึ่ง API ภายนอก -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{
   --bg:#080e1c;--card:#0f1929;--card2:#162035;--card3:#1c2a42;
@@ -459,9 +461,8 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
     <div style="background:var(--card2);border-radius:8px;padding:11px;margin-bottom:11px;">
       <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:8px;">📱 QR Code ห้องนี้</div>
       <div style="display:flex;gap:8px;align-items:center;">
-        <div id="mEditQR" style="background:#fff;border-radius:7px;padding:8px;width:80px;height:80px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <img id="mEditQRImg" width="64" height="64" alt="QR" style="display:none;">
-          <span style="font-size:10px;color:#999;text-align:center;">กด Generate</span>
+        <div id="mEditQR" style="background:#fff;border-radius:7px;padding:6px;width:90px;height:90px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+          <span id="mEditQRHint" style="font-size:10px;color:#999;text-align:center;">กด Generate</span>
         </div>
         <div style="flex:1;">
           <div style="font-size:10px;color:var(--text2);margin-bottom:6px;">ลูกค้าสแกนเพื่อสั่งอาหารในห้องนี้</div>
@@ -500,7 +501,7 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 <div class="mbg" id="mQR">
   <div class="mbox">
     <div class="mtitle">📱 QR Code — <span id="qrLbl"></span><button class="mx" data-close="mQR">✕</button></div>
-    <div class="qrbox"><img id="qrImg" width="200" height="200" alt="QR"></div>
+    <div class="qrbox"><div id="qrBox" style="width:200px;height:200px;display:flex;align-items:center;justify-content:center;"></div></div>
     <div class="qrtxt" id="qrTxt"></div>
     <div style="font-size:10px;color:var(--text2);margin-bottom:9px;">ลูกค้าสแกนหรือเปิดลิงก์เพื่อสั่งอาหาร</div>
     <div style="display:flex;gap:7px;">
@@ -684,7 +685,8 @@ function openEditRoom(id){
   $('mEditType').value=r.type||'karaoke';
   $('mEditNote').value=r.note||'';
   $('mDeleteRoomBtn').style.display=isNew?'none':'flex';
-  $('mEditQRImg').style.display='none';$('mEditQRImg').src='';$('mEditQRUrl').textContent='';
+  var qrDiv=$('mEditQR');qrDiv.innerHTML='<span id="mEditQRHint" style="font-size:10px;color:#999;text-align:center;">กด Generate</span>';
+  $('mEditQRUrl').textContent='';
   openM('mEditRoom');
 }
 function goPos(rid){curRoom=rid;nav('pos');buildRS();}
@@ -695,7 +697,10 @@ function showQR(id,name){
   $('qrLbl').textContent=name;
   var url=location.href.split('?')[0]+'?room='+id+'&rn='+encodeURIComponent(name);
   $('qrTxt').textContent=url;
-  $('qrImg').src='https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl='+encodeURIComponent(url)+'&choe=UTF-8';
+  var box=$('qrBox');box.innerHTML='';
+  try{
+    new QRCode(box,{text:url,width:200,height:200,colorDark:'#000',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M});
+  }catch(e){box.innerHTML='<span style="color:#e53e3e;font-size:11px;">QR ไม่ได้</span>';}
   qrRoomData={id:id,name:name};
   openM('mQR');
 }
@@ -896,19 +901,30 @@ $('mGenQRBtn').addEventListener('click',function(){
   var id=$('mEditRid').value,name=$('mEditName').value||'ห้อง';
   if(!id){toast('บันทึกห้องก่อน','err');return;}
   var url=location.href.split('?')[0]+'?room='+id+'&rn='+encodeURIComponent(name);
-  $('mEditQRImg').src='https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl='+encodeURIComponent(url)+'&choe=UTF-8';
-  $('mEditQRImg').style.display='block';$('mEditQRUrl').textContent=url;toast('✅ Generate QR แล้ว');
+  var qrDiv=$('mEditQR');
+  qrDiv.innerHTML='';
+  try{
+    new QRCode(qrDiv,{text:url,width:78,height:78,colorDark:'#000',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M});
+  }catch(e){
+    qrDiv.innerHTML='<span style="font-size:9px;color:#e53e3e;">QR Error</span>';
+  }
+  $('mEditQRUrl').textContent=url;
+  toast('✅ Generate QR แล้ว');
 });
 $('mPrintQRBtn').addEventListener('click',function(){
   var id=$('mEditRid').value,name=$('mEditName').value||'ห้อง';
   if(!id){toast('บันทึกห้องก่อน','err');return;}
   var url=location.href.split('?')[0]+'?room='+id+'&rn='+encodeURIComponent(name);
-  var qurl='https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl='+encodeURIComponent(url)+'&choe=UTF-8';
-  var w=window.open('','_blank','width=400,height=520');
-  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>QR '+name+'</title><style>body{font-family:sans-serif;text-align:center;padding:28px;background:#fff;color:#111;}h2{margin-bottom:4px;}p{font-size:12px;color:#666;margin-bottom:18px;}img{border:1px solid #eee;border-radius:8px;padding:10px;}small{display:block;margin-top:10px;font-size:9px;color:#aaa;word-break:break-all;}@media print{.nobtn{display:none;}}</style></head>'+
-    '<body><h2>🎤 MELODY Karaoke</h2><p>'+name+' - สแกนเพื่อสั่งอาหาร/เครื่องดื่ม</p>'+
-    '<img src="'+qurl+'" width="240" height="240"><small>'+url+'</small>'+
-    '<br><br><button class="nobtn" onclick="window.print()" style="padding:10px 22px;background:#d4af37;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;">🖨️ พิมพ์</button></body></html>');
+  var w=window.open('','_blank','width=420,height=540');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>QR '+name+'</title>'
+    +'<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>'
+    +'<style>body{font-family:sans-serif;text-align:center;padding:28px;background:#fff;}h2{margin-bottom:4px;}p{font-size:12px;color:#666;margin-bottom:18px;}#qr{display:inline-block;padding:10px;border:1px solid #eee;border-radius:8px;}small{display:block;margin-top:10px;font-size:9px;color:#aaa;word-break:break-all;}@media print{.nobtn{display:none;}}</style>'
+    +'</head><body><h2>🎤 MELODY Karaoke</h2><p>'+name+' - สแกนเพื่อสั่งอาหาร/เครื่องดื่ม</p>'
+    +'<div id="qr"></div>'
+    +'<small>'+url+'</small><br><br>'
+    +'<button class="nobtn" onclick="window.print()" style="padding:10px 22px;background:#d4af37;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;">🖨️ พิมพ์</button>'
+    +'<scr'+'ipt>new QRCode(document.getElementById("qr"),{text:"'+url.replace(/"/g,'&quot;')+'",width:260,height:260,colorDark:"#000000",colorLight:"#ffffff"});<\/script>'
+    +'</body></html>');
   w.document.close();
 });
 
