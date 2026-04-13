@@ -161,25 +161,83 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 .blayout{display:grid;grid-template-columns:270px 1fr;height:100%;overflow:hidden;}
 .bctrl{overflow-y:auto;padding:13px;border-right:1px solid var(--border2);background:var(--card);}
 .bprev{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;align-items:center;gap:11px;}
-.receipt{background:#fff;color:#111;width:330px;border-radius:11px;font-family:'Sarabun',sans-serif;font-size:12px;box-shadow:0 4px 18px rgba(0,0,0,.5);}
-.receipt::before,.receipt::after{content:'';display:block;height:9px;background:repeating-radial-gradient(circle at 8px,transparent 0,transparent 5px,#fff 5px,#fff 9px);background-size:15px 9px;background-color:#111;}
+
+/* ── Receipt 58mm Thermal ── */
+.receipt{
+  background:#fff;color:#111;
+  width:216px; /* 58mm @ 96dpi = ~220px, ใช้ 216 ให้มี margin */
+  border-radius:8px;
+  font-family:'Sarabun',sans-serif;
+  font-size:11px;
+  box-shadow:0 4px 18px rgba(0,0,0,.5);
+  letter-spacing:0;
+  line-height:1.4;
+}
+.receipt::before,.receipt::after{
+  content:'';display:block;height:7px;
+  background:repeating-radial-gradient(circle at 6px,transparent 0,transparent 4px,#fff 4px,#fff 7px);
+  background-size:12px 7px;background-color:#111;
+}
 .receipt::after{transform:rotate(180deg);}
-.ri{padding:15px 17px;}
-.rhd{text-align:center;border-bottom:1px dashed #ddd;padding-bottom:9px;margin-bottom:9px;}
-.rshop{font-size:14px;font-weight:800;}
-.rsub{font-size:10px;color:#777;margin-top:2px;}
-.rmeta{display:grid;grid-template-columns:auto 1fr;gap:2px 9px;margin-bottom:9px;font-size:11px;}
+.ri{padding:10px 12px;}
+.rhd{text-align:center;border-bottom:1px dashed #ccc;padding-bottom:7px;margin-bottom:7px;}
+.rshop{font-size:13px;font-weight:800;letter-spacing:.5px;}
+.rsub{font-size:9px;color:#777;margin-top:2px;}
+.rmeta{display:grid;grid-template-columns:auto 1fr;gap:1px 7px;margin-bottom:7px;font-size:10px;}
 .rml{color:#888;}
 .rmv{font-weight:600;}
-.rbar{background:linear-gradient(135deg,#d4af37,#f0d060);color:#111;border-radius:6px;padding:7px 11px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:12px;}
-.rith{display:grid;grid-template-columns:1fr 34px 58px;gap:2px;font-size:9px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #eee;padding-bottom:3px;margin-bottom:3px;}
-.rit{display:grid;grid-template-columns:1fr 34px 58px;gap:2px;font-size:11px;padding:3px 0;border-bottom:1px dotted #f0f0f0;}
-.rtots{margin-top:8px;border-top:1px solid #ddd;padding-top:8px;}
-.rtr{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;color:#555;}
-.rtr.main{font-size:13px;font-weight:800;color:#111;border-top:2px solid #111;margin-top:5px;padding-top:5px;}
-.rtr.paid{background:#d4af37;color:#111;padding:4px 7px;border-radius:4px;font-weight:700;margin-top:4px;}
-.rfooter{text-align:center;margin-top:10px;padding-top:9px;border-top:1px dashed #ddd;font-size:11px;color:#555;}
-.stamp{display:inline-block;border:2px solid #22c55e;color:#22c55e;font-size:9px;font-weight:800;padding:2px 9px;border-radius:3px;letter-spacing:3px;transform:rotate(-5deg);margin-top:5px;}
+.rbar{background:#d4af37;color:#111;padding:5px 8px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:11px;}
+.rith{display:grid;grid-template-columns:1fr 28px 52px;gap:2px;font-size:8px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid #ddd;padding-bottom:3px;margin-bottom:3px;}
+.rit{display:grid;grid-template-columns:1fr 28px 52px;gap:2px;font-size:10px;padding:3px 0;border-bottom:1px dotted #eee;}
+.rtots{margin-top:7px;border-top:1px solid #ccc;padding-top:7px;}
+.rtr{display:flex;justify-content:space-between;font-size:10px;padding:2px 0;color:#555;}
+.rtr.main{font-size:12px;font-weight:800;color:#111;border-top:2px solid #111;margin-top:5px;padding-top:5px;}
+.rtr.paid{background:#d4af37;color:#111;padding:4px 7px;font-weight:700;margin-top:4px;font-size:10px;}
+.rfooter{text-align:center;margin-top:8px;padding-top:8px;border-top:1px dashed #ccc;font-size:10px;color:#555;}
+.stamp{display:inline-block;border:2px solid #22c55e;color:#22c55e;font-size:8px;font-weight:800;padding:2px 8px;border-radius:3px;letter-spacing:3px;transform:rotate(-5deg);margin-top:5px;}
+
+/* ── PRINT MEDIA — 58mm Thermal ── */
+@media print{
+  /* ซ่อนทุกอย่างยกเว้นใบเสร็จ */
+  body>*{display:none!important;}
+  #printArea{display:block!important;}
+
+  @page{
+    size:58mm auto;  /* กระดาษ 58mm ความยาวอัตโนมัติ */
+    margin:0;
+  }
+
+  #printArea{
+    width:58mm;
+    margin:0;
+    padding:0;
+    background:#fff;
+    color:#000;
+    font-family:'Sarabun',sans-serif;
+    font-size:10pt;
+  }
+
+  /* ซ่อน decoration ที่ไม่จำเป็น */
+  #printArea .receipt{
+    width:100%;
+    box-shadow:none;
+    border-radius:0;
+  }
+  #printArea .receipt::before,
+  #printArea .receipt::after{display:none;}
+
+  /* ปรับ font ให้อ่านชัดบน thermal */
+  #printArea .rshop{font-size:12pt;font-weight:900;}
+  #printArea .rsub{font-size:8pt;}
+  #printArea .rbar{font-size:10pt;padding:4px 6px;}
+  #printArea .rit{font-size:9pt;}
+  #printArea .rtr{font-size:9pt;}
+  #printArea .rtr.main{font-size:11pt;}
+  #printArea .stamp{display:none;} /* thermal ไม่จำเป็น */
+
+  /* QR ชำระเงิน — ปริ้นชัด */
+  #printArea img{max-width:45mm;height:auto;}
+}
 
 /* CUSTOMER */
 #sCust{overflow-y:auto;height:100vh;background:linear-gradient(160deg,#0a1628,#060c18);}
@@ -212,6 +270,7 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 .toast.show{transform:translateX(-50%) translateY(0);}
 .toast.ok{border-color:var(--green);color:var(--green);}
 .toast.err{border-color:var(--red);color:var(--red);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 </style>
 </head>
 <body>
@@ -301,17 +360,25 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
     </div>
 
     <!-- ORDERS -->
-    <div class="page" id="p-orders">
-      <div class="shd">
-        <div class="stitle">📋 ออเดอร์</div>
-        <div style="display:flex;gap:5px;" id="ofBtns">
-          <button class="btn bo sm of on" data-f="all">ทั้งหมด</button>
-          <button class="btn bo sm of" data-f="pending">⏳ รอ</button>
-          <button class="btn bo sm of" data-f="done">✅ เสร็จ</button>
-          <button class="btn bo sm of" data-f="paid">💳 จ่ายแล้ว</button>
+    <!-- MONITOR — ออเดอร์ Realtime -->
+    <div class="page" id="p-orders" style="background:var(--bg);">
+      <div class="shd" style="flex-shrink:0;">
+        <div class="stitle">📡 Monitor</div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <div id="monLive" style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--green);">
+            <span style="width:7px;height:7px;background:var(--green);border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>Live
+          </div>
+          <button class="btn bo sm" id="monRefreshBtn">🔄 รีเฟรช</button>
         </div>
       </div>
-      <div class="orows" id="oRows"></div>
+
+      <!-- Stats bar -->
+      <div style="display:flex;gap:7px;padding:0 17px 11px;flex-wrap:wrap;" id="monStats"></div>
+
+      <!-- Room columns -->
+      <div style="flex:1;overflow:hidden;padding:0 17px 17px;">
+        <div id="monGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;height:100%;overflow-y:auto;"></div>
+      </div>
     </div>
 
     <!-- HISTORY — ประวัติบิล -->
@@ -434,11 +501,19 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 
         </div>
         <div class="bprev">
-          <div style="font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;">ตัวอย่างบิล</div>
-          <div id="receiptEl"></div>
-          <div style="display:flex;gap:7px;width:330px;">
+          <div style="font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;">ตัวอย่างบิล 58mm</div>
+          <div id="printArea"><div id="receiptEl"></div></div>
+          <div style="display:flex;gap:7px;width:230px;">
             <button class="btn bg2" style="flex:1;" id="printBtn">🖨️ พิมพ์</button>
-            <button class="btn bo" style="flex:1;" id="newBillBtn">🔄 บิลใหม่</button>
+            <button class="btn bo" style="flex:1;" id="newBillBtn">🔄 ใหม่</button>
+          </div>
+          <!-- iOS guide -->
+          <div style="width:230px;background:var(--card2);border-radius:8px;padding:10px;font-size:10px;color:var(--text2);line-height:1.8;">
+            <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:5px;">📱 วิธีปริ้นบน iPhone</div>
+            <div>1. กด <b style="color:var(--text);">🖨️ พิมพ์</b></div>
+            <div>2. เลือกเครื่องปริ้น Bluetooth</div>
+            <div>3. ถ้าไม่เจอ → ใช้ app <b style="color:var(--text);">PrintHand</b></div>
+            <div style="margin-top:5px;font-size:9px;color:var(--text3);">หรือ Share → Save to Files → เปิดใน PrintHand</div>
           </div>
         </div>
       </div>
@@ -519,12 +594,196 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
         <div style="padding:9px 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:7px;" id="mgrGrid"></div>
       </div>
 
+      <!-- HR Integration URL -->
+      <div class="cb">
+        <div class="chd">
+          <div>
+            <div class="chtl">🔗 เชื่อมต่อระบบ HR</div>
+            <div style="font-size:10px;color:var(--text2);margin-top:2px;">Google Apps Script Web App URL</div>
+          </div>
+          <div id="hrStatusDot" style="width:10px;height:10px;border-radius:50%;background:var(--text3);flex-shrink:0;"></div>
+        </div>
+        <div class="cbd">
+          <div class="fr2">
+            <label class="fl">Web App URL</label>
+            <input class="inp" id="hrUrl" placeholder="https://script.google.com/macros/s/xxx/exec" style="font-size:10px;font-family:monospace;">
+          </div>
+          <div style="display:flex;gap:7px;">
+            <button class="btn bg2 sm" id="hrSaveBtn" style="flex:1;">💾 บันทึก</button>
+            <button class="btn bo sm" id="hrTestBtn" style="flex:1;">🔌 ทดสอบ</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-  </div>
-</div>
+        <!-- HR PAGE -->
+        <div class="page pad" id="p-hr">
+          <!-- PIN login for HR (if not already owner) -->
+          <div id="hrLockBar" style="display:none;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.3);border-radius:10px;padding:11px 14px;margin-bottom:13px;display:flex;align-items:center;gap:9px;">
+            <span style="font-size:18px;">🔒</span>
+            <span style="font-size:12px;color:var(--red);">ต้องเป็น Admin เพื่อแก้ไขข้อมูล HR</span>
+          </div>
 
-<!-- CUSTOMER QR -->
+          <!-- Nav tabs -->
+          <div style="display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px;flex-shrink:0;" class="hr-tabs">
+            <button class="btn bo sm hrtab on" data-hr="dash">📊 สรุปยอด</button>
+            <button class="btn bo sm hrtab" data-hr="entry">📝 บันทึก</button>
+            <button class="btn bo sm hrtab" data-hr="ref">🍻 คืนดื่ม</button>
+            <button class="btn bo sm hrtab" data-hr="emp">👥 พนักงาน</button>
+          </div>
+
+          <!-- DASH -->
+          <div class="hr-sec" id="hrDash">
+            <div class="cb">
+              <div class="chd">
+                <div class="chtl">📊 สรุปยอดประจำวัน</div>
+                <div style="display:flex;gap:6px;">
+                  <input type="date" id="hrDDate" class="inp" style="width:140px;padding:6px 8px;font-size:11px;">
+                  <button class="btn bg2 sm" id="hrDLoad">🔍 ค้นหา</button>
+                </div>
+              </div>
+              <div class="cbd" style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:11px;min-width:700px;" id="hrDTable">
+                  <thead><tr style="background:var(--card2);">
+                    <th style="padding:8px 6px;text-align:left;color:var(--gold);">ชื่อ</th>
+                    <th style="padding:8px 6px;color:var(--gold);">งาน</th>
+                    <th style="padding:8px 6px;color:var(--gold);">ชม.</th>
+                    <th style="padding:8px 6px;color:var(--gold);">ดื่ม</th>
+                    <th style="padding:8px 6px;color:var(--gold);">ทิป</th>
+                    <th style="padding:8px 6px;color:var(--red);">ชง</th>
+                    <th style="padding:8px 6px;color:var(--gold);">รายได้</th>
+                    <th style="padding:8px 6px;color:var(--text2);">เดิม</th>
+                    <th style="padding:8px 6px;color:var(--gold2);">รวม</th>
+                    <th style="padding:8px 6px;color:var(--red);">เบิก</th>
+                    <th style="padding:8px 6px;color:var(--green);">สุทธิ</th>
+                    <th style="padding:8px 6px;">แก้ไข</th>
+                  </tr></thead>
+                  <tbody id="hrDBody"><tr><td colspan="12" style="padding:20px;text-align:center;color:var(--text2);">กด ค้นหา เพื่อโหลดข้อมูล</td></tr></tbody>
+                </table>
+                <div id="hrDTotal" style="text-align:right;font-size:13px;font-weight:700;color:var(--gold);padding:8px 0;"></div>
+              </div>
+            </div>
+            <!-- Refund summary -->
+            <div class="cb">
+              <div class="chd"><div class="chtl">🍻 สรุปคืนดื่ม</div></div>
+              <div class="cbd" style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:11px;" id="hrRefSumTable">
+                  <thead><tr style="background:var(--card2);">
+                    <th style="padding:8px 6px;text-align:left;color:var(--gold);">กลุ่ม</th>
+                    <th style="padding:8px 6px;color:var(--gold);">คืน</th>
+                    <th style="padding:8px 6px;color:var(--green);">เงิน</th>
+                    <th style="padding:8px 6px;color:var(--red);">เบิก</th>
+                    <th style="padding:8px 6px;color:var(--gold2);">เหลือ</th>
+                  </tr></thead>
+                  <tbody id="hrRefSumBody"><tr><td colspan="5" style="padding:14px;text-align:center;color:var(--text2);">—</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ENTRY -->
+          <div class="hr-sec" id="hrEntry" style="display:none;">
+            <div class="cb">
+              <div class="chd">
+                <div class="chtl">📝 บันทึกประจำวัน</div>
+                <div style="display:flex;gap:6px;align-items:center;">
+                  <input type="date" id="hrEDate" class="inp" style="width:140px;padding:6px 8px;font-size:11px;">
+                  <button class="btn bo sm" id="hrSyncPOS" style="white-space:nowrap;">☁️ ดึง POS</button>
+                </div>
+              </div>
+              <div class="cbd" style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:11px;min-width:600px;" id="hrEntryTable">
+                  <thead><tr style="background:var(--card2);">
+                    <th style="padding:8px 6px;text-align:left;color:var(--gold);">ชื่อ</th>
+                    <th style="padding:8px 4px;color:var(--gold);">มา</th>
+                    <th style="padding:8px 4px;color:var(--gold);">ชม.</th>
+                    <th style="padding:8px 4px;color:var(--gold);">ดื่ม</th>
+                    <th style="padding:8px 4px;color:var(--gold);">ทิป</th>
+                    <th style="padding:8px 4px;color:var(--red);">ชง</th>
+                    <th style="padding:8px 4px;color:var(--red);">เบิก</th>
+                    <th style="padding:8px 4px;color:var(--gold);">Note</th>
+                  </tr></thead>
+                  <tbody id="hrEntryBody"></tbody>
+                </table>
+                <button class="btn bg2 wf" id="hrSaveBulk" style="margin-top:11px;">💾 บันทึกทั้งหมด</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- REFUND -->
+          <div class="hr-sec" id="hrRef" style="display:none;">
+            <div class="cb">
+              <div class="chd">
+                <div class="chtl">🍻 บันทึกคืนดื่ม</div>
+                <input type="date" id="hrRDate" class="inp" style="width:140px;padding:6px 8px;font-size:11px;">
+              </div>
+              <div class="cbd" style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:11px;" id="hrRefTable">
+                  <thead><tr style="background:var(--card2);">
+                    <th style="padding:8px 6px;text-align:left;color:var(--gold);">ตำแหน่ง</th>
+                    <th style="padding:8px 6px;color:var(--gold);">จำนวน</th>
+                    <th style="padding:8px 6px;color:var(--red);">เบิก</th>
+                    <th style="padding:8px 6px;color:var(--gold);">Note</th>
+                  </tr></thead>
+                  <tbody id="hrRefBody"></tbody>
+                </table>
+                <button class="btn bg2 wf" id="hrSaveRef" style="margin-top:11px;">💾 บันทึกคืนดื่ม</button>
+              </div>
+            </div>
+            <!-- Refund history -->
+            <div class="cb">
+              <div class="chd">
+                <div class="chtl">📜 ประวัติคืนดื่ม</div>
+                <div style="display:flex;gap:5px;">
+                  <input type="date" id="hrRHFrom" class="inp" style="width:130px;padding:5px 7px;font-size:11px;">
+                  <input type="date" id="hrRHTo" class="inp" style="width:130px;padding:5px 7px;font-size:11px;">
+                  <button class="btn bg2 sm" id="hrRHLoad">🔍</button>
+                </div>
+              </div>
+              <div class="cbd" style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:11px;" id="hrRHTable">
+                  <thead><tr style="background:var(--card2);">
+                    <th style="padding:7px 5px;text-align:left;color:var(--gold);">วันที่</th>
+                    <th style="padding:7px 5px;text-align:left;color:var(--gold);">กลุ่ม</th>
+                    <th style="padding:7px 5px;color:var(--gold);">คืน</th>
+                    <th style="padding:7px 5px;color:var(--green);">เงิน</th>
+                    <th style="padding:7px 5px;color:var(--red);">เบิก</th>
+                    <th style="padding:7px 5px;color:var(--gold2);">เหลือ</th>
+                  </tr></thead>
+                  <tbody id="hrRHBody"><tr><td colspan="6" style="padding:14px;text-align:center;color:var(--text2);">กด 🔍 เพื่อโหลด</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- EMPLOYEES -->
+          <div class="hr-sec" id="hrEmp" style="display:none;">
+            <div class="cb">
+              <div class="chd">
+                <div class="chtl">👥 พนักงาน</div>
+                <button class="btn bg2 sm" id="hrAddEmpBtn">+ เพิ่ม</button>
+              </div>
+              <div class="cbd" style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:11px;" id="hrEmpTable">
+                  <thead><tr style="background:var(--card2);">
+                    <th style="padding:8px 6px;text-align:left;color:var(--gold);">ชื่อ</th>
+                    <th style="padding:8px 6px;color:var(--gold);">ตำแหน่ง</th>
+                    <th style="padding:8px 6px;color:var(--gold);">สถานะ</th>
+                    <th style="padding:8px 6px;color:var(--text2);">SKU ดื่ม</th>
+                    <th style="padding:8px 6px;color:var(--text2);">SKU ชม.</th>
+                    <th style="padding:8px 6px;">แก้ไข</th>
+                  </tr></thead>
+                  <tbody id="hrEmpBody"><tr><td colspan="6" style="padding:14px;text-align:center;color:var(--text2);">กำลังโหลด...</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- end content -->
+    </div><!-- end sApp -->
 <div class="scr" id="sCust" style="overflow-y:auto;height:100vh;">
   <div class="ctop">
     <div style="font-size:26px;">🎤</div>
@@ -619,7 +878,25 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 <div class="mbg" id="mCO">
   <div class="mbox wide">
     <div class="mtitle">💳 เก็บเงิน — <span id="coLbl"></span><button class="mx" data-close="mCO">✕</button></div>
-    <div id="coBillEl" style="background:#fff;color:#111;border-radius:9px;padding:13px;font-family:'Sarabun';font-size:11px;margin-bottom:10px;max-height:280px;overflow-y:auto;"></div>
+
+    <!-- สรุปบิล -->
+    <div id="coBillEl" style="background:#fff;color:#111;border-radius:9px;padding:13px;font-family:'Sarabun';font-size:11px;margin-bottom:10px;max-height:300px;overflow-y:auto;"></div>
+
+    <!-- toggle ค่าห้อง -->
+    <div style="display:flex;align-items:center;justify-content:space-between;background:var(--card2);border-radius:8px;padding:9px 12px;margin-bottom:9px;">
+      <div>
+        <div style="font-size:12px;font-weight:600;">🏠 ค่าชั่วโมงห้อง</div>
+        <div style="font-size:10px;color:var(--text2);" id="coRoomChargeLabel">฿0 · 0 ชม.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:11px;color:var(--text2);">คิดค่าห้อง</span>
+        <div id="coRoomTog" style="width:34px;height:19px;background:var(--green);border-radius:10px;position:relative;cursor:pointer;">
+          <div id="coRoomTogDot" style="width:13px;height:13px;background:#fff;border-radius:50%;position:absolute;top:3px;right:3px;transition:all .2s;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ช่องทางชำระ -->
     <div style="font-size:10px;color:var(--text2);margin-bottom:7px;">ช่องทางชำระเงิน</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;" id="payOpts">
       <div class="popt" data-m="cash"><div style="font-size:18px;">💵</div><div style="font-size:10px;font-weight:600;">เงินสด</div></div>
@@ -635,6 +912,18 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
       </div>
     </div>
     <button class="btn bg2 wf" id="coConfirm" disabled>✅ ยืนยันชำระเงิน</button>
+  </div>
+</div>
+
+<!-- Modal ดูรายการสั่ง / ประวัติต่อห้อง -->
+<div class="mbg" id="mRoomOrders">
+  <div class="mbox wide">
+    <div class="mtitle">📋 รายการสั่ง — <span id="roLbl"></span><button class="mx" data-close="mRoomOrders">✕</button></div>
+    <div id="roList" style="display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow-y:auto;"></div>
+    <div style="margin-top:10px;display:flex;gap:7px;">
+      <button class="btn bg2" style="flex:1;" id="roAddOrder">🍺 สั่งเพิ่ม</button>
+      <button class="btn bo" style="flex:1;" data-close="mRoomOrders">ปิด</button>
+    </div>
   </div>
 </div>
 
@@ -727,7 +1016,7 @@ var DB = {
   ],
   orders:[
     {id:'o1',rid:'r1',rname:'ห้อง 1',sid:'s1',items:[{id:'m1',name:'เบียร์สิงห์',emoji:'🍺',price:120,qty:4},{id:'m10',name:'ไก่ทอด',emoji:'🍗',price:150,qty:1}],status:'done',src:'pos',time:Date.now()-50*60000,total:630,by:'พนักงาน'},
-    {id:'o2',rid:'r1',rname:'ห้อง 1',sid:'s1',items:[{id:'m8',name:'โค้ก',emoji:'🥤',price:35,qty:2}],status:'pending',src:'customer',time:Date.now()-5*60000,total:70,by:'ลูกค้า QR'}
+    {id:'o2',rid:'r1',rname:'ห้อง 1',sid:'s1',items:[{id:'m8',name:'โค้ก',emoji:'🥤',price:35,qty:2}],status:'done',src:'customer',time:Date.now()-5*60000,total:70,by:'ลูกค้า QR'}
   ]
 };
 
@@ -737,8 +1026,8 @@ var posCat='ทั้งหมด',posSrch='',OF='all';
 var payMethod=null,coData=null,qrRoomData=null;
 var bItems=[{name:'ไก่ทอด',qty:2,price:150},{name:'เบียร์สิงห์',qty:4,price:120}];
 
-var PAGES={owner:['rooms','pos','orders','history','summary','bill','settings'],staff:['rooms','pos','orders','bill']};
-var PLBL={rooms:'🏠 ห้อง',pos:'🍺 POS',orders:'📋 ออเดอร์',history:'🧾 ประวัติบิล',summary:'📊 สรุปยอด',bill:'🖨️ บิล',settings:'⚙️ ตั้งค่า'};
+var PAGES={owner:['rooms','pos','orders','history','summary','bill','hr','settings'],staff:['rooms','pos','orders','bill']};
+var PLBL={rooms:'🏠 ห้อง',pos:'🍺 POS',orders:'📡 Monitor',history:'🧾 ประวัติบิล',summary:'📊 สรุปยอด',bill:'🖨️ บิล',hr:'👥 HR',settings:'⚙️ ตั้งค่า'};
 
 /* ══════════════════════════════════════
    FIREBASE REST API — ไม่มี eval() ไม่มี SDK
@@ -979,6 +1268,7 @@ function nav(p){
   if(p==='orders')renderOrders();
   if(p==='history')renderHistory();
   if(p==='summary')renderSummary();
+  if(p==='hr')initHR();
   if(p==='settings')renderMgr();
   if(p==='bill'){initBill();buildReceipt();}
 }
@@ -996,9 +1286,8 @@ var RTYPE={karaoke:'🎤 คาราโอเกะ',table:'🪑 โต๊ะ',
 function sBox(n,l,c){return '<div style="background:var(--card);border:1px solid var(--border2);border-radius:9px;padding:9px 13px;flex:1;min-width:85px;"><div style="font-size:19px;font-weight:700;color:'+c+';">'+n+'</div><div style="font-size:10px;color:var(--text2);">'+l+'</div></div>';}
 function renderRooms(){
   var busy=DB.rooms.filter(function(r){return r.status==='busy';}).length;
-  var pend=DB.orders.filter(function(o){return o.status==='pending';}).length;
-  var rev=DB.orders.filter(function(o){return o.status==='paid';}).reduce(function(s,o){return s+o.total;},0);
-  $('rStats').innerHTML=sBox(DB.rooms.length-busy,'ห้องว่าง','var(--green)')+sBox(busy,'กำลังใช้','var(--gold)')+sBox(pend,'ออเดอร์รอ','var(--red)')+sBox('฿'+rev.toLocaleString(),'รายได้วันนี้','var(--gold2)');
+    var rev=DB.orders.filter(function(o){return o.status==='paid';}).reduce(function(s,o){return s+o.total;},0);
+  $('rStats').innerHTML=sBox(DB.rooms.length-busy,'ห้องว่าง','var(--green)')+sBox(busy,'กำลังใช้','var(--gold)')+sBox('฿'+rev.toLocaleString(),'รายได้วันนี้','var(--gold2)');
   var banner=$('manageBanner');
   if(manageMode&&CR==='owner'){banner.style.display='flex';}else{banner.style.display='none';}
   $('rGrid').innerHTML=DB.rooms.map(function(r){
@@ -1035,6 +1324,7 @@ function renderRooms(){
         '<div class="rbill">ค่าห้อง ฿'+rc.toLocaleString()+' + อาหาร ฿'+ft.toLocaleString()+'</div>'+
         '<div style="display:flex;gap:5px;margin-top:7px;">'+
           '<button class="btn bo sm" style="flex:1;font-size:10px;" data-pos="'+r.id+'">🍺 สั่ง</button>'+
+          '<button class="btn bo sm" style="font-size:10px;" data-roomorders="'+r.id+'" title="ดูรายการ">📋</button>'+
           '<button class="btn bo sm" style="font-size:10px;" data-move="'+r.id+'" title="ย้ายห้อง">🔄</button>'+
           '<button class="btn bg2 sm" style="flex:1;font-size:10px;" data-co="'+r.id+'">💳 เก็บเงิน</button>'+
         '</div>':
@@ -1045,6 +1335,7 @@ function renderRooms(){
   document.querySelectorAll('[data-co]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openCO(el.dataset.co);});});
   document.querySelectorAll('[data-pos]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();goPos(el.dataset.pos);});});
   document.querySelectorAll('[data-move]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openMoveRoom(el.dataset.move);});});
+  document.querySelectorAll('[data-roomorders]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openRoomOrders(el.dataset.roomorders);});});
   document.querySelectorAll('[data-qr]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();showQR(el.dataset.qr,el.dataset.qrn);});});
   document.querySelectorAll('[data-qrm]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();showQR(el.dataset.qrm,el.dataset.qrn);});});
   document.querySelectorAll('[data-edit]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openEditRoom(el.dataset.edit);});});
@@ -1115,21 +1406,69 @@ function showQR(id,name){
 }
 
 /* ── CHECKOUT ── */
+var coRoomCharge=true; // toggle ค่าห้อง
+
+function buildCOBill(){
+  if(!coData)return;
+  var r=coData.r,s=coData.s,rc=coRoomCharge?coData.rc:0,ft=coData.ft;
+  var grand=rc+ft;coData.grandFinal=grand;
+  var rows='';
+  coData.ro.forEach(function(o){
+    if(o.status==='cancelled')return;
+    o.items.forEach(function(i){
+      rows+='<div style="display:flex;justify-content:space-between;font-size:11px;padding:2px 0;">'+
+        '<span>'+(i.emoji||'')+' '+i.name+' x'+i.qty+'</span>'+
+        '<span>฿'+(i.price*i.qty).toLocaleString()+'</span></div>';
+    });
+  });
+  var now=new Date();
+  $('coBillEl').innerHTML=
+    '<div style="text-align:center;border-bottom:1px dashed #ccc;padding-bottom:8px;margin-bottom:8px;">'+
+      '<div style="font-size:13px;font-weight:800;">'+( ($('sShop')&&$('sShop').value)||'Melody Karaoke')+'</div>'+
+      '<div style="font-size:10px;color:#777;">'+now.toLocaleString('th-TH')+'</div>'+
+    '</div>'+
+    '<div style="display:flex;justify-content:space-between;"><b>'+r.name+'</b><span>👥 '+s.pax+' คน</span></div>'+
+    '<div style="font-size:10px;color:#666;margin:3px 0;">'+coData.hrs+' ชม. ('+coData.mins+' น.)</div>'+
+    rows+
+    (coRoomCharge?'<div style="display:flex;justify-content:space-between;border-top:1px dashed #ccc;margin-top:6px;padding-top:6px;"><span>ค่าห้อง</span><span>฿'+rc.toLocaleString()+'</span></div>':
+     '<div style="display:flex;justify-content:space-between;border-top:1px dashed #ccc;margin-top:6px;padding-top:6px;color:#aaa;"><span><s>ค่าห้อง</s></span><span><s>฿'+coData.rc.toLocaleString()+'</s> ฟรี</span></div>')+
+    '<div style="display:flex;justify-content:space-between;"><span>ค่าอาหาร/เครื่องดื่ม</span><span>฿'+ft.toLocaleString()+'</span></div>'+
+    '<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800;border-top:2px solid #111;margin-top:6px;padding-top:6px;"><span>รวมทั้งสิ้น</span><span>฿'+grand.toLocaleString()+'</span></div>';
+  // update label
+  $('coRoomChargeLabel').textContent=coRoomCharge?'฿'+coData.rc.toLocaleString()+' · '+coData.hrs+' ชม.':'ยกเว้นค่าห้อง';
+  // recalc cash change
+  var c=+$('cashIn').value||0;
+  $('chgAmt').textContent='฿'+Math.max(0,c-grand).toLocaleString();
+  $('coConfirm').disabled=(payMethod==='cash')?c<grand:!payMethod;
+}
+
 function openCO(id){
   var r=DB.rooms.find(function(x){return x.id===id;});
   var s=DB.sessions.find(function(x){return x.id===r.sid;});if(!s)return;
   var mins=Math.floor((Date.now()-s.start)/60000),hrs=Math.ceil(mins/60),rc=hrs*r.rate;
-  var ro=DB.orders.filter(function(o){return o.sid===s.id&&o.status!=='paid';});
+  var ro=DB.orders.filter(function(o){return o.sid===s.id&&o.status!=='cancelled'&&o.status!=='paid';});
   var ft=ro.reduce(function(a,o){return a+o.total;},0),grand=rc+ft;
-  coData={r:r,s:s,rc:rc,ft:ft,grand:grand,ro:ro,mins:mins,hrs:hrs};
-  $('coLbl').textContent=r.name;payMethod=null;
+  coData={r:r,s:s,rc:rc,ft:ft,grand:grand,grandFinal:grand,ro:ro,mins:mins,hrs:hrs};
+  $('coLbl').textContent=r.name;
+  payMethod=null;coRoomCharge=true;
   document.querySelectorAll('.popt').forEach(function(el){el.classList.remove('on');});
   $('coConfirm').disabled=true;$('cashWrap').style.display='none';$('cashIn').value='';$('chgAmt').textContent='฿0';
-  var rows='';ro.forEach(function(o){o.items.forEach(function(i){rows+='<div style="display:flex;justify-content:space-between;font-size:11px;padding:2px 0;"><span>'+i.emoji+' '+i.name+' x'+i.qty+'</span><span>฿'+(i.price*i.qty).toLocaleString()+'</span></div>';});});
-  var now=new Date();
-  $('coBillEl').innerHTML='<div style="text-align:center;border-bottom:1px dashed #ccc;padding-bottom:8px;margin-bottom:8px;"><div style="font-size:13px;font-weight:800;">Melody Karaoke</div><div style="font-size:10px;color:#777;">'+now.toLocaleString('th-TH')+'</div></div><div style="display:flex;justify-content:space-between;"><b>'+r.name+'</b><span>👥 '+s.pax+' คน</span></div><div style="font-size:10px;color:#666;margin:3px 0;">'+hrs+' ชม. ('+mins+' น.)</div>'+rows+'<div style="display:flex;justify-content:space-between;border-top:1px dashed #ccc;margin-top:6px;padding-top:6px;"><span>ค่าห้อง</span><span>฿'+rc.toLocaleString()+'</span></div><div style="display:flex;justify-content:space-between;"><span>ค่าอาหาร</span><span>฿'+ft.toLocaleString()+'</span></div><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800;border-top:2px solid #111;margin-top:6px;padding-top:6px;"><span>รวมทั้งสิ้น</span><span>฿'+grand.toLocaleString()+'</span></div>';
+  // reset toggle UI
+  $('coRoomTog').style.background='var(--green)';
+  $('coRoomTogDot').style.right='3px';$('coRoomTogDot').style.left='';
+  buildCOBill();
   openM('mCO');
 }
+
+// Room charge toggle
+document.getElementById('coRoomTog').addEventListener('click',function(){
+  coRoomCharge=!coRoomCharge;
+  this.style.background=coRoomCharge?'var(--green)':'var(--card3)';
+  var dot=$('coRoomTogDot');
+  if(coRoomCharge){dot.style.right='3px';dot.style.left='';}
+  else{dot.style.left='3px';dot.style.right='';}
+  buildCOBill();
+});
 
 /* ── POS ── */
 function renderPOS(){
@@ -1150,26 +1489,86 @@ function renderCart(){
 }
 function chCart(id,d){var idx=cart.findIndex(function(i){return i.id===id;});if(idx<0)return;cart[idx].qty+=d;if(cart[idx].qty<=0)cart.splice(idx,1);renderCart();}
 
-/* ── ORDERS ── */
-function renderOrders(){
-  var list=$('oRows');
-  var data=OF==='all'?DB.orders:DB.orders.filter(function(o){return o.status===OF;});
-  data=data.slice().reverse();
-  if(!data.length){list.innerHTML='<div style="color:var(--text2);padding:18px;font-size:12px;">ไม่มีออเดอร์</div>';return;}
-  var sm={pending:'⏳ รอ',done:'✅ เสร็จ',paid:'💳 จ่ายแล้ว'};
-  var bm={pending:'bgb',done:'bgg',paid:'bgr'};
-  list.innerHTML=data.map(function(o){
-    var canEdit=CR==='owner'||CR==='staff';
-    return '<div class="orow"><div class="ortag">'+(o.rname.replace(/[^0-9V]/g,'')||'?')+'</div>'+
-      '<div class="orinf"><div class="ortitle">'+o.rname+(o.src==='customer'?' <span class="badge" style="background:rgba(167,139,250,.12);color:#a78bfa;">📱QR</span>':'')+'</div>'+
-      '<div class="orits">'+o.items.map(function(i){return i.emoji+'x'+i.qty;}).join(' ')+' · '+o.by+'</div>'+
-      '<span class="badge '+(bm[o.status]||'bgo')+'">'+(sm[o.status]||o.status)+'</span></div>'+
-      '<div class="orrt"><div class="ortot">฿'+o.total.toLocaleString()+'</div>'+
-      '<div class="ortm">'+new Date(o.time).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+'</div>'+
-      (canEdit&&o.status==='done'?'<button class="btn bg2 sm" style="margin-top:4px;font-size:10px;" data-pay="'+o.id+'">💳 ชำระ</button>':'')+
-      '</div></div>';
-  }).join('');
-  document.querySelectorAll('[data-pay]').forEach(function(el){el.addEventListener('click',function(){var o=DB.orders.find(function(x){return x.id===el.dataset.pay;});if(o){o.status='paid';saveData();renderOrders();toast('💳 ชำระแล้ว','ok');}});});
+/* ── MONITOR (หน้า Orders ที่ถูก redesign) ── */
+function renderOrders(){ renderMonitor(); } // alias เพื่อไม่ให้ code เก่า error
+
+function renderMonitor(){
+  var busyRooms=DB.rooms.filter(function(r){return r.status==='busy';});
+  var activeOrders=DB.orders.filter(function(o){
+    var d=new Date(o.time),n=new Date();
+    return o.status==='done'&&d.toDateString()===n.toDateString();
+  });
+  var todayRev=DB.orders.filter(function(o){
+    var d=new Date(o.time),n=new Date();
+    return o.status==='paid'&&d.toDateString()===n.toDateString();
+  }).reduce(function(s,o){return s+o.total;},0);
+
+  $('monStats').innerHTML=
+    monStat(busyRooms.length,'ห้องเปิด','var(--gold)')+
+    monStat(activeOrders.length,'ออเดอร์วันนี้','var(--blue)')+
+    monStat(DB.rooms.length-busyRooms.length,'ห้องว่าง','var(--green)')+
+    monStat('฿'+todayRev.toLocaleString(),'วันนี้','var(--gold2)');
+
+  var cols='';
+  busyRooms.forEach(function(r){
+    var s=DB.sessions.find(function(x){return x.id===r.sid;});
+    if(!s)return;
+    var orders=DB.orders.filter(function(o){return o.sid===s.id&&o.status!=='paid'&&o.status!=='cancelled';}).slice().reverse();
+    var ft=orders.reduce(function(a,o){return a+o.total;},0);
+    var hrs=Math.ceil((Date.now()-s.start)/3600000);
+    var rc=hrs*r.rate;
+
+    cols+='<div style="background:var(--card);border:1px solid var(--border2);border-radius:12px;display:flex;flex-direction:column;overflow:hidden;">'+
+      '<div style="padding:10px 13px;background:var(--card2);border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;">'+
+        '<div>'+
+          '<div style="font-size:13px;font-weight:700;">'+r.name+'</div>'+
+          '<div style="font-size:10px;color:var(--text2);">'+fmtD(Date.now()-s.start)+' · 👥'+s.pax+'</div>'+
+        '</div>'+
+        '<div style="text-align:right;">'+
+          '<div style="font-size:11px;font-weight:700;color:var(--gold2);">฿'+(rc+ft).toLocaleString()+'</div>'+
+          '<div style="font-size:9px;color:var(--text2);">'+orders.length+' ออเดอร์</div>'+
+        '</div>'+
+      '</div>'+
+      '<div style="flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:5px;max-height:320px;">'+
+      (orders.length?orders.map(function(o){
+        var canEdit=CR==='owner'||CR==='staff';
+        return '<div style="background:var(--card2);border-left:3px solid var(--green);border-radius:0 7px 7px 0;padding:7px 9px;">'+
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'+
+            '<span style="font-size:10px;color:var(--text2);">'+new Date(o.time).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' · '+o.by+(o.src==='customer'?' 📱':'')+'</span>'+
+            (canEdit?'<button class="btn br2 sm" style="font-size:9px;padding:2px 6px;" data-moncancel="'+o.id+'">✕</button>':'')+
+          '</div>'+
+          '<div style="font-size:11px;">'+o.items.map(function(i){return(i.emoji||'')+' '+i.name+' x'+i.qty;}).join(' · ')+'</div>'+
+          '<div style="font-size:11px;font-weight:700;color:var(--gold2);margin-top:2px;">฿'+o.total.toLocaleString()+'</div>'+
+        '</div>';
+      }).join(''):'<div style="color:var(--text2);font-size:11px;padding:9px;text-align:center;">ยังไม่มีออเดอร์</div>')+
+      '</div>'+
+      '<div style="padding:8px;border-top:1px solid var(--border2);display:flex;gap:5px;">'+
+        '<button class="btn bo sm" style="flex:1;font-size:10px;" data-monpos="'+r.id+'">🍺 สั่ง</button>'+
+        '<button class="btn bo sm" style="font-size:10px;" data-monro="'+r.id+'">📋</button>'+
+        '<button class="btn bg2 sm" style="flex:1;font-size:10px;" data-monco="'+r.id+'">💳 เก็บเงิน</button>'+
+      '</div>'+
+    '</div>';
+  });
+
+  if(!busyRooms.length) cols='<div style="color:var(--text2);font-size:13px;padding:30px;text-align:center;grid-column:1/-1;">ยังไม่มีห้องที่เปิดอยู่</div>';
+  $('monGrid').innerHTML=cols;
+
+  document.querySelectorAll('[data-moncancel]').forEach(function(el){
+    el.addEventListener('click',function(e){e.stopPropagation();
+      var o=DB.orders.find(function(x){return x.id===el.dataset.moncancel;});
+      if(!o||!confirm('ยกเลิกออเดอร์ ฿'+o.total.toLocaleString()+'?'))return;
+      o.status='cancelled';saveData();renderMonitor();toast('❌ ยกเลิกแล้ว','ok');
+    });
+  });
+  document.querySelectorAll('[data-monpos]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();goPos(el.dataset.monpos);});});
+  document.querySelectorAll('[data-monco]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openCO(el.dataset.monco);});});
+  document.querySelectorAll('[data-monro]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openRoomOrders(el.dataset.monro);});});
+}
+
+function monStat(n,l,c){
+  return'<div style="background:var(--card);border:1px solid var(--border2);border-radius:9px;padding:9px 13px;flex:1;min-width:80px;">'+
+    '<div style="font-size:18px;font-weight:700;color:'+c+';">'+n+'</div>'+
+    '<div style="font-size:10px;color:var(--text2);">'+l+'</div></div>';
 }
 
 /* ── BILL ── */
@@ -1586,21 +1985,102 @@ document.querySelectorAll('.popt').forEach(function(el){
     document.querySelectorAll('.popt').forEach(function(x){x.classList.remove('on');});
     el.classList.add('on');payMethod=el.dataset.m;
     $('cashWrap').style.display=payMethod==='cash'?'block':'none';
-    $('coConfirm').disabled=payMethod==='cash';
-    if(payMethod!=='cash')$('coConfirm').disabled=false;
+    $('cashIn').value='';
+    if(payMethod!=='cash'){$('coConfirm').disabled=false;}
+    else{$('coConfirm').disabled=true;}
+    buildCOBill();
   });
 });
 $('cashIn').addEventListener('input',function(){
-  var g=coData?coData.grand:0,c=+this.value||0;
+  var g=coData?coData.grandFinal:0,c=+this.value||0;
   $('chgAmt').textContent='฿'+Math.max(0,c-g).toLocaleString();
   $('coConfirm').disabled=c<g;
 });
 $('coConfirm').addEventListener('click',function(){
-  if(!coData)return;var r=coData.r,s=coData.s,grand=coData.grand,ro=coData.ro;
-  ro.forEach(function(o){var x=DB.orders.find(function(d){return d.id===o.id;});if(x)x.status='paid';});
-  DB.sessions=DB.sessions.filter(function(x){return x.id!==s.id;});r.status='free';r.sid=null;
-  closeM('mCO');toast('💳 ชำระ ฿'+grand.toLocaleString()+' เรียบร้อย!','ok');
+  if(!coData)return;
+  var r=coData.r,s=coData.s,grand=coData.grandFinal,ro=coData.ro;
+  ro.forEach(function(o){
+    var x=DB.orders.find(function(d){return d.id===o.id;});
+    if(x&&x.status!=='cancelled')x.status='paid';
+  });
+  DB.sessions=DB.sessions.filter(function(x){return x.id!==s.id;});
+  r.status='free';r.sid=null;
+  closeM('mCO');
+  toast('💳 ชำระ ฿'+grand.toLocaleString()+' เรียบร้อย!','ok');
+  // ส่งข้อมูลไป HR (ผ่านหน้า HR tab โดยตรง)
   saveData();renderRooms();renderOrders();buildRS();
+});
+
+/* ── ดูรายการสั่ง / ประวัติต่อห้อง ── */
+var roCurrentRid = null;
+
+function openRoomOrders(rid){
+  var r=DB.rooms.find(function(x){return x.id===rid;});
+  var s=DB.sessions.find(function(x){return x.id===r.sid;});
+  if(!r||!s){toast('ไม่พบข้อมูลห้อง','err');return;}
+  roCurrentRid=rid;
+  $('roLbl').textContent=r.name;
+  renderRoList(rid,s.id);
+  openM('mRoomOrders');
+}
+
+function renderRoList(rid,sid){
+  var orders=DB.orders.filter(function(o){return o.sid===sid;}).slice().reverse();
+  var canEdit=(CR==='owner'||CR==='staff');
+  var stMap={pending:'⏳ รอ',done:'✅ เสร็จ',paid:'💳 จ่าย',cancelled:'❌ ยกเลิก'};
+  var bgMap={pending:'bgb',done:'bgg',paid:'bgo',cancelled:'bgr'};
+
+  if(!orders.length){
+    $('roList').innerHTML='<div style="color:var(--text2);padding:18px;text-align:center;font-size:12px;">ยังไม่มีออเดอร์</div>';
+    return;
+  }
+
+  $('roList').innerHTML=orders.map(function(o){
+    var dt=new Date(o.time).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+    var isCancelled=o.status==='cancelled';
+    var isPaid=o.status==='paid';
+    return '<div style="background:var(--card2);border-radius:9px;padding:10px 12px;display:flex;gap:9px;align-items:flex-start;'+(isCancelled?'opacity:.55;':'')+'">'+
+      '<div style="flex:1;">'+
+        '<div style="font-size:11px;font-weight:600;margin-bottom:2px;">'+
+          dt+' · <span style="color:var(--text2);">'+o.by+'</span>'+
+          (o.src==='customer'?' <span class="badge bgb" style="font-size:8px;">📱QR</span>':'')+
+        '</div>'+
+        '<div style="font-size:11px;margin-bottom:4px;">'+
+          o.items.map(function(i){
+            return '<span style="display:inline-block;background:var(--card3);border-radius:5px;padding:1px 6px;margin:2px 2px 0 0;font-size:10px;">'+(i.emoji||'')+' '+i.name+' x'+i.qty+'</span>';
+          }).join('')+
+        '</div>'+
+        '<span class="badge '+(bgMap[o.status]||'bgo')+'">'+(stMap[o.status]||o.status)+'</span>'+
+      '</div>'+
+      '<div style="text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:4px;">'+
+        '<div style="font-size:13px;font-weight:700;color:'+(isCancelled?'var(--text3)':'var(--gold2)')+';">'+
+          (isCancelled?'<s>':'')+' ฿'+o.total.toLocaleString()+(isCancelled?'</s>':'')+
+        '</div>'+
+        (canEdit&&!isCancelled&&!isPaid?
+          '<button class="btn br2 sm" style="font-size:10px;padding:3px 8px;" data-rocancel="'+o.id+'">❌ ยกเลิก</button>':'')+
+      '</div>'+
+    '</div>';
+  }).join('');
+
+  // bind cancel buttons
+  document.querySelectorAll('[data-rocancel]').forEach(function(el){
+    el.addEventListener('click',function(){
+      var o=DB.orders.find(function(x){return x.id===el.dataset.rocancel;});
+      if(!o)return;
+      if(!confirm('ยกเลิกออเดอร์ ฿'+o.total.toLocaleString()+' ?'))return;
+      o.status='cancelled';
+      saveData();
+      renderRoList(roCurrentRid,o.sid);
+      renderRooms();
+      toast('❌ ยกเลิกออเดอร์แล้ว','ok');
+    });
+  });
+}
+
+// ปุ่ม สั่งเพิ่ม ใน modal
+document.getElementById('roAddOrder').addEventListener('click',function(){
+  closeM('mRoomOrders');
+  if(roCurrentRid){goPos(roCurrentRid);}
 });
 
 // QR
@@ -1618,19 +2098,19 @@ $('sendBtn').addEventListener('click',function(){
   var r=DB.rooms.find(function(x){return x.id===curRoom;});
   var s=DB.sessions.find(function(x){return x.rid===curRoom;});
   var total=cart.reduce(function(a,i){return a+i.price*i.qty;},0);
-  DB.orders.push({id:'o'+Date.now(),rid:curRoom,rname:r?r.name:'',sid:s?s.id:null,items:cart.map(function(i){return Object.assign({},i);}),status:'pending',src:'pos',time:Date.now(),total:total,by:CU.name});
+  DB.orders.push({id:'o'+Date.now(),rid:curRoom,rname:r?r.name:'',sid:s?s.id:null,items:cart.map(function(i){return Object.assign({},i);}),status:'done',src:'pos',time:Date.now(),total:total,by:CU.name});
   cart=[];renderCart();saveData();toast('✅ ส่งออเดอร์แล้ว!','ok');
 });
 $('pRS').addEventListener('change',function(){curRoom=this.value||null;renderCart();});
 $('pSrch').addEventListener('input',function(){posSrch=this.value;renderPOS();});
 $('clearBtn').addEventListener('click',function(){cart=[];renderCart();});
 
-// Order filter
-$('ofBtns').addEventListener('click',function(e){
-  var btn=e.target.closest('.of');if(!btn)return;OF=btn.dataset.f;
-  document.querySelectorAll('.of').forEach(function(b){b.classList.remove('on');b.style.borderColor='';b.style.color='';});
-  btn.classList.add('on');btn.style.borderColor='var(--gold)';btn.style.color='var(--gold)';renderOrders();
-});
+// Monitor refresh button + auto-refresh ทุก 10 วินาทีเมื่ออยู่หน้า monitor
+$('monRefreshBtn').addEventListener('click',function(){renderMonitor();toast('🔄 รีเฟรชแล้ว');});
+setInterval(function(){
+  var activePage=document.querySelector('.page.on');
+  if(activePage&&activePage.id==='p-orders') renderMonitor();
+},10000);
 
 // Bill
 ['bRoom','bPax','bRoomAmt','bNo','bDisc','bTax','bPay','bCash'].forEach(function(id){var el=$(id);if(el){el.addEventListener('input',buildReceipt);el.addEventListener('change',buildReceipt);}});
@@ -1685,7 +2165,12 @@ $('bPayName').addEventListener('input',function(){
   updatePayQRMini();buildReceipt();
 });
 $('addBItem').addEventListener('click',function(){bItems.push({name:'',qty:1,price:0});renderBItems();});
-$('printBtn').addEventListener('click',function(){window.print();});
+$('printBtn').addEventListener('click',function(){
+  // iOS Safari: focus printArea ก่อน print
+  var pa=$('printArea');
+  if(pa){pa.style.display='block';}
+  setTimeout(function(){window.print();},100);
+});
 $('newBillBtn').addEventListener('click',function(){if(!confirm('เปิดบิลใหม่?'))return;bItems=[{name:'',qty:1,price:0}];renderBItems();initBill();});
 
 /* ── History events ── */
@@ -1711,6 +2196,392 @@ $('sumExportBtn').addEventListener('click',function(){
 // Settings
 $('saveSetBtn').addEventListener('click',function(){buildReceipt();toast('✅ บันทึกข้อมูลร้านแล้ว','ok');});
 $('saveBillSetBtn').addEventListener('click',function(){buildReceipt();toast('✅ บันทึกตั้งค่าบิลแล้ว','ok');});
+
+/* ══════════════════════════════════════
+   HR — Google Apps Script Integration
+══════════════════════════════════════ */
+var HR = { url:'', emp:[], rates:{}, hrRole:false };
+
+// โหลด HR config
+(function(){
+  try{
+    var s=localStorage.getItem('melodyHRUrl');
+    if(s){HR.url=s;$('hrUrl').value=s;}
+  }catch(e){}
+  updateHrDot();
+})();
+
+function saveHRUrl(){
+  HR.url=$('hrUrl').value.trim();
+  try{localStorage.setItem('melodyHRUrl',HR.url);}catch(e){}
+  updateHrDot();
+  toast(HR.url?'✅ บันทึก URL แล้ว':'⚠️ ล้าง URL แล้ว');
+}
+function updateHrDot(){
+  var dot=$('hrStatusDot');if(!dot)return;
+  dot.style.background=HR.url?'var(--green)':'var(--text3)';
+}
+$('hrSaveBtn').addEventListener('click',saveHRUrl);
+$('hrTestBtn').addEventListener('click',function(){
+  if(!HR.url){toast('กรุณาใส่ URL ก่อน','err');return;}
+  toast('⏳ ทดสอบ...');
+  callHR('ping',{}).then(function(r){
+    toast('✅ เชื่อมต่อได้: '+JSON.stringify(r).slice(0,40),'ok');
+  }).catch(function(e){toast('❌ '+e.message,'err');});
+});
+
+// ── call Apps Script ──
+function callHR(fn, params){
+  if(!HR.url) return Promise.reject(new Error('ยังไม่ได้ตั้งค่า URL'));
+  var url=HR.url+'?fn='+fn+'&'+Object.keys(params).map(function(k){return k+'='+encodeURIComponent(params[k]);}).join('&');
+  return fetch(url).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return r.json();
+  });
+}
+function postHR(fn, data){
+  if(!HR.url) return Promise.reject(new Error('ยังไม่ได้ตั้งค่า URL'));
+  return fetch(HR.url,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({fn:fn,data:data})
+  }).then(function(r){return r.json();});
+}
+
+// ── HR page tabs ──
+function goHR(tab){
+  document.querySelectorAll('.hr-sec').forEach(function(el){el.style.display='none';});
+  document.querySelectorAll('.hrtab').forEach(function(el){el.classList.remove('on');el.style.borderColor='';el.style.color='';});
+  var sec=document.getElementById('hr'+tab.charAt(0).toUpperCase()+tab.slice(1));
+  if(sec)sec.style.display='block';
+  var btn=document.querySelector('.hrtab[data-hr="'+tab+'"]');
+  if(btn){btn.classList.add('on');btn.style.borderColor='var(--gold)';btn.style.color='var(--gold)';}
+}
+document.querySelectorAll('.hrtab').forEach(function(el){
+  el.addEventListener('click',function(){goHR(el.dataset.hr);});
+});
+
+// ── Init HR ──
+function initHR(){
+  if(!HR.url){
+    document.getElementById('hrDBody').innerHTML='<tr><td colspan="12" style="padding:20px;text-align:center;color:var(--red);">ยังไม่ได้ตั้งค่า URL ใน ⚙️ ตั้งค่า</td></tr>';
+    return;
+  }
+  var today=new Date().toISOString().split('T')[0];
+  ['hrDDate','hrEDate','hrRDate','hrRHFrom','hrRHTo'].forEach(function(id){
+    var el=document.getElementById(id);if(el&&!el.value)el.value=today;
+  });
+  // โหลด employees ก่อน
+  if(!HR.emp.length) hrLoadEmp();
+  loadHRDash();
+}
+
+// ── DASHBOARD ──
+function loadHRDash(){
+  var d=document.getElementById('hrDDate').value;
+  if(!d)return;
+  document.getElementById('hrDBody').innerHTML='<tr><td colspan="12" style="padding:16px;text-align:center;color:var(--text2);">⏳ กำลังโหลด...</td></tr>';
+  callHR('getDashboardData',{startDateStr:d,endDateStr:d,nameFilter:'ALL'})
+    .then(function(data){
+      var tb=document.getElementById('hrDBody');
+      if(!data.length){tb.innerHTML='<tr><td colspan="12" style="padding:16px;text-align:center;color:var(--text2);">ไม่มีข้อมูล</td></tr>';return;}
+      var gt=0;
+      tb.innerHTML=data.map(function(r){
+        gt+=r.netRemaining;
+        var canEdit=CR==='owner'&&r.lastId;
+        return '<tr style="border-bottom:1px solid var(--border2);">'+
+          '<td style="padding:7px 6px;font-weight:600;color:var(--gold);">'+r.name+'</td>'+
+          '<td style="padding:7px 6px;text-align:center;">'+r.work+'</td>'+
+          '<td style="padding:7px 6px;text-align:center;">'+r.hours+'</td>'+
+          '<td style="padding:7px 6px;text-align:center;">'+r.drinks+'</td>'+
+          '<td style="padding:7px 6px;text-align:center;">'+r.tip+'</td>'+
+          '<td style="padding:7px 6px;text-align:center;color:var(--red);">'+r.mix+'</td>'+
+          '<td style="padding:7px 6px;text-align:right;color:var(--green);">฿'+r.incomeToday.toLocaleString()+'</td>'+
+          '<td style="padding:7px 6px;text-align:right;color:var(--text2);">฿'+r.prevBalance.toLocaleString()+'</td>'+
+          '<td style="padding:7px 6px;text-align:right;color:var(--gold);">฿'+r.totalSum.toLocaleString()+'</td>'+
+          '<td style="padding:7px 6px;text-align:right;color:var(--red);">฿'+r.withdraw.toLocaleString()+'</td>'+
+          '<td style="padding:7px 6px;text-align:right;color:var(--green);font-weight:700;">฿'+r.netRemaining.toLocaleString()+'</td>'+
+          '<td style="padding:7px 6px;text-align:center;">'+
+            (canEdit?'<button class="btn bo sm" style="font-size:10px;padding:3px 7px;" data-hredit="'+r.lastId+'">✏️</button>':'')+
+          '</td></tr>';
+      }).join('');
+      document.getElementById('hrDTotal').textContent='สุทธิรวม: ฿'+gt.toLocaleString();
+      document.querySelectorAll('[data-hredit]').forEach(function(el){
+        el.addEventListener('click',function(){openHREdit(el.dataset.hredit);});
+      });
+    }).catch(function(e){
+      document.getElementById('hrDBody').innerHTML='<tr><td colspan="12" style="padding:16px;text-align:center;color:var(--red);">❌ '+e.message+'</td></tr>';
+    });
+
+  // โหลด refund summary
+  callHR('getRefunds',{startStr:d,endStr:d}).then(function(res){
+    var tb=document.getElementById('hrRefSumBody');
+    if(!Object.keys(res.balances||{}).length){tb.innerHTML='<tr><td colspan="5" style="padding:12px;text-align:center;color:var(--text2);">ไม่มีข้อมูล</td></tr>';return;}
+    var grp={};
+    (res.list||[]).forEach(function(x){
+      if(!grp[x.group])grp[x.group]={c:0,m:0,w:0};
+      grp[x.group].c+=x.count;grp[x.group].m+=x.money;grp[x.group].w+=x.withdraw;
+    });
+    tb.innerHTML=Object.keys(res.balances).map(function(k){
+      var g=grp[k]||{c:0,m:0,w:0};
+      return '<tr style="border-bottom:1px solid var(--border2);">'+
+        '<td style="padding:7px 6px;font-weight:600;">'+k+'</td>'+
+        '<td style="padding:7px 6px;text-align:center;">'+g.c+'</td>'+
+        '<td style="padding:7px 6px;text-align:right;color:var(--green);">฿'+g.m.toLocaleString()+'</td>'+
+        '<td style="padding:7px 6px;text-align:right;color:var(--red);">฿'+g.w.toLocaleString()+'</td>'+
+        '<td style="padding:7px 6px;text-align:right;color:var(--gold2);font-weight:700;">฿'+res.balances[k].toLocaleString()+'</td>'+
+      '</tr>';
+    }).join('');
+  }).catch(function(){});
+}
+document.getElementById('hrDLoad').addEventListener('click',loadHRDash);
+
+// ── ENTRY ──
+function hrLoadEntryTable(){
+  var active=HR.emp.filter(function(e){return e.status==='Active';});
+  var tb=document.getElementById('hrEntryBody');
+  if(!active.length){tb.innerHTML='<tr><td colspan="8" style="padding:14px;text-align:center;color:var(--text2);">ไม่พบพนักงาน Active — ตรวจสอบใน Google Sheets</td></tr>';return;}
+  tb.innerHTML=active.map(function(e){
+    return '<tr class="hrrow" data-name="'+e.name+'">'+
+      '<td style="padding:6px;font-weight:600;">'+e.name+'</td>'+
+      '<td style="padding:4px 2px;"><input type="checkbox" class="hrck" style="width:18px;height:18px;accent-color:var(--gold);"></td>'+
+      '<td style="padding:4px 2px;"><input type="number" class="hrh inp" style="width:60px;padding:5px;font-size:11px;" value="0" min="0"></td>'+
+      '<td style="padding:4px 2px;"><input type="number" class="hrd inp" style="width:60px;padding:5px;font-size:11px;" value="0" min="0"></td>'+
+      '<td style="padding:4px 2px;"><input type="number" class="hrt inp" style="width:60px;padding:5px;font-size:11px;" value="0" min="0"></td>'+
+      '<td style="padding:4px 2px;"><input type="number" class="hrm inp" style="width:60px;padding:5px;font-size:11px;" value="0"></td>'+
+      '<td style="padding:4px 2px;"><input type="number" class="hrw inp" style="width:60px;padding:5px;font-size:11px;" value="0" min="0"></td>'+
+      '<td style="padding:4px 2px;"><input type="text" class="hrn inp" style="width:90px;padding:5px;font-size:11px;"></td>'+
+    '</tr>';
+  }).join('');
+}
+
+document.getElementById('hrSyncPOS').addEventListener('click',function(){
+  var d=document.getElementById('hrEDate').value;
+  if(!d||!HR.url){toast('กรุณาตั้งค่า URL และเลือกวันที่','err');return;}
+  toast('⏳ กำลังดึงยอด POS...');
+  callHR('syncLoyverseDaily',{dateStr:d}).then(function(r){
+    if(!r.success){toast('❌ '+r.error,'err');return;}
+    document.querySelectorAll('.hrrow').forEach(function(row){
+      var n=row.dataset.name;
+      if(r.data&&r.data[n]){
+        row.querySelector('.hrd').value=r.data[n].drinks||0;
+        row.querySelector('.hrh').value=r.data[n].hours||0;
+      }
+    });
+    toast('✅ พบ '+r.count+' รายการ','ok');
+  }).catch(function(e){toast('❌ '+e.message,'err');});
+});
+
+document.getElementById('hrSaveBulk').addEventListener('click',function(){
+  var d=document.getElementById('hrEDate').value;if(!d)return;
+  var list=[];
+  document.querySelectorAll('.hrrow').forEach(function(row){
+    var w=row.querySelector('.hrck').checked?1:0;
+    var h=+row.querySelector('.hrh').value;
+    var dr=+row.querySelector('.hrd').value;
+    var t=+row.querySelector('.hrt').value;
+    var m=+row.querySelector('.hrm').value;
+    var wd=+row.querySelector('.hrw').value;
+    var n=row.querySelector('.hrn').value;
+    if(w||h||dr||t||m||wd||n)list.push({date:d,name:row.dataset.name,work:w,hours:h,drinks:dr,tip:t,mix:m,withdraw:wd,note:n});
+  });
+  if(!list.length){toast('ไม่มีข้อมูลที่จะบันทึก','err');return;}
+  toast('⏳ กำลังบันทึก...');
+  postHR('saveDailyBulk',list).then(function(r){
+    if(r.success){toast('✅ บันทึก '+list.length+' รายการแล้ว','ok');}
+    else toast('❌ '+(r.error||'error'),'err');
+  }).catch(function(e){toast('❌ '+e.message,'err');});
+});
+
+// ── REFUND ──
+function hrLoadRefTable(){
+  var positions=[...new Set(HR.emp.map(function(e){return e.position;}).filter(Boolean))];
+  var tb=document.getElementById('hrRefBody');
+  tb.innerHTML=positions.map(function(p){
+    return '<tr class="hrrefrow" data-group="'+p+'">'+
+      '<td style="padding:6px;font-weight:600;color:var(--gold);">'+p+'</td>'+
+      '<td><input type="number" class="hrrc inp" style="width:70px;padding:5px;font-size:11px;" value="0" min="0"></td>'+
+      '<td><input type="number" class="hrrw inp" style="width:70px;padding:5px;font-size:11px;" value="0" min="0"></td>'+
+      '<td><input type="text" class="hrrn inp" style="width:100px;padding:5px;font-size:11px;"></td>'+
+    '</tr>';
+  }).join('');
+}
+
+document.getElementById('hrSaveRef').addEventListener('click',function(){
+  var d=document.getElementById('hrRDate').value;if(!d)return;
+  var list=[];
+  document.querySelectorAll('.hrrefrow').forEach(function(row){
+    var c=+row.querySelector('.hrrc').value;
+    var w=+row.querySelector('.hrrw').value;
+    var n=row.querySelector('.hrrn').value;
+    if(c>0||w>0||n)list.push({date:d,group:row.dataset.group,count:c,withdraw:w,note:n});
+  });
+  if(!list.length){toast('ไม่มีข้อมูล','err');return;}
+  toast('⏳ กำลังบันทึก...');
+  postHR('saveRefundsBulk',list).then(function(r){
+    if(r.success){toast('✅ บันทึกคืนดื่มแล้ว','ok');document.querySelectorAll('.hrrefrow input').forEach(function(i){i.value='';});}
+    else toast('❌ '+(r.error||'error'),'err');
+  }).catch(function(e){toast('❌ '+e.message,'err');});
+});
+
+document.getElementById('hrRHLoad').addEventListener('click',function(){
+  var s=document.getElementById('hrRHFrom').value;
+  var e=document.getElementById('hrRHTo').value;
+  if(!s||!e)return;
+  document.getElementById('hrRHBody').innerHTML='<tr><td colspan="6" style="padding:12px;text-align:center;color:var(--text2);">⏳ กำลังโหลด...</td></tr>';
+  callHR('getRefunds',{startStr:s,endStr:e}).then(function(res){
+    var tb=document.getElementById('hrRHBody');
+    if(!(res.list||[]).length){tb.innerHTML='<tr><td colspan="6" style="padding:12px;text-align:center;color:var(--text2);">ไม่มีข้อมูล</td></tr>';return;}
+    tb.innerHTML=res.list.map(function(x){
+      return '<tr style="border-bottom:1px solid var(--border2);">'+
+        '<td style="padding:6px;font-size:10px;">'+x.date+'</td>'+
+        '<td style="padding:6px;font-size:10px;">'+x.group+'</td>'+
+        '<td style="padding:6px;text-align:center;">'+x.count+'</td>'+
+        '<td style="padding:6px;text-align:right;color:var(--green);">฿'+x.money.toLocaleString()+'</td>'+
+        '<td style="padding:6px;text-align:right;color:var(--red);">฿'+x.withdraw.toLocaleString()+'</td>'+
+        '<td style="padding:6px;text-align:right;color:var(--gold2);">฿'+x.remaining.toLocaleString()+'</td>'+
+      '</tr>';
+    }).join('');
+  }).catch(function(e){toast('❌ '+e.message,'err');});
+});
+
+// ── EMPLOYEES ──
+function hrLoadEmp(){
+  callHR('getEmployees',{}).then(function(list){
+    HR.emp=list;
+    var tb=document.getElementById('hrEmpBody');
+    tb.innerHTML=list.map(function(e){
+      var canEdit=CR==='owner';
+      return '<tr style="border-bottom:1px solid var(--border2);">'+
+        '<td style="padding:7px 6px;font-weight:600;">'+e.name+'</td>'+
+        '<td style="padding:7px 6px;">'+e.position+'</td>'+
+        '<td style="padding:7px 6px;color:'+(e.status==='Active'?'var(--green)':'var(--text2)')+';">'+e.status+'</td>'+
+        '<td style="padding:7px 6px;font-size:10px;font-family:monospace;color:var(--text2);">'+e.sku_drink+'</td>'+
+        '<td style="padding:7px 6px;font-size:10px;font-family:monospace;color:var(--text2);">'+e.sku_hour+'</td>'+
+        '<td style="padding:7px 6px;">'+(canEdit?'<button class="btn bo sm" style="font-size:10px;" data-hrempid="'+e.id+'">✏️</button>':'')+
+        '</td></tr>';
+    }).join('');
+    document.querySelectorAll('[data-hrempid]').forEach(function(el){
+      el.addEventListener('click',function(){
+        var emp=HR.emp.find(function(x){return String(x.id)===el.dataset.hrempid;});
+        if(emp)openHREmpModal(emp);
+      });
+    });
+    hrLoadEntryTable();
+    hrLoadRefTable();
+  }).catch(function(e){
+    document.getElementById('hrEmpBody').innerHTML='<tr><td colspan="6" style="padding:14px;text-align:center;color:var(--red);">❌ '+e.message+'</td></tr>';
+  });
+}
+document.getElementById('hrAddEmpBtn').addEventListener('click',function(){openHREmpModal(null);});
+
+// ── EDIT MODAL ──
+function openHREdit(id){
+  callHR('getRecordById',{id:id}).then(function(r){
+    if(!r.success){toast('❌ '+r.error,'err');return;}
+    var d=r.data;
+    openHRModal(
+      '✏️ แก้ไขข้อมูล',
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'+
+        '<div><label class="fl">งาน</label><input class="inp" id="heW" type="number" value="'+d.work+'"></div>'+
+        '<div><label class="fl">ชม.</label><input class="inp" id="heH" type="number" value="'+d.hours+'"></div>'+
+        '<div><label class="fl">ดื่ม</label><input class="inp" id="heD" type="number" value="'+d.drinks+'"></div>'+
+        '<div><label class="fl">ทิป</label><input class="inp" id="heT" type="number" value="'+d.tip+'"></div>'+
+        '<div><label class="fl">ชง</label><input class="inp" id="heM" type="number" value="'+d.mix+'"></div>'+
+        '<div><label class="fl">เบิก</label><input class="inp" id="heWd" type="number" value="'+d.withdraw+'"></div>'+
+        '<div style="grid-column:span 2"><label class="fl">Note</label><input class="inp" id="heN" value="'+d.note+'"></div>'+
+      '</div>',
+      function(){
+        postHR('updateDailyRecord',{id:id,work:+$('heW').value,hours:+$('heH').value,drinks:+$('heD').value,tip:+$('heT').value,mix:+$('heM').value,withdraw:+$('heWd').value,note:$('heN').value})
+          .then(function(r){if(r.success){closeHRModal();loadHRDash();toast('✅ แก้ไขแล้ว','ok');}else toast('❌ '+(r.error||'error'),'err');})
+          .catch(function(e){toast('❌ '+e.message,'err');});
+      }
+    );
+  }).catch(function(e){toast('❌ '+e.message,'err');});
+}
+
+function openHREmpModal(emp){
+  openHRModal(
+    emp?'✏️ แก้ไขพนักงาน':'➕ เพิ่มพนักงาน',
+    '<div class="fr2"><label class="fl">ชื่อ</label><input class="inp" id="emN" value="'+(emp?emp.name:'')+'"></div>'+
+    '<div class="fr2"><label class="fl">ตำแหน่ง</label><input class="inp" id="emP" value="'+(emp?emp.position:'')+'"></div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'+
+      '<div class="fr2"><label class="fl">SKU ดื่ม</label><input class="inp" id="emSD" value="'+(emp?emp.sku_drink:'')+'"></div>'+
+      '<div class="fr2"><label class="fl">SKU ชม.</label><input class="inp" id="emSH" value="'+(emp?emp.sku_hour:'')+'"></div>'+
+    '</div>'+
+    '<div class="fr2"><label class="fl">สถานะ</label><select class="inp" id="emST" style="padding:7px 8px;"><option value="Active"'+(emp&&emp.status==='Active'?' selected':'')+'>Active</option><option value="Inactive"'+(emp&&emp.status==='Inactive'?' selected':'')+'>Inactive</option></select></div>',
+    function(){
+      var payload={id:emp?emp.id:'',name:$('emN').value.trim(),position:$('emP').value.trim(),sku_drink:$('emSD').value.trim(),sku_hour:$('emSH').value.trim(),status:$('emST').value,note:''};
+      if(!payload.name||!payload.position){toast('กรุณากรอกชื่อและตำแหน่ง','err');return;}
+      var fn=emp?'updateEmployee':'saveEmployee';
+      postHR(fn,payload).then(function(r){
+        if(r.success){closeHRModal();hrLoadEmp();toast('✅ บันทึกพนักงานแล้ว','ok');}
+        else toast('❌ '+(r.error||'error'),'err');
+      }).catch(function(e){toast('❌ '+e.message,'err');});
+    }
+  );
+}
+
+// Generic HR modal
+function openHRModal(title,body,onSave){
+  var existing=document.getElementById('hrModal');if(existing)existing.remove();
+  var html='<div class="mbg open" id="hrModal">'+
+    '<div class="mbox">'+
+      '<div class="mtitle">'+title+'<button class="mx" id="hrMClose">✕</button></div>'+
+      body+
+      '<div style="display:flex;gap:7px;margin-top:13px;">'+
+        '<button class="btn bg2 wf" id="hrMSave">💾 บันทึก</button>'+
+        '<button class="btn bo" id="hrMCancel">ยกเลิก</button>'+
+      '</div>'+
+    '</div></div>';
+  document.body.insertAdjacentHTML('beforeend',html);
+  document.getElementById('hrMClose').onclick=closeHRModal;
+  document.getElementById('hrMCancel').onclick=closeHRModal;
+  document.getElementById('hrMSave').onclick=onSave;
+  document.getElementById('hrModal').addEventListener('click',function(e){if(e.target===this)closeHRModal();});
+}
+function closeHRModal(){var m=document.getElementById('hrModal');if(m)m.remove();}
+
+/* ── Apps Script doGet รับ request จาก Melody POS ──
+   วิธีที่ Apps Script ต้องเพิ่ม:
+   
+   function doGet(e) {
+     var fn = e.parameter.fn;
+     var result;
+     if (fn === 'ping') result = {ok:true};
+     else if (fn === 'getDashboardData') result = getDashboardData(e.parameter.startDateStr, e.parameter.endDateStr, e.parameter.nameFilter);
+     else if (fn === 'getEmployees') result = getEmployees();
+     else if (fn === 'getRefunds') result = getRefunds(e.parameter.startStr, e.parameter.endStr);
+     else if (fn === 'syncLoyverseDaily') result = syncLoyverseDaily(e.parameter.dateStr);
+     else if (fn === 'getRecordById') result = getRecordById(e.parameter.id);
+     else result = {error: 'unknown fn'};
+     return ContentService.createTextOutput(JSON.stringify(result))
+       .setMimeType(ContentService.MimeType.JSON);
+   }
+   
+   function doPost(e) {
+     var body = JSON.parse(e.postData.contents);
+     var fn = body.fn;
+     var result;
+     if (fn === 'saveDailyBulk') result = saveDailyBulk(body.data);
+     else if (fn === 'saveRefundsBulk') result = saveRefundsBulk(body.data);
+     else if (fn === 'saveEmployee') result = saveEmployee(body.data);
+     else if (fn === 'updateEmployee') result = updateEmployee(body.data);
+     else if (fn === 'updateDailyRecord') result = updateDailyRecord(body.data.id, body.data);
+     else result = {error: 'unknown fn'};
+     return ContentService.createTextOutput(JSON.stringify(result))
+       .setMimeType(ContentService.MimeType.JSON);
+   }
+*/ 
+
+/* ══════════════════════════════════════
+   HR INTEGRATION — ส่งยอดไป Google Sheets
+══════════════════════════════════════ */
+var HR = {
+  url: '',
+  skuMap: [] // [{menuId, type:'drink'|'hour', staffName}]
+};
+
 $('savePinBtn').addEventListener('click',function(){var op=$('sOPin').value,sp=$('sSPin').value;if(op.length>=4)CFG.ownerPin=op;if(sp.length>=4)CFG.staffPin=sp;saveData();toast('✅ บันทึก PIN แล้ว','ok');});
 var mnImgData = null;
 
@@ -1812,7 +2683,7 @@ $('ccSend').addEventListener('click',function(){
   if(!custCart.length||!custRoom)return;
   var total=custCart.reduce(function(s,i){return s+i.price*i.qty;},0);
   var sess=DB.sessions.find(function(x){return x.rid===custRoom.id;});
-  DB.orders.push({id:'o'+Date.now(),rid:custRoom.id,rname:custRoom.name,sid:sess?sess.id:null,items:custCart.map(function(i){return Object.assign({},i);}),status:'pending',src:'customer',time:Date.now(),total:total,by:'ลูกค้า QR'});
+  DB.orders.push({id:'o'+Date.now(),rid:custRoom.id,rname:custRoom.name,sid:sess?sess.id:null,items:custCart.map(function(i){return Object.assign({},i);}),status:'done',src:'customer',time:Date.now(),total:total,by:'ลูกค้า QR'});
   custCart=[];saveData();
   $('cMenu').innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;gap:13px;text-align:center;padding:18px;"><div style="font-size:50px;">✅</div><div style="font-size:19px;font-weight:700;color:var(--gold);">ส่งออเดอร์แล้ว!</div><div style="font-size:12px;color:var(--text2);">พนักงานได้รับออเดอร์แล้ว 🎤</div><div style="background:var(--card2);border-radius:9px;padding:10px 18px;font-size:13px;">รวม <b style="color:var(--gold);">฿'+total.toLocaleString()+'</b></div><button class="btn bg2" id="rCust">+ สั่งเพิ่ม</button></div>';
   renderCC();toast('📤 ส่งออเดอร์แล้ว!','ok');
