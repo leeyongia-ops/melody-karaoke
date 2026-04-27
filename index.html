@@ -1485,12 +1485,40 @@ function addCart(id){
   toast((m.emoji||'🍽️')+' '+m.name);renderCart();
 }
 function renderCart(){
-  var el=$('oList');if(!cart.length){el.innerHTML='<div class="oempty"><span style="font-size:30px;">🍺</span>ยังไม่มีรายการ</div>';$('cTot').textContent='฿0';$('cGrand').textContent='฿0';$('sendBtn').disabled=true;return;}
-  var total=0;el.innerHTML=cart.map(function(i){total+=i.price*i.qty;return'<div class="oitem"><div class="oiem">'+i.emoji+'</div><div class="oinf"><div class="onm">'+i.name+'</div><div class="opr">฿'+i.price+' x'+i.qty+'</div></div><div class="qc"><button class="qb" data-qid="'+i.id+'" data-qd="-1">-</button><span class="qn">'+i.qty+'</span><button class="qb" data-qid="'+i.id+'" data-qd="1">+</button></div></div>';}).join('');
-  document.querySelectorAll('[data-qid]').forEach(function(el){el.addEventListener('click',function(){chCart(el.dataset.qid,+el.dataset.qd);});});
-  $('cTot').textContent='฿'+total.toLocaleString();$('cGrand').textContent='฿'+total.toLocaleString();$('sendBtn').disabled=!curRoom;
+  var el=$('oList');
+  if(!cart.length){
+    el.innerHTML='<div class="oempty"><span style="font-size:30px;">🍺</span>ยังไม่มีรายการ</div>';
+    $('cTot').textContent='฿0';$('cGrand').textContent='฿0';$('sendBtn').disabled=true;
+    return;
+  }
+  var total=0;
+  el.innerHTML=cart.map(function(i){
+    total+=i.price*i.qty;
+    return'<div class="oitem">'+
+      '<div class="oiem">'+(i.emoji||'🍽️')+'</div>'+
+      '<div class="oinf"><div class="onm">'+i.name+'</div><div class="opr">฿'+i.price+' x'+i.qty+'</div></div>'+
+      '<div class="qc">'+
+        '<button class="qb" data-qid="'+i.id+'" data-qd="-1">-</button>'+
+        '<span class="qn">'+i.qty+'</span>'+
+        '<button class="qb" data-qid="'+i.id+'" data-qd="1">+</button>'+
+      '</div></div>';
+  }).join('');
+  $('cTot').textContent='฿'+total.toLocaleString();
+  $('cGrand').textContent='฿'+total.toLocaleString();
+  $('sendBtn').disabled=!curRoom;
 }
-function chCart(id,d){var idx=cart.findIndex(function(i){return i.id===id;});if(idx<0)return;cart[idx].qty+=d;if(cart[idx].qty<=0)cart.splice(idx,1);renderCart();}
+// Event delegation — bind ครั้งเดียว ไม่ซ้อน
+$('oList').addEventListener('click',function(e){
+  var btn=e.target.closest('[data-qid]');
+  if(btn) chCart(btn.dataset.qid,+btn.dataset.qd);
+});
+function chCart(id,d){
+  var idx=cart.findIndex(function(i){return i.id===id;});
+  if(idx<0)return;
+  cart[idx].qty+=d;
+  if(cart[idx].qty<=0)cart.splice(idx,1);
+  renderCart();
+}
 
 /* ── MONITOR (หน้า Orders ที่ถูก redesign) ── */
 function renderOrders(){ renderMonitor(); } // alias เพื่อไม่ให้ code เก่า error
@@ -1555,7 +1583,8 @@ function renderMonitor(){
     el.addEventListener('click',function(e){e.stopPropagation();
       var o=SESSION_ORDERS.find(function(x){return x.id===el.dataset.moncancel;});
       if(!o||!confirm('ยกเลิกออเดอร์ ฿'+o.total.toLocaleString()+'?'))return;
-      o.status='cancelled';saveData();renderMonitor();toast('❌ ยกเลิกแล้ว','ok');
+      SESSION_ORDERS=SESSION_ORDERS.filter(function(x){return x.id!==o.id;});
+      saveData();renderMonitor();toast('❌ ยกเลิกแล้ว','ok');
     });
   });
   document.querySelectorAll('[data-monpos]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();goPos(el.dataset.monpos);});});
@@ -2012,52 +2041,50 @@ document.querySelectorAll('.popt').forEach(function(el){
     document.querySelectorAll('.popt').forEach(function(x){x.classList.remove('on');});
     el.classList.add('on');payMethod=el.dataset.m;
     $('cashWrap').style.display=payMethod==='cash'?'block':'none';
-    $('cashIn').value='';
-    if(payMethod!=='cash'){$('coConfirm').disabled=false;}
-    else{$('coConfirm').disabled=true;}
-    buildCOBill();
+    $('cashIn').value='';$('chgAmt').textContent='฿0';
+    if(payMethod==='cash'){$('coConfirm').disabled=true;}
+    else{$('coConfirm').disabled=false;}
   });
 });
 $('cashIn').addEventListener('input',function(){
-  var g=coData?coData.grandFinal:0,c=+this.value||0;
+  var g=coData?coData.grand:0,c=+this.value||0;
   $('chgAmt').textContent='฿'+Math.max(0,c-g).toLocaleString();
   $('coConfirm').disabled=c<g;
 });
 $('coConfirm').addEventListener('click',function(){
   if(!coData)return;
-  var r=coData.r,s=coData.s,grand=coData.grandFinal,ro=coData.ro;
+  var r=coData.r,s=coData.s,ro=coData.ro;
+  var grand=ro.reduce(function(a,o){return a+o.total;},0);
 
   // ส่ง receipt ไป Loyverse
-  if(HR.url && LV.storeId){
+  if(HR.url){
     var lineItems=[];
     ro.forEach(function(o){
       o.items.forEach(function(i){
         lineItems.push({
-          variant_id: i.variant_id||null,
-          item_name:  i.name,
-          quantity:   i.qty,
-          price:      i.price,
-          total_money:i.price*i.qty
+          variant_id:  i.variant_id||null,
+          item_name:   i.name,
+          quantity:    i.qty,
+          price:       i.price,
+          total_money: i.price*i.qty
         });
       });
     });
-    // เพิ่มค่าห้องเป็น line item ถ้าคิด
-    var payMap={cash:'CASH',qr:'OTHER',card:'CARD',tf:'OTHER'};
-    var receipt={
-      store_id:     LV.storeId,
-      receipt_type: 'SALES',
-      note:         r.name,
-      payments:[{payment_type_id:null,name:payMethod==='card'?'Card':payMethod==='qr'?'PromptPay':'Cash',money_amount:grand}],
-      line_items:   lineItems,
-      total_money:  grand
-    };
-    lvPost('lvCreateReceipt',receipt).then(function(res){
-      if(res.receipt_number) toast('📤 บันทึกใบเสร็จ Loyverse #'+res.receipt_number,'ok');
-      else toast('⚠️ Loyverse: '+(res.message||'ไม่ได้รับเลขใบเสร็จ'));
-    }).catch(function(){toast('⚠️ ส่ง Loyverse ไม่ได้ — บันทึกในเครื่องแล้ว');});
+    if(lineItems.length){
+      lvPost('lvCreateReceipt',{
+        store_id:     LV.storeId||'',
+        receipt_type: 'SALES',
+        note:         r.name,
+        payments:[{name:payMethod==='tf'?'Transfer':'Cash',money_amount:grand}],
+        line_items:   lineItems,
+        total_money:  grand
+      }).then(function(res){
+        if(res.receipt_number) toast('📤 Loyverse #'+res.receipt_number,'ok');
+      }).catch(function(){toast('⚠️ ส่ง Loyverse ไม่ได้');});
+    }
   }
 
-  // ล้าง SESSION_ORDERS ของห้องนี้
+  // ปิดห้อง
   var closedSid=s.id;
   SESSION_ORDERS=SESSION_ORDERS.filter(function(o){return o.sid!==closedSid;});
   DB.sessions=DB.sessions.filter(function(x){return x.id!==closedSid;});
@@ -2065,7 +2092,7 @@ $('coConfirm').addEventListener('click',function(){
   closeM('mCO');
   toast('💳 ชำระ ฿'+grand.toLocaleString()+' เรียบร้อย!','ok');
   saveData();
-  fbDeleteSessionOrders(closedSid); // ลบออกจาก Firebase ด้วย
+  fbDeleteSessionOrders(closedSid);
   renderRooms();renderOrders();buildRS();
 });
 
@@ -2123,12 +2150,14 @@ function renderRoList(rid,sid){
   // bind cancel buttons
   document.querySelectorAll('[data-rocancel]').forEach(function(el){
     el.addEventListener('click',function(){
-      var o=SESSION_ORDERS.find(function(x){return x.id===el.dataset.rocancel;});
+      var oid=el.dataset.rocancel;
+      var o=SESSION_ORDERS.find(function(x){return x.id===oid;});
       if(!o)return;
       if(!confirm('ยกเลิกออเดอร์ ฿'+o.total.toLocaleString()+' ?'))return;
-      o.status='cancelled';
+      var sid=o.sid;
+      SESSION_ORDERS=SESSION_ORDERS.filter(function(x){return x.id!==oid;});
       saveData();
-      renderRoList(roCurrentRid,o.sid);
+      renderRoList(roCurrentRid,sid);
       renderRooms();
       toast('❌ ยกเลิกออเดอร์แล้ว','ok');
     });
