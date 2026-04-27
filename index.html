@@ -294,7 +294,7 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
       <button class="pb" data-k="7">7</button><button class="pb" data-k="8">8</button><button class="pb" data-k="9">9</button>
       <button class="pb del" id="pDel">⌫</button><button class="pb" data-k="0">0</button><button class="pb go" id="pGo">เข้าระบบ</button>
     </div>
-    <div class="lhint">👑 เจ้าของ: <b style="color:var(--text2)">1234</b> &nbsp;|&nbsp; 🧑‍💼 พนักงาน: <b style="color:var(--text2)">0000</b></div>
+    
     <div class="lerr" id="lErr"></div>
   </div>
 </div>
@@ -483,7 +483,7 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
           <div class="g2">
             <div class="fr2"><label class="fl">ชำระด้วย</label>
               <select class="inp" id="bPay" style="padding:6px 7px;">
-                <option>เงินสด</option><option>พร้อมเพย์</option><option>บัตรเครดิต</option><option>โอนเงิน</option>
+                <option>เงินสด</option><option>โอนเงิน</option>
               </select>
             </div>
             <div class="fr2"><label class="fl">รับเงิน (฿)</label><input class="inp" type="number" id="bCash" value="0"></div>
@@ -593,6 +593,7 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
         <div class="chd">
           <div class="chtl">🗂 เมนูสินค้า</div>
           <button class="btn bg2 sm" id="addMenuBtn">🔄 โหลดเมนู</button>
+          <button class="btn bo sm" id="syncLVBtn" style="font-size:10px;">☁️ Sync จาก Loyverse</button>
         </div>
         <div class="cbd">
           <div style="background:rgba(212,175,55,.06);border-radius:8px;padding:10px;font-size:11px;color:var(--text2);margin-bottom:10px;line-height:1.8;">
@@ -822,8 +823,6 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
   <div class="mbox">
     <div class="mtitle">🎤 เปิดห้อง — <span id="mRLbl"></span><button class="mx" data-close="mRoom">✕</button></div>
     <input type="hidden" id="mRid">
-    <div class="fr2"><label class="fl">จำนวนลูกค้า</label><input class="inp" type="number" id="mPax" value="2" min="1"></div>
-    <div class="fr2"><label class="fl">หมายเหตุ</label><input class="inp" id="mNote" placeholder="ชื่อกลุ่ม..."></div>
     <button class="btn bg2 wf" id="mRConfirm">✅ เปิดห้อง</button>
   </div>
 </div>
@@ -854,10 +853,6 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
     </div>
     <input type="hidden" id="mEditRid">
     <div class="fr2"><label class="fl">ชื่อห้อง/โต๊ะ</label><input class="inp" id="mEditName" placeholder="เช่น ห้อง 1, โต๊ะ A, VIP"></div>
-    <div class="g2">
-      <div class="fr2"><label class="fl">ความจุ (คน)</label><input class="inp" type="number" id="mEditCap" value="6" min="1"></div>
-      <div class="fr2"><label class="fl">ราคา/ชม. (฿)</label><input class="inp" type="number" id="mEditRate" value="300" min="0"></div>
-    </div>
     <div class="fr2"><label class="fl">ประเภท</label>
       <select class="inp" id="mEditType" style="padding:7px 8px;">
         <option value="karaoke">🎤 คาราโอเกะ</option>
@@ -888,36 +883,16 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
 <div class="mbg" id="mCO">
   <div class="mbox wide">
     <div class="mtitle">💳 เก็บเงิน — <span id="coLbl"></span><button class="mx" data-close="mCO">✕</button></div>
-
-    <!-- สรุปบิล -->
-    <div id="coBillEl" style="background:#fff;color:#111;border-radius:9px;padding:13px;font-family:'Sarabun';font-size:11px;margin-bottom:10px;max-height:300px;overflow-y:auto;"></div>
-
-    <!-- toggle ค่าห้อง -->
-    <div style="display:flex;align-items:center;justify-content:space-between;background:var(--card2);border-radius:8px;padding:9px 12px;margin-bottom:9px;">
-      <div>
-        <div style="font-size:12px;font-weight:600;">🏠 ค่าชั่วโมงห้อง</div>
-        <div style="font-size:10px;color:var(--text2);" id="coRoomChargeLabel">฿0 · 0 ชม.</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:11px;color:var(--text2);">คิดค่าห้อง</span>
-        <div id="coRoomTog" style="width:34px;height:19px;background:var(--green);border-radius:10px;position:relative;cursor:pointer;">
-          <div id="coRoomTogDot" style="width:13px;height:13px;background:#fff;border-radius:50%;position:absolute;top:3px;right:3px;transition:all .2s;"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ช่องทางชำระ -->
+    <div id="coBillEl" style="background:#fff;color:#111;border-radius:9px;padding:13px;font-family:'Sarabun';font-size:11px;margin-bottom:10px;max-height:320px;overflow-y:auto;"></div>
     <div style="font-size:10px;color:var(--text2);margin-bottom:7px;">ช่องทางชำระเงิน</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;" id="payOpts">
-      <div class="popt" data-m="cash"><div style="font-size:18px;">💵</div><div style="font-size:10px;font-weight:600;">เงินสด</div></div>
-      <div class="popt" data-m="qr"><div style="font-size:18px;">📱</div><div style="font-size:10px;font-weight:600;">พร้อมเพย์</div></div>
-      <div class="popt" data-m="card"><div style="font-size:18px;">💳</div><div style="font-size:10px;font-weight:600;">บัตรเครดิต</div></div>
-      <div class="popt" data-m="tf"><div style="font-size:18px;">🏦</div><div style="font-size:10px;font-weight:600;">โอนเงิน</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;" id="payOpts">
+      <div class="popt" data-m="cash" style="padding:18px;"><div style="font-size:28px;">💵</div><div style="font-size:13px;font-weight:700;margin-top:5px;">เงินสด</div></div>
+      <div class="popt" data-m="tf" style="padding:18px;"><div style="font-size:28px;">🏦</div><div style="font-size:13px;font-weight:700;margin-top:5px;">โอนเงิน</div></div>
     </div>
     <div id="cashWrap" style="display:none;margin-bottom:9px;">
       <div class="fl">รับเงิน (฿)</div>
       <input class="inp" type="number" id="cashIn" placeholder="0">
-      <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:12px;font-weight:700;">
+      <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:13px;font-weight:700;">
         <span>เงินทอน</span><span style="color:var(--green);" id="chgAmt">฿0</span>
       </div>
     </div>
@@ -1178,6 +1153,7 @@ function startPolling(){
       if(p&&p.id==='p-rooms')renderRooms();
       if(p&&p.id==='p-orders')renderMonitor();
     }
+    checkNewOrders();
   },5000);
 }
 
@@ -1300,7 +1276,7 @@ function renderAll(){
     $('btnManageRooms').style.display='flex';
     renderMgr();
   }
-  // โหลดเมนูจาก Loyverse
+  loadMenuFromCache();
   lvLoadItems();
 }
 function startClock(){
@@ -1325,7 +1301,6 @@ function renderRooms(){
     var isBusy=r.status==='busy';
     var ro=SESSION_ORDERS.filter(function(o){return o.sid===r.sid&&o.status!=='cancelled';});
     var ft=ro.reduce(function(a,o){return a+o.total;},0);
-    var rc=0;if(s){var h=Math.ceil((Date.now()-s.start)/3600000);rc=h*r.rate;}
     var tIcon=(RTYPE[r.type||'karaoke']||'🎤').split(' ')[0];
     var noteHtml=r.note?'<div style="font-size:9px;color:var(--text3);margin-bottom:4px;">'+r.note+'</div>':'';
     if(manageMode&&CR==='owner'){
@@ -1336,7 +1311,7 @@ function renderRooms(){
         '</div>'+
         '<div style="font-size:10px;color:var(--text2);margin-bottom:2px;">'+tIcon+' '+(r.type||'karaoke')+'</div>'+
         '<div class="rnum">'+r.name+'</div>'+
-        '<div class="rcap">👥 '+r.cap+' คน · ฿'+r.rate+'/ชม.</div>'+
+        '<div class="rcap">'+(RTYPE[r.type||'karaoke']||'🎤')+'</div>'+
         noteHtml+
         '<span class="badge '+(isBusy?'bgo':'bgg')+'">'+( isBusy?'● กำลังใช้':'○ ว่าง')+'</span>'+
         '<div style="margin-top:7px;font-size:10px;color:var(--text3);">กด ✏️ เพื่อแก้ไข</div>'+
@@ -1346,12 +1321,12 @@ function renderRooms(){
       '<div style="position:absolute;top:9px;right:9px;"><button class="rqr" data-qr="'+r.id+'" data-qrn="'+r.name+'">📱</button></div>'+
       '<div style="font-size:10px;color:var(--text2);margin-bottom:2px;">'+tIcon+'</div>'+
       '<div class="rnum">'+r.name+'</div>'+
-      '<div class="rcap">👥 '+r.cap+' คน · ฿'+r.rate+'/ชม.</div>'+
+      '<div class="rcap">'+(RTYPE[r.type||'karaoke']||'🎤')+'</div>'+
       noteHtml+
       '<span class="badge '+(isBusy?'bgo':'bgg')+'" style="margin-bottom:6px;">'+(isBusy?'● กำลังใช้':'○ ว่าง')+'</span>'+
       (isBusy&&s?
         '<div class="rtimer" data-sid="'+s.id+'">'+fmtD(Date.now()-s.start)+'</div>'+
-        '<div class="rbill">ค่าห้อง ฿'+rc.toLocaleString()+' + อาหาร ฿'+ft.toLocaleString()+'</div>'+
+        '<div class="rbill">ยอดออเดอร์ ฿'+ft.toLocaleString()+'</div>'+
         '<div style="display:flex;gap:5px;margin-top:7px;">'+
           '<button class="btn bo sm" style="flex:1;font-size:10px;" data-pos="'+r.id+'">🍺 สั่ง</button>'+
           '<button class="btn bo sm" style="font-size:10px;" data-roomorders="'+r.id+'" title="ดูรายการ">📋</button>'+
@@ -1370,7 +1345,14 @@ function renderRooms(){
   document.querySelectorAll('[data-qrm]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();showQR(el.dataset.qrm,el.dataset.qrn);});});
   document.querySelectorAll('[data-edit]').forEach(function(el){el.addEventListener('click',function(e){e.stopPropagation();openEditRoom(el.dataset.edit);});});
 }
-function openRoom(id){var r=DB.rooms.find(function(x){return x.id===id;});$('mRLbl').textContent=r.name;$('mRid').value=id;$('mNote').value='';$('mPax').value=2;openM('mRoom');}
+function openRoom(id){
+  var r=DB.rooms.find(function(x){return x.id===id;});
+  var sid='s'+Date.now();
+  DB.sessions.push({id:sid,rid:id,rname:r.name,start:Date.now()});
+  r.status='busy';r.sid=sid;
+  saveData();renderRooms();buildRS();
+  toast('🎤 เปิด'+r.name+'แล้ว!','ok');
+}
 
 /* ── ย้ายห้อง ── */
 function openMoveRoom(fromId){
@@ -1410,8 +1392,6 @@ function openEditRoom(id){
   $('mEditRoomTitle').textContent=isNew?'➕ เพิ่มห้องใหม่':'✏️ แก้ไข: '+r.name;
   $('mEditRid').value=r.id||'';
   $('mEditName').value=r.name||'';
-  $('mEditCap').value=r.cap||6;
-  $('mEditRate').value=r.rate||300;
   $('mEditType').value=r.type||'karaoke';
   $('mEditNote').value=r.note||'';
   $('mDeleteRoomBtn').style.display=isNew?'none':'flex';
@@ -1436,15 +1416,20 @@ function showQR(id,name){
 }
 
 /* ── CHECKOUT ── */
-var coRoomCharge=true; // toggle ค่าห้อง
 
-function buildCOBill(){
-  if(!coData)return;
-  var r=coData.r,s=coData.s,rc=coRoomCharge?coData.rc:0,ft=coData.ft;
-  var grand=rc+ft;coData.grandFinal=grand;
+function openCO(id){
+  var r=DB.rooms.find(function(x){return x.id===id;});
+  var s=DB.sessions.find(function(x){return x.id===r.sid;});if(!s)return;
+  var ro=SESSION_ORDERS.filter(function(o){return o.sid===s.id&&o.status!=='cancelled';});
+  var grand=ro.reduce(function(a,o){return a+o.total;},0);
+  coData={r:r,s:s,ro:ro,grand:grand};
+  $('coLbl').textContent=r.name;
+  payMethod=null;
+  document.querySelectorAll('.popt').forEach(function(el){el.classList.remove('on');});
+  $('coConfirm').disabled=true;$('cashWrap').style.display='none';$('cashIn').value='';$('chgAmt').textContent='฿0';
+  // สร้างบิลสรุป
   var rows='';
-  coData.ro.forEach(function(o){
-    if(o.status==='cancelled')return;
+  ro.forEach(function(o){
     o.items.forEach(function(i){
       rows+='<div style="display:flex;justify-content:space-between;font-size:11px;padding:2px 0;">'+
         '<span>'+(i.emoji||'')+' '+i.name+' x'+i.qty+'</span>'+
@@ -1452,52 +1437,20 @@ function buildCOBill(){
     });
   });
   var now=new Date();
+  var shop=($('sShop')&&$('sShop').value)||'Melody Karaoke';
+  var dur=Math.floor((Date.now()-s.start)/60000);
+  var h=Math.floor(dur/60),m=dur%60;
   $('coBillEl').innerHTML=
     '<div style="text-align:center;border-bottom:1px dashed #ccc;padding-bottom:8px;margin-bottom:8px;">'+
-      '<div style="font-size:13px;font-weight:800;">'+( ($('sShop')&&$('sShop').value)||'Melody Karaoke')+'</div>'+
+      '<div style="font-size:13px;font-weight:800;">'+shop+'</div>'+
       '<div style="font-size:10px;color:#777;">'+now.toLocaleString('th-TH')+'</div>'+
     '</div>'+
-    '<div style="display:flex;justify-content:space-between;"><b>'+r.name+'</b><span>👥 '+s.pax+' คน</span></div>'+
-    '<div style="font-size:10px;color:#666;margin:3px 0;">'+coData.hrs+' ชม. ('+coData.mins+' น.)</div>'+
+    '<div style="font-weight:700;margin-bottom:4px;">'+r.name+'</div>'+
+    '<div style="font-size:10px;color:#666;margin-bottom:8px;">เปิดใช้ '+h+'ชม. '+m+'น.</div>'+
     rows+
-    (coRoomCharge?'<div style="display:flex;justify-content:space-between;border-top:1px dashed #ccc;margin-top:6px;padding-top:6px;"><span>ค่าห้อง</span><span>฿'+rc.toLocaleString()+'</span></div>':
-     '<div style="display:flex;justify-content:space-between;border-top:1px dashed #ccc;margin-top:6px;padding-top:6px;color:#aaa;"><span><s>ค่าห้อง</s></span><span><s>฿'+coData.rc.toLocaleString()+'</s> ฟรี</span></div>')+
-    '<div style="display:flex;justify-content:space-between;"><span>ค่าอาหาร/เครื่องดื่ม</span><span>฿'+ft.toLocaleString()+'</span></div>'+
-    '<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800;border-top:2px solid #111;margin-top:6px;padding-top:6px;"><span>รวมทั้งสิ้น</span><span>฿'+grand.toLocaleString()+'</span></div>';
-  // update label
-  $('coRoomChargeLabel').textContent=coRoomCharge?'฿'+coData.rc.toLocaleString()+' · '+coData.hrs+' ชม.':'ยกเว้นค่าห้อง';
-  // recalc cash change
-  var c=+$('cashIn').value||0;
-  $('chgAmt').textContent='฿'+Math.max(0,c-grand).toLocaleString();
-  $('coConfirm').disabled=(payMethod==='cash')?c<grand:!payMethod;
-}
-
-function openCO(id){
-  var r=DB.rooms.find(function(x){return x.id===id;});
-  var s=DB.sessions.find(function(x){return x.id===r.sid;});if(!s)return;
-  var mins=Math.floor((Date.now()-s.start)/60000),hrs=Math.ceil(mins/60),rc=hrs*r.rate;
-  var ro=SESSION_ORDERS.filter(function(o){return o.sid===s.id&&o.status!=='cancelled';});
-  var ft=ro.reduce(function(a,o){return a+o.total;},0),grand=rc+ft;
-  coData={r:r,s:s,rc:rc,ft:ft,grand:grand,grandFinal:grand,ro:ro,mins:mins,hrs:hrs};
-  $('coLbl').textContent=r.name;
-  payMethod=null;coRoomCharge=true;
-  document.querySelectorAll('.popt').forEach(function(el){el.classList.remove('on');});
-  $('coConfirm').disabled=true;$('cashWrap').style.display='none';$('cashIn').value='';$('chgAmt').textContent='฿0';
-  $('coRoomTog').style.background='var(--green)';
-  $('coRoomTogDot').style.right='3px';$('coRoomTogDot').style.left='';
-  buildCOBill();
+    '<div style="display:flex;justify-content:space-between;font-size:14px;font-weight:800;border-top:2px solid #111;margin-top:8px;padding-top:8px;"><span>รวม</span><span>฿'+grand.toLocaleString()+'</span></div>';
   openM('mCO');
 }
-
-// Room charge toggle
-document.getElementById('coRoomTog').addEventListener('click',function(){
-  coRoomCharge=!coRoomCharge;
-  this.style.background=coRoomCharge?'var(--green)':'var(--card3)';
-  var dot=$('coRoomTogDot');
-  if(coRoomCharge){dot.style.right='3px';dot.style.left='';}
-  else{dot.style.left='3px';dot.style.right='';}
-  buildCOBill();
-});
 
 /* ── POS ── */
 function getMenuItems(){
@@ -1562,17 +1515,15 @@ function renderMonitor(){
     if(!s)return;
     var orders=SESSION_ORDERS.filter(function(o){return o.sid===s.id&&o.status!=='cancelled';}).slice().reverse();
     var ft=orders.reduce(function(a,o){return a+o.total;},0);
-    var hrs=Math.ceil((Date.now()-s.start)/3600000);
-    var rc=hrs*r.rate;
 
     cols+='<div style="background:var(--card);border:1px solid var(--border2);border-radius:12px;display:flex;flex-direction:column;overflow:hidden;">'+
       '<div style="padding:10px 13px;background:var(--card2);border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;">'+
         '<div>'+
           '<div style="font-size:13px;font-weight:700;">'+r.name+'</div>'+
-          '<div style="font-size:10px;color:var(--text2);">'+fmtD(Date.now()-s.start)+' · 👥'+s.pax+'</div>'+
+          '<div style="font-size:10px;color:var(--text2);">'+fmtD(Date.now()-s.start)+'</div>'+
         '</div>'+
         '<div style="text-align:right;">'+
-          '<div style="font-size:11px;font-weight:700;color:var(--gold2);">฿'+(rc+ft).toLocaleString()+'</div>'+
+          '<div style="font-size:11px;font-weight:700;color:var(--gold2);">฿'+ft.toLocaleString()+'</div>'+
           '<div style="font-size:9px;color:var(--text2);">'+orders.length+' ออเดอร์</div>'+
         '</div>'+
       '</div>'+
@@ -2004,24 +1955,17 @@ $('pGo').addEventListener('click',doLogin);
 document.addEventListener('keydown',function(e){if(!$('sLogin').classList.contains('show'))return;if(e.key>='0'&&e.key<='9')pinKey(e.key);else if(e.key==='Backspace')pinDel();else if(e.key==='Enter')doLogin();});
 
 // Room modal
-$('mRConfirm').addEventListener('click',function(){
-  var id=$('mRid').value,pax=+$('mPax').value||1,note=$('mNote').value;
-  var r=DB.rooms.find(function(x){return x.id===id;});
-  var sid='s'+Date.now();
-  DB.sessions.push({id:sid,rid:id,rname:r.name,pax:pax,note:note,start:Date.now()});
-  r.status='busy';r.sid=sid;closeM('mRoom');renderRooms();buildRS();saveData();toast('🎤 เปิด'+r.name+'แล้ว!','ok');
-});
+// mRConfirm — ไม่ใช้แล้ว openRoom เปิดทันที
 
 $('btnAddRoom').addEventListener('click',function(){openEditRoom(null);});
 $('btnManageRooms').addEventListener('click',function(){manageMode=!manageMode;$('btnManageRooms').textContent=manageMode?'✅ เสร็จ':'⚙️ จัดการห้อง';renderRooms();});
 $('doneManageBtn').addEventListener('click',function(){manageMode=false;$('btnManageRooms').textContent='⚙️ จัดการห้อง';renderRooms();});
 $('mEditRoomSave').addEventListener('click',function(){
   var id=$('mEditRid').value,name=$('mEditName').value.trim();
-  var cap=+$('mEditCap').value||1,rate=+$('mEditRate').value||0;
   var type=$('mEditType').value,note=$('mEditNote').value.trim();
   if(!name){toast('กรุณาใส่ชื่อห้อง','err');return;}
-  if(id){var r=DB.rooms.find(function(x){return x.id===id;});if(r){r.name=name;r.cap=cap;r.rate=rate;r.type=type;r.note=note;}toast('✅ แก้ไขห้อง "'+name+'" แล้ว','ok');}
-  else{var nid='r'+Date.now();DB.rooms.push({id:nid,name:name,cap:cap,rate:rate,type:type,note:note,status:'free',sid:null});$('mEditRid').value=nid;toast('✅ เพิ่มห้อง "'+name+'" แล้ว','ok');}
+  if(id){var r=DB.rooms.find(function(x){return x.id===id;});if(r){r.name=name;r.type=type;r.note=note;}toast('✅ แก้ไขห้อง "'+name+'" แล้ว','ok');}
+  else{var nid='r'+Date.now();DB.rooms.push({id:nid,name:name,type:type,note:note,status:'free',sid:null});$('mEditRid').value=nid;toast('✅ เพิ่มห้อง "'+name+'" แล้ว','ok');}
   closeM('mEditRoom');renderRooms();buildRS();saveData();
 });
 $('mDeleteRoomBtn').addEventListener('click',function(){
@@ -2098,14 +2042,11 @@ $('coConfirm').addEventListener('click',function(){
       });
     });
     // เพิ่มค่าห้องเป็น line item ถ้าคิด
-    if(coRoomCharge&&coData.rc>0){
-      lineItems.push({item_name:'ค่าห้อง '+r.name+' '+coData.hrs+' ชม.',quantity:1,price:coData.rc,total_money:coData.rc});
-    }
     var payMap={cash:'CASH',qr:'OTHER',card:'CARD',tf:'OTHER'};
     var receipt={
       store_id:     LV.storeId,
       receipt_type: 'SALES',
-      note:         r.name+' · '+s.pax+' คน',
+      note:         r.name,
       payments:[{payment_type_id:null,name:payMethod==='card'?'Card':payMethod==='qr'?'PromptPay':'Cash',money_amount:grand}],
       line_items:   lineItems,
       total_money:  grand
@@ -2706,9 +2647,77 @@ var mnImgData = null;
 // จัดการเมนูผ่าน Loyverse Back Office โดยตรง
 // https://r.loyverse.com/dashboard/#/items
 if($('addMenuBtn')) $('addMenuBtn').addEventListener('click',function(){
-  toast('จัดการเมนูที่ Loyverse Back Office: r.loyverse.com/dashboard/#/items');
-  window.open('https://r.loyverse.com/dashboard/#/items','_blank');
+  LV.loaded=false; lvLoadItems(); toast('⏳ กำลังโหลดเมนู...');
 });
+
+// Sync Loyverse → Firebase
+if($('syncLVBtn')) $('syncLVBtn').addEventListener('click',lvSyncToFirebase);
+
+async function lvSyncToFirebase(){
+  if(!HR.url){toast('กรุณาตั้งค่า Apps Script URL ก่อน','err');return;}
+  toast('⏳ กำลัง Sync เมนูจาก Loyverse...');
+  try{
+    var res=await lvProxy('lvGetItems',{});
+    if(!res.items||!res.items.length){toast('❌ ไม่พบสินค้าใน Loyverse','err');return;}
+    LV.items=res.items;
+    LV.categories=res.categories||[];
+    LV.storeId=res.storeId||'';
+    LV.loaded=true;
+    // บันทึกลง Firebase
+    if(FB.connected){
+      for(var i=0;i<res.items.length;i++){
+        await fbSet('karaokeMenu',res.items[i].id,res.items[i]);
+      }
+    }
+    // บันทึกลง localStorage ด้วย
+    try{localStorage.setItem('melodyMenu',JSON.stringify(res.items));}catch(e){}
+    renderPOS();renderMgr();
+    toast('✅ Sync เมนูสำเร็จ '+res.items.length+' รายการ','ok');
+  }catch(e){toast('❌ Sync ล้มเหลว: '+e.message,'err');}
+}
+
+/* ── โหลดเมนูจาก Firebase/localStorage ก่อน ถ้าไม่มีค่อยใช้ demo ── */
+function loadMenuFromCache(){
+  try{
+    // ลอง Firebase ก่อน
+    if(FB.connected){
+      fbGet('karaokeMenu').then(function(items){
+        if(items&&items.length){
+          LV.items=items;LV.loaded=true;
+          renderPOS();renderMgr();renderCustMenu();
+        }
+      }).catch(function(){});
+    }
+    // localStorage fallback
+    var cached=localStorage.getItem('melodyMenu');
+    if(cached){
+      var items=JSON.parse(cached);
+      if(items&&items.length&&!LV.loaded){
+        LV.items=items;LV.loaded=true;
+      }
+    }
+  }catch(e){}
+}
+
+/* ── เสียงแจ้งเตือนออเดอร์ใหม่ ── */
+var lastOrderCount=0;
+function playNotif(){
+  try{
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    [880,1100,880].forEach(function(f,i){
+      var o=ctx.createOscillator();var g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=f;g.gain.value=0.3;
+      o.start(ctx.currentTime+i*0.15);
+      o.stop(ctx.currentTime+i*0.15+0.12);
+    });
+  }catch(e){}
+}
+function checkNewOrders(){
+  var cur=SESSION_ORDERS.filter(function(o){return o.status!=='cancelled';}).length;
+  if(cur>lastOrderCount&&lastOrderCount>0) playNotif();
+  lastOrderCount=cur;
+}
 
 // Customer
 $('ccSend').addEventListener('click',function(){
