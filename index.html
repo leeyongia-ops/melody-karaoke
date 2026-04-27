@@ -968,10 +968,23 @@ var DB = {
 
 // Loyverse data (ดึงจาก API — ไม่เก็บใน Firebase)
 var LV = {
-  items:    [],   // สินค้าจาก Loyverse
-  categories:[], // หมวดหมู่
-  storeId:  '',  // store_id สำหรับสร้าง receipt
-  loaded:   false
+  items:[
+    {id:'m1',variant_id:'',name:'เบียร์สิงห์',cat:'เบียร์',price:120,emoji:'🍺',img:'',avail:true,sku:''},
+    {id:'m2',variant_id:'',name:'เบียร์ช้าง',cat:'เบียร์',price:110,emoji:'🍺',img:'',avail:true,sku:''},
+    {id:'m3',variant_id:'',name:'เบียร์ลีโอ',cat:'เบียร์',price:110,emoji:'🍺',img:'',avail:true,sku:''},
+    {id:'m4',variant_id:'',name:'ไวน์แดง',cat:'ไวน์',price:180,emoji:'🍷',img:'',avail:true,sku:''},
+    {id:'m5',variant_id:'',name:'วิสกี้',cat:'สุรา',price:150,emoji:'🥃',img:'',avail:true,sku:''},
+    {id:'m6',variant_id:'',name:'เหล้าขาว',cat:'สุรา',price:90,emoji:'🥃',img:'',avail:true,sku:''},
+    {id:'m7',variant_id:'',name:'น้ำเปล่า',cat:'น้ำดื่ม',price:20,emoji:'💧',img:'',avail:true,sku:''},
+    {id:'m8',variant_id:'',name:'โค้ก',cat:'น้ำดื่ม',price:35,emoji:'🥤',img:'',avail:true,sku:''},
+    {id:'m9',variant_id:'',name:'น้ำแข็ง',cat:'น้ำดื่ม',price:20,emoji:'🧊',img:'',avail:true,sku:''},
+    {id:'m10',variant_id:'',name:'ไก่ทอด',cat:'อาหาร',price:150,emoji:'🍗',img:'',avail:true,sku:''},
+    {id:'m11',variant_id:'',name:'ปีกไก่',cat:'อาหาร',price:130,emoji:'🍗',img:'',avail:true,sku:''},
+    {id:'m12',variant_id:'',name:'ถั่วทอด',cat:'ของว่าง',price:40,emoji:'🥜',img:'',avail:true,sku:''}
+  ],
+  categories:['เบียร์','ไวน์','สุรา','น้ำดื่ม','อาหาร','ของว่าง'],
+  storeId:  '',
+  loaded:   true  // ใช้ demo data ก่อน Loyverse เชื่อมต่อ
 };
 
 // ออเดอร์ในเซสชันปัจจุบัน (เก็บ local เท่านั้น ส่ง Loyverse ตอนเก็บเงิน)
@@ -1190,19 +1203,19 @@ function lvPost(fn, data){
 
 // โหลด items+categories จาก Loyverse (ผ่าน proxy)
 function lvLoadItems(){
-  if(!HR.url) return;
-  if(LV.loaded) return; // cache
+  if(!HR.url) return; // ยังไม่ตั้งค่า — ใช้ demo data ต่อ
   lvProxy('lvGetItems',{}).then(function(res){
-    LV.items=res.items||[];
-    LV.categories=res.categories||[];
-    LV.storeId=res.storeId||'';
-    LV.loaded=true;
-    renderPOS(); // re-render หลังโหลดเสร็จ
-    renderCustMenu();
-    toast('✅ โหลดเมนูจาก Loyverse แล้ว ('+(LV.items.length)+' รายการ)','ok');
+    if(res.items && res.items.length){
+      LV.items=res.items;
+      LV.categories=res.categories||[];
+      LV.storeId=res.storeId||'';
+      LV.loaded=true;
+      renderPOS();
+      renderCustMenu();
+      toast('✅ โหลดเมนูจาก Loyverse ('+(LV.items.length)+' รายการ)','ok');
+    }
   }).catch(function(e){
-    // fallback — ใช้เมนู local ถ้า Loyverse ไม่ตอบ
-    console.warn('Loyverse offline, using local menu:', e.message);
+    console.warn('Loyverse offline, using demo menu:', e.message);
   });
 }
 
