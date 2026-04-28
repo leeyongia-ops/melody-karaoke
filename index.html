@@ -990,8 +990,8 @@ var posCat='ทั้งหมด',posSrch='',OF='all';
 var payMethod=null,coData=null,qrRoomData=null;
 var bItems=[{name:'ไก่ทอด',qty:2,price:150},{name:'เบียร์สิงห์',qty:4,price:120}];
 
-var PAGES={owner:['rooms','pos','orders','history','summary','bill','hr','settings'],staff:['rooms','pos','orders','bill']};
-var PLBL={rooms:'🏠 ห้อง',pos:'🍺 POS',orders:'📡 Monitor',history:'🧾 ประวัติบิล',summary:'📊 สรุปยอด',bill:'🖨️ บิล',hr:'👥 HR',settings:'⚙️ ตั้งค่า'};
+var PAGES={owner:['rooms','pos','orders','history','summary','bill','settings'],staff:['rooms','pos','orders','bill']};
+var PLBL={rooms:'🏠 ห้อง',pos:'🍺 POS',orders:'📡 Monitor',history:'🧾 ประวัติบิล',summary:'📊 สรุปยอด',bill:'🖨️ บิล',settings:'⚙️ ตั้งค่า'};
 
 /* ══════════════════════════════════════
    FIREBASE REST API — ไม่มี eval() ไม่มี SDK
@@ -1198,21 +1198,18 @@ function lvPost(fn, data){
 
 // โหลด items+categories จาก Loyverse (ผ่าน proxy)
 function lvLoadItems(){
-  if(!HR.url) return; // ยังไม่ตั้งค่า — ใช้ demo data ต่อ
-  lvProxy('lvGetItems',{}).then(function(res){
+  if(!HR.url) return;
+  lvProxy('lvGetItems',{}).then(async function(res){
     if(res.items && res.items.length){
       LV.items=res.items;
       LV.categories=res.categories||[];
       LV.storeId=res.storeId||'';
       LV.paymentTypeId=res.paymentTypeId||'';
       LV.loaded=true;
-      renderPOS();
-      renderCustMenu();
-      toast('✅ โหลดเมนูจาก Loyverse ('+(LV.items.length)+' รายการ)','ok');
+      try{ await IDB.saveMenu(res.items); }catch(e){}
+      renderPOS();renderMgr();renderCustMenu();
     }
-  }).catch(function(e){
-    console.warn('Loyverse offline, using demo menu:', e.message);
-  });
+  }).catch(function(e){ console.warn('Loyverse offline:', e.message); });
 }
 
 // แปลง Loyverse item เป็น format ที่ระบบใช้
@@ -1231,24 +1228,82 @@ function lvItemToMenu(item){
   };
 }
 
-// โหลด localStorage ก่อน
+// ── IndexedDB (เมนู cache เร็วกว่า localStorage) ──
+var IDB = {
+  dbName: 'MelodyKTV_DB',
+  version: 1,
+  init: function() {
+    return new Promise(function(res, rej) {
+      var req = indexedDB.open(IDB.dbName, IDB.version);
+      req.onupgradeneeded = function(e) {
+        var db = e.target.result;
+        if (!db.objectStoreNames.contains('menu')) db.createObjectStore('menu', { keyPath: 'id' });
+      };
+      req.onsuccess = function(e) { res(e.target.result); };
+      req.onerror   = function(e) { rej(e.target.error); };
+    });
+  },
+  saveMenu: async function(items) {
+    var db = await IDB.init();
+    var tx = db.transaction('menu', 'readwrite');
+    var store = tx.objectStore('menu');
+    store.clear();
+    items.forEach(function(item) { store.put(item); });
+  },
+  getMenu: async function() {
+    var db = await IDB.init();
+    return new Promise(function(res) {
+      var tx    = db.transaction('menu', 'readonly');
+      var req   = tx.objectStore('menu').getAll();
+      req.onsuccess = function() { res(req.result || []); };
+      req.onerror   = function() { res([]); };
+    });
+  }
+};
+
+// โหลด localStorage ก่อน (sync)
 loadData();
 
-// เชื่อม Firebase แบบ async (ไม่บล็อก UI)
+// Init async — IndexedDB → Firebase
 (async function(){
-  var ok=await testFirebase();
-  FB.connected=ok;
-  if(ok){
-    console.log('✅ Firebase connected');
-    var pulled=await pullAll();
-    if(pulled){
-      // merge: ถ้า Firebase มีข้อมูลมากกว่า local ใช้ Firebase
-      saveData(); // sync local กลับ
+  // 1. โหลดเมนูจาก IndexedDB ก่อนเลย (เร็วที่สุด ไม่รอเน็ต)
+  try {
+    var cached = await IDB.getMenu();
+    if (cached && cached.length) {
+      LV.items  = cached;
+      LV.loaded = true;
+      renderPOS();
+      renderMgr();
     }
+  } catch(e) {}
+
+  // 2. เชื่อมต่อ Firebase
+  var ok = await testFirebase();
+  FB.connected = ok;
+  if (ok) {
+    console.log('✅ Firebase connected');
+    await pullAll();
+    saveData();
     startPolling();
+
+    // 3. โหลดเมนูจาก Firebase (เผื่อมีอัปเดตจากเครื่องอื่น)
+    try {
+      var cloudMenu = await fbGet('karaokeMenu');
+      if (cloudMenu && cloudMenu.length) {
+        LV.items  = cloudMenu;
+        LV.loaded = true;
+        await IDB.saveMenu(cloudMenu);
+        renderPOS();
+        renderMgr();
+        renderCustMenu();
+      }
+    } catch(e) {}
   } else {
-    console.log('⚠️ Firebase offline — ใช้ localStorage แทน');
+    console.log('⚠️ Firebase offline — using local cache');
   }
+
+  // 4. โหลดเมนูใหม่จาก Loyverse ถ้ามี GAS URL (background)
+  lvLoadItems();
 })();
 
 /* ── UTILS ── */
@@ -1285,7 +1340,6 @@ function nav(p){
   if(p==='orders')renderOrders();
   if(p==='history')renderHistory();
   if(p==='summary')renderSummary();
-  if(p==='hr')initHR();
   if(p==='settings')renderMgr();
   if(p==='bill'){initBill();buildReceipt();}
 }
@@ -1296,7 +1350,6 @@ function renderAll(){
     $('btnManageRooms').style.display='flex';
     renderMgr();
   }
-  loadMenuFromCache();
   lvLoadItems();
 }
 function startClock(){
@@ -2893,42 +2946,27 @@ async function lvSyncToFirebase(){
     LV.items=res.items;
     LV.categories=res.categories||[];
     LV.storeId=res.storeId||'';
+    LV.paymentTypeId=res.paymentTypeId||'';
     LV.loaded=true;
-    // บันทึกลง Firebase
+
+    // บันทึกลง IndexedDB (เร็ว ใช้ offline ได้)
+    try{ await IDB.saveMenu(res.items); }catch(e){}
+
+    // บันทึกลง localStorage
+    try{ localStorage.setItem('melodyMenu',JSON.stringify(res.items)); }catch(e){}
+
+    // บันทึกลง Firebase (ทุกเครื่องเห็น)
     if(FB.connected){
       for(var i=0;i<res.items.length;i++){
         await fbSet('karaokeMenu',res.items[i].id,res.items[i]);
       }
     }
-    // บันทึกลง localStorage ด้วย
-    try{localStorage.setItem('melodyMenu',JSON.stringify(res.items));}catch(e){}
-    renderPOS();renderMgr();
-    toast('✅ Sync เมนูสำเร็จ '+res.items.length+' รายการ','ok');
+    renderPOS();renderMgr();renderCustMenu();
+    toast('✅ Sync สำเร็จ '+res.items.length+' รายการ','ok');
   }catch(e){toast('❌ Sync ล้มเหลว: '+e.message,'err');}
 }
 
 /* ── โหลดเมนูจาก Firebase/localStorage ก่อน ถ้าไม่มีค่อยใช้ demo ── */
-function loadMenuFromCache(){
-  try{
-    // ลอง Firebase ก่อน
-    if(FB.connected){
-      fbGet('karaokeMenu').then(function(items){
-        if(items&&items.length){
-          LV.items=items;LV.loaded=true;
-          renderPOS();renderMgr();renderCustMenu();
-        }
-      }).catch(function(){});
-    }
-    // localStorage fallback
-    var cached=localStorage.getItem('melodyMenu');
-    if(cached){
-      var items=JSON.parse(cached);
-      if(items&&items.length&&!LV.loaded){
-        LV.items=items;LV.loaded=true;
-      }
-    }
-  }catch(e){}
-}
 
 /* ── เสียงแจ้งเตือนออเดอร์ใหม่ ── */
 var lastOrderCount=0;
