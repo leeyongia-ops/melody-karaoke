@@ -1192,8 +1192,15 @@ function lvProxy(fn, params){
 function lvPost(fn, data){
   var base=HR.url;
   if(!base) return Promise.reject(new Error('ยังไม่ได้ตั้งค่า Apps Script URL'));
-  return fetch(base,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fn:fn,data:data})})
-    .then(function(r){return r.json();});
+  return fetch(base,{
+    method:'POST',
+    mode:'no-cors', // GAS มี redirect — no-cors ข้ามปัญหานี้ได้
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({fn:fn,data:data})
+  }).then(function(){
+    // no-cors = opaque response อ่าน body ไม่ได้ แต่ GAS รับข้อมูลแล้ว
+    return {ok:true};
+  });
 }
 
 // โหลด items+categories จาก Loyverse (ผ่าน proxy)
@@ -2871,6 +2878,7 @@ async function btWrite(bytes){
     var chunk=512;
     for(var i=0;i<bytes.length;i+=chunk){
       await BT.char.writeValue(bytes.slice(i,i+chunk));
+      await new Promise(function(r){setTimeout(r,50);}); // รอ 50ms ให้เครื่องปริ้นประมวลผล
     }
     return true;
   }catch(e){toast('❌ ปริ้นไม่ได้: '+e.message,'err');return false;}
