@@ -605,6 +605,24 @@ html,body{height:100%;font-family:'Kanit',sans-serif;background:var(--bg);color:
         </div>
       </div>
 
+      <!-- BT Printer -->
+      <div class="cb">
+        <div class="chd">
+          <div>
+            <div class="chtl">🖨️ เครื่องปริ้น Bluetooth</div>
+            <div style="font-size:10px;color:var(--text2);margin-top:2px;">58mm Thermal — Android Chrome เท่านั้น</div>
+          </div>
+          <div id="btStatusDot" style="width:10px;height:10px;border-radius:50%;background:var(--text3);flex-shrink:0;"></div>
+        </div>
+        <div class="cbd">
+          <div style="display:flex;gap:7px;margin-bottom:9px;">
+            <button class="btn bg2 sm" style="flex:1;" id="btConnectBtn">🔗 เชื่อมต่อเครื่องปริ้น</button>
+            <button class="btn bo sm" style="flex:1;" id="btTestBtn">🖨️ ทดสอบปริ้น</button>
+          </div>
+          <div style="font-size:10px;color:var(--text2);" id="btDeviceName">ยังไม่ได้เชื่อมต่อ</div>
+        </div>
+      </div>
+
       <!-- HR Integration URL -->
       <div class="cb">
         <div class="chd">
@@ -944,22 +962,23 @@ var DB = {
 // Loyverse data (ดึงจาก API — ไม่เก็บใน Firebase)
 var LV = {
   items:[
-    {id:'m1',variant_id:'',name:'เบียร์สิงห์',cat:'เบียร์',price:120,emoji:'🍺',img:'',avail:true,sku:''},
-    {id:'m2',variant_id:'',name:'เบียร์ช้าง',cat:'เบียร์',price:110,emoji:'🍺',img:'',avail:true,sku:''},
-    {id:'m3',variant_id:'',name:'เบียร์ลีโอ',cat:'เบียร์',price:110,emoji:'🍺',img:'',avail:true,sku:''},
-    {id:'m4',variant_id:'',name:'ไวน์แดง',cat:'ไวน์',price:180,emoji:'🍷',img:'',avail:true,sku:''},
-    {id:'m5',variant_id:'',name:'วิสกี้',cat:'สุรา',price:150,emoji:'🥃',img:'',avail:true,sku:''},
-    {id:'m6',variant_id:'',name:'เหล้าขาว',cat:'สุรา',price:90,emoji:'🥃',img:'',avail:true,sku:''},
-    {id:'m7',variant_id:'',name:'น้ำเปล่า',cat:'น้ำดื่ม',price:20,emoji:'💧',img:'',avail:true,sku:''},
-    {id:'m8',variant_id:'',name:'โค้ก',cat:'น้ำดื่ม',price:35,emoji:'🥤',img:'',avail:true,sku:''},
-    {id:'m9',variant_id:'',name:'น้ำแข็ง',cat:'น้ำดื่ม',price:20,emoji:'🧊',img:'',avail:true,sku:''},
-    {id:'m10',variant_id:'',name:'ไก่ทอด',cat:'อาหาร',price:150,emoji:'🍗',img:'',avail:true,sku:''},
-    {id:'m11',variant_id:'',name:'ปีกไก่',cat:'อาหาร',price:130,emoji:'🍗',img:'',avail:true,sku:''},
-    {id:'m12',variant_id:'',name:'ถั่วทอด',cat:'ของว่าง',price:40,emoji:'🥜',img:'',avail:true,sku:''}
+    {id:'m1',variant_id:'',name:'Beer Singha',  cat:'Beer', price:120,emoji:'🍺',img:'',avail:true,sku:''},
+    {id:'m2',variant_id:'',name:'Beer Chang',   cat:'Beer', price:110,emoji:'🍺',img:'',avail:true,sku:''},
+    {id:'m3',variant_id:'',name:'Beer Leo',     cat:'Beer', price:110,emoji:'🍺',img:'',avail:true,sku:''},
+    {id:'m4',variant_id:'',name:'Red Wine',     cat:'Wine', price:180,emoji:'🍷',img:'',avail:true,sku:''},
+    {id:'m5',variant_id:'',name:'Whisky',       cat:'Spirit',price:150,emoji:'🥃',img:'',avail:true,sku:''},
+    {id:'m6',variant_id:'',name:'White Spirit', cat:'Spirit',price:90, emoji:'🥃',img:'',avail:true,sku:''},
+    {id:'m7',variant_id:'',name:'Water',        cat:'Drink', price:20, emoji:'💧',img:'',avail:true,sku:''},
+    {id:'m8',variant_id:'',name:'Coke',         cat:'Drink', price:35, emoji:'🥤',img:'',avail:true,sku:''},
+    {id:'m9',variant_id:'',name:'Ice',          cat:'Drink', price:20, emoji:'🧊',img:'',avail:true,sku:''},
+    {id:'m10',variant_id:'',name:'Fried Chicken',cat:'Food', price:150,emoji:'🍗',img:'',avail:true,sku:''},
+    {id:'m11',variant_id:'',name:'Chicken Wing', cat:'Food', price:130,emoji:'🍗',img:'',avail:true,sku:''},
+    {id:'m12',variant_id:'',name:'Peanuts',      cat:'Snack',price:40, emoji:'🥜',img:'',avail:true,sku:''}
   ],
-  categories:['เบียร์','ไวน์','สุรา','น้ำดื่ม','อาหาร','ของว่าง'],
-  storeId:  '',
-  loaded:   true  // ใช้ demo data ก่อน Loyverse เชื่อมต่อ
+  categories:['Beer','Wine','Spirit','Drink','Food','Snack'],
+  storeId:       '',
+  paymentTypeId: '',
+  loaded:        true
 };
 
 // ออเดอร์ในเซสชันปัจจุบัน (เก็บ local เท่านั้น ส่ง Loyverse ตอนเก็บเงิน)
@@ -1185,6 +1204,7 @@ function lvLoadItems(){
       LV.items=res.items;
       LV.categories=res.categories||[];
       LV.storeId=res.storeId||'';
+      LV.paymentTypeId=res.paymentTypeId||'';
       LV.loaded=true;
       renderPOS();
       renderCustMenu();
@@ -1584,6 +1604,7 @@ function renderMonitor(){
       var o=SESSION_ORDERS.find(function(x){return x.id===el.dataset.moncancel;});
       if(!o||!confirm('ยกเลิกออเดอร์ ฿'+o.total.toLocaleString()+'?'))return;
       SESSION_ORDERS=SESSION_ORDERS.filter(function(x){return x.id!==o.id;});
+      if(FB.connected) fbDel('karaokeOrders',o.id);
       saveData();renderMonitor();toast('❌ ยกเลิกแล้ว','ok');
     });
   });
@@ -2055,6 +2076,7 @@ $('coConfirm').addEventListener('click',function(){
   if(!coData)return;
   var r=coData.r,s=coData.s,ro=coData.ro;
   var grand=ro.reduce(function(a,o){return a+o.total;},0);
+  var payName=payMethod==='tf'?'Transfer':'Cash';
 
   // ส่ง receipt ไป Loyverse
   if(HR.url){
@@ -2062,7 +2084,7 @@ $('coConfirm').addEventListener('click',function(){
     ro.forEach(function(o){
       o.items.forEach(function(i){
         lineItems.push({
-          variant_id:  i.variant_id||null,
+          variant_id:  i.variant_id||'',
           item_name:   i.name,
           quantity:    i.qty,
           price:       i.price,
@@ -2072,20 +2094,26 @@ $('coConfirm').addEventListener('click',function(){
     });
     if(lineItems.length){
       lvPost('lvCreateReceipt',{
-        store_id:     LV.storeId||'',
-        receipt_type: 'SALES',
-        note:         r.name,
-        payments:[{name:payMethod==='tf'?'Transfer':'Cash',money_amount:grand}],
-        line_items:   lineItems,
-        total_money:  grand
+        store_id:        LV.storeId||'',
+        payment_type_id: LV.paymentTypeId||'',
+        note:            r.name,
+        payments:[{
+          payment_type_id: LV.paymentTypeId||null,
+          name:            payName,
+          money_amount:    grand
+        }],
+        line_items: lineItems
       }).then(function(res){
         if(res.receipt_number) toast('📤 Loyverse #'+res.receipt_number,'ok');
-      }).catch(function(){toast('⚠️ ส่ง Loyverse ไม่ได้');});
+        else if(res.message) toast('⚠️ Loyverse: '+res.message);
+      }).catch(function(e){toast('⚠️ ส่ง Loyverse ไม่ได้: '+e.message);});
     }
   }
 
   // ปิดห้อง
   var closedSid=s.id;
+  var closedRname=r.name;
+  var closedItems=ro.slice();
   SESSION_ORDERS=SESSION_ORDERS.filter(function(o){return o.sid!==closedSid;});
   DB.sessions=DB.sessions.filter(function(x){return x.id!==closedSid;});
   r.status='free';r.sid=null;
@@ -2094,6 +2122,15 @@ $('coConfirm').addEventListener('click',function(){
   saveData();
   fbDeleteSessionOrders(closedSid);
   renderRooms();renderOrders();buildRS();
+
+  // ปริ้นบิล BT อัตโนมัติ
+  btPrintReceipt({
+    room:    closedRname,
+    orders:  closedItems,
+    total:   grand,
+    payName: payName,
+    time:    new Date()
+  });
 });
 
 /* ── ดูรายการสั่ง / ประวัติต่อห้อง ── */
@@ -2156,6 +2193,7 @@ function renderRoList(rid,sid){
       if(!confirm('ยกเลิกออเดอร์ ฿'+o.total.toLocaleString()+' ?'))return;
       var sid=o.sid;
       SESSION_ORDERS=SESSION_ORDERS.filter(function(x){return x.id!==oid;});
+      if(FB.connected) fbDel('karaokeOrders',oid);
       saveData();
       renderRoList(roCurrentRid,sid);
       renderRooms();
@@ -2630,37 +2668,182 @@ function openHRModal(title,body,onSave){
 }
 function closeHRModal(){var m=document.getElementById('hrModal');if(m)m.remove();}
 
-/* ── Apps Script doGet รับ request จาก Melody POS ──
-   วิธีที่ Apps Script ต้องเพิ่ม:
-   
-   function doGet(e) {
-     var fn = e.parameter.fn;
-     var result;
-     if (fn === 'ping') result = {ok:true};
-     else if (fn === 'getDashboardData') result = getDashboardData(e.parameter.startDateStr, e.parameter.endDateStr, e.parameter.nameFilter);
-     else if (fn === 'getEmployees') result = getEmployees();
-     else if (fn === 'getRefunds') result = getRefunds(e.parameter.startStr, e.parameter.endStr);
-     else if (fn === 'syncLoyverseDaily') result = syncLoyverseDaily(e.parameter.dateStr);
-     else if (fn === 'getRecordById') result = getRecordById(e.parameter.id);
-     else result = {error: 'unknown fn'};
-     return ContentService.createTextOutput(JSON.stringify(result))
-       .setMimeType(ContentService.MimeType.JSON);
-   }
-   
-   function doPost(e) {
-     var body = JSON.parse(e.postData.contents);
-     var fn = body.fn;
-     var result;
-     if (fn === 'saveDailyBulk') result = saveDailyBulk(body.data);
-     else if (fn === 'saveRefundsBulk') result = saveRefundsBulk(body.data);
-     else if (fn === 'saveEmployee') result = saveEmployee(body.data);
-     else if (fn === 'updateEmployee') result = updateEmployee(body.data);
-     else if (fn === 'updateDailyRecord') result = updateDailyRecord(body.data.id, body.data);
-     else result = {error: 'unknown fn'};
-     return ContentService.createTextOutput(JSON.stringify(result))
-       .setMimeType(ContentService.MimeType.JSON);
-   }
-*/ 
+/* ══════════════════════════════════════
+   BT PRINTING — Web Bluetooth + ESC/POS
+   รองรับ: Android Chrome, Windows Chrome
+   เครื่องปริ้น: 58mm Thermal (ESC/POS)
+══════════════════════════════════════ */
+var BT = {
+  device:  null,
+  char:    null,
+  service: '000018f0-0000-1000-8000-00805f9b34fb', // Nordic UART / Generic Serial
+  charUUID:'00002af1-0000-1000-8000-00805f9b34fb',
+  // fallback UUIDs สำหรับเครื่องปริ้นต่างรุ่น
+  services: [
+    '000018f0-0000-1000-8000-00805f9b34fb',
+    '0000ffe0-0000-1000-8000-00805f9b34fb',
+    '00001101-0000-1000-8000-00805f9b34fb',
+    '49535343-fe7d-4ae5-8fa9-9fafd205e455'
+  ],
+  chars: [
+    '00002af1-0000-1000-8000-00805f9b34fb',
+    '0000ffe1-0000-1000-8000-00805f9b34fb',
+    '49535343-8841-43f4-a8d4-ecbe34729bb3'
+  ]
+};
+
+// ESC/POS commands
+var ESC=0x1B,GS=0x1D;
+function escCmd(){return Array.from(arguments);}
+var CMD={
+  INIT:    [ESC,0x40],
+  CUT:     [GS,0x56,0x41,0x00],
+  BOLD_ON: [ESC,0x45,0x01],
+  BOLD_OFF:[ESC,0x45,0x00],
+  CENTER:  [ESC,0x61,0x01],
+  LEFT:    [ESC,0x61,0x00],
+  LF:      [0x0A],
+  SIZE_NORMAL:[GS,0x21,0x00],
+  SIZE_LARGE: [GS,0x21,0x11],
+};
+
+function strToBytes(str){
+  var bytes=[];
+  for(var i=0;i<str.length;i++){
+    var c=str.charCodeAt(i);
+    bytes.push(c<256?c:0x3F); // ? สำหรับอักขระไม่รองรับ
+  }
+  return bytes;
+}
+
+function line58(left,right){
+  var w=32; // 58mm ≈ 32 chars
+  var l=left.substring(0,w-right.length-1);
+  var pad=w-l.length-right.length;
+  return l+' '.repeat(Math.max(1,pad))+right;
+}
+
+function dashedLine(){return '-'.repeat(32);}
+
+// สร้าง ESC/POS bytes สำหรับบิล
+function buildReceiptBytes(data){
+  var shop=($('sShop')&&$('sShop').value)||'MELODY KARAOKE';
+  var bytes=[];
+  var add=function(arr){arr.forEach(function(b){bytes.push(b);});};
+  var txt=function(s){add(strToBytes(s));add(CMD.LF);};
+
+  add(CMD.INIT);
+  add(CMD.CENTER);
+  add(CMD.BOLD_ON);
+  add(CMD.SIZE_LARGE);
+  txt(shop);
+  add(CMD.SIZE_NORMAL);
+  add(CMD.BOLD_OFF);
+  txt('Table: '+data.room);
+  txt(data.time.toLocaleDateString('en-GB')+' '+data.time.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}));
+  add(CMD.LEFT);
+  txt(dashedLine());
+
+  // รายการ
+  data.orders.forEach(function(o){
+    o.items.forEach(function(i){
+      txt(line58(i.name.substring(0,20)+' x'+i.qty, i.price*i.qty+''));
+    });
+  });
+  txt(dashedLine());
+  add(CMD.BOLD_ON);
+  txt(line58('TOTAL', data.total+''));
+  add(CMD.BOLD_OFF);
+  txt('Pay: '+data.payName);
+  txt(dashedLine());
+
+  // QR PromptPay (ถ้ามี — แสดงเป็น text URL แทน)
+  if(payQRImgData){
+    add(CMD.CENTER);
+    txt('');
+    txt('Scan to Pay');
+    txt('(See QR on screen)');
+    add(CMD.LEFT);
+  }
+
+  add(CMD.CENTER);
+  txt('');
+  txt('Thank You !');
+  txt('');
+  add(CMD.LF);add(CMD.LF);add(CMD.LF);
+  add(CMD.CUT);
+  return new Uint8Array(bytes);
+}
+
+// เชื่อมต่อ BT printer
+async function btConnect(){
+  if(!navigator.bluetooth){
+    toast('Browser ไม่รองรับ Bluetooth — ใช้ Android Chrome','err');
+    return false;
+  }
+  try{
+    toast('⏳ กำลังค้นหาเครื่องปริ้น...');
+    var filters=[{name:'mini-printer'},{namePrefix:'MTP'},{namePrefix:'Printer'},{namePrefix:'BT'}];
+    var optServices=BT.services;
+    BT.device=await navigator.bluetooth.requestDevice({
+      filters:filters,
+      optionalServices:optServices
+    });
+    var server=await BT.device.gatt.connect();
+    // ลอง services ทีละตัว
+    for(var si=0;si<BT.services.length;si++){
+      try{
+        var svc=await server.getPrimaryService(BT.services[si]);
+        for(var ci=0;ci<BT.chars.length;ci++){
+          try{
+            BT.char=await svc.getCharacteristic(BT.chars[ci]);
+            toast('✅ เชื่อมต่อ '+BT.device.name+' แล้ว','ok');
+            return true;
+          }catch(e){}
+        }
+      }catch(e){}
+    }
+    toast('❌ ไม่พบ characteristic ของเครื่องปริ้น','err');
+    return false;
+  }catch(e){
+    if(e.name!=='NotFoundError') toast('❌ BT Error: '+e.message,'err');
+    return false;
+  }
+}
+
+// ส่งข้อมูลไปเครื่องปริ้น
+async function btWrite(bytes){
+  if(!BT.char){toast('❌ ยังไม่ได้เชื่อมต่อเครื่องปริ้น','err');return false;}
+  try{
+    var chunk=512;
+    for(var i=0;i<bytes.length;i+=chunk){
+      await BT.char.writeValue(bytes.slice(i,i+chunk));
+    }
+    return true;
+  }catch(e){toast('❌ ปริ้นไม่ได้: '+e.message,'err');return false;}
+}
+
+// ปริ้นบิลอัตโนมัติ
+async function btPrintReceipt(data){
+  if(!navigator.bluetooth) return; // ไม่รองรับ — ข้ามไป
+  // ถ้ายังไม่ได้เชื่อม ให้ถามก่อน
+  if(!BT.char){
+    if(!confirm('🖨️ ต้องการปริ้นบิลผ่าน Bluetooth Printer ไหมครับ?'))return;
+    var ok=await btConnect();
+    if(!ok)return;
+  }
+  var bytes=buildReceiptBytes(data);
+  var success=await btWrite(bytes);
+  if(success) toast('🖨️ ปริ้นบิลแล้ว','ok');
+}
+
+// ปุ่ม manual connect
+document.addEventListener('DOMContentLoaded',function(){
+  // เพิ่มปุ่ม BT ใน settings ถ้ายังไม่มี
+  var btArea=document.getElementById('btArea');
+  if(btArea) return;
+});
+/* วิธีที่ Apps Script ต้องเพิ่ม doGet/doPost ดู Code.gs */
 
 /* ══════════════════════════════════════
    HR INTEGRATION — ส่งยอดไป Google Sheets
@@ -2677,6 +2860,25 @@ var mnImgData = null;
 // https://r.loyverse.com/dashboard/#/items
 if($('addMenuBtn')) $('addMenuBtn').addEventListener('click',function(){
   LV.loaded=false; lvLoadItems(); toast('⏳ กำลังโหลดเมนู...');
+});
+
+// BT Printer buttons
+if($('btConnectBtn')) $('btConnectBtn').addEventListener('click',async function(){
+  var ok=await btConnect();
+  if(ok){
+    $('btStatusDot').style.background='var(--green)';
+    $('btDeviceName').textContent='เชื่อมต่อ: '+BT.device.name;
+  }
+});
+if($('btTestBtn')) $('btTestBtn').addEventListener('click',async function(){
+  if(!BT.char){toast('เชื่อมต่อเครื่องปริ้นก่อนครับ','err');return;}
+  await btPrintReceipt({
+    room:'Test Room',
+    orders:[{items:[{name:'Test Item',qty:1,price:100}]}],
+    total:100,
+    payName:'Cash',
+    time:new Date()
+  });
 });
 
 // Sync Loyverse → Firebase
